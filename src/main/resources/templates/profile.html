@@ -1,0 +1,1692 @@
+<!--&lt;!&ndash;&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<html lang="en"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;      xmlns:th="https://www.thymeleaf.org">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<head>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <title>Title</title>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</head>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<body>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<br>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div style="margin: 20px;" sec:authorize="hasAnyRole('ROLE_ADMIN')">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <a th:href="@{'/admin'}">ADMIN PANEL</a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<br>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div style="margin: 20px; display: flex">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        Hello, it is profile page.&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <div class="card" style="width: 18rem;">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <form th:action="@{'/upload-avatar'}" enctype="multipart/form-data" method="post">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" class="card-img-top">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <div class="card-body">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <div class="mb-3">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            <input class="form-control" type="file" name="avatar">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <div class="row">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            <div class="col-12">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <button class="btn btn-success">UPLOAD PICTURE</button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </form>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <p th:text="${#authentication.principal.email}"></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <p th:text="${#authentication.principal.fullName}"></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <form th:action="@{'/exit'}" method="get">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <button>SIGN OUT</button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        </form>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <div style="margin-left: 30px">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <h2>If you want to add Accommodation, click here</h2>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        &lt;!&ndash; Button trigger modal &ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            CLICK&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        </button>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;        &lt;!&ndash; Modal &ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <div class="modal-dialog">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <div class="modal-content">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <div class="modal-header">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <div class="modal-body">&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <div class="modal-footer">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                        <button type="button" class="btn btn-primary">Save changes</button>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</body>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</html>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html>&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Profile Screen</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">&ndash;&gt;-->
+<!--&lt;!&ndash;    <style>&ndash;&gt;-->
+<!--&lt;!&ndash;        body {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 0px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-family: 'Segoe UI';&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        main {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 20% 80%;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-left {&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            min-height: 738px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-left-div {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 0px 10%;&ndash;&gt;-->
+<!--&lt;!&ndash;            row-gap: 2em;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-left-div div {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 20% 80%;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-left img {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;            opacity: 0.3;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-left-a {&ndash;&gt;-->
+<!--&lt;!&ndash;            text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: darkslategray;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-left-h1 {&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;            left: 10%;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #092035;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            left: 60px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right {&ndash;&gt;-->
+
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-header {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 70% 30%;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-top: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-right: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-header img {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-header h4 {&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: left;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-info {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 13% 13% 70%;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-info h4 {&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-logo h1 {&ndash;&gt;-->
+<!--&lt;!&ndash;            color: darkslategray;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;            left: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .background {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 200px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-image: url('https://static.vecteezy.com/system/resources/previews/003/452/115/non_2x/wildlife-elk-in-forest-nature-landscape-illustration-free-vector.jpg');&ndash;&gt;-->
+<!--&lt;!&ndash;            background-position: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-size: cover;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-right-div {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 35% 65%;&ndash;&gt;-->
+<!--&lt;!&ndash;            gap: 3em;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 70%;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: -100px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-left: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;            z-index: 1000;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .m-1 {&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 310px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow: hidden;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .m-2 {&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            min-height: 500px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            overflow: hidden;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-2 {&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding-top: 13px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding-bottom: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 40% 30% 30%;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-2 button {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 0px;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: darkslategray;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 18px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: 600;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .main-2 button:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            opacity: 0.7;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: 0.3s;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .file {&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        label {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-family: Arial;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #999;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .input {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: none;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .button {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: -105px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-left: 220px;&ndash;&gt;-->
+<!--&lt;!&ndash;            z-index: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .icon {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .profile-photo {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 200px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 50px auto;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0px 2px 10px lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 50%;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid whitesmoke;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 200px&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .profile-photo img {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 200px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 50%;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 200px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .content {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            grid-template-columns: 50% 50%;&ndash;&gt;-->
+<!--&lt;!&ndash;            justify-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            row-gap: 1em;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 40px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .content label {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 18px;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .content input {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 17px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .content button {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #335da5;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 17px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 0px solid;&ndash;&gt;-->
+<!--&lt;!&ndash;            position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-left: -115px;&ndash;&gt;-->
+<!--&lt;!&ndash;            top: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0px 5px 5px lightgray;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        #user-image {&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        .content button:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            opacity: 0.7;&ndash;&gt;-->
+<!--&lt;!&ndash;            transition: 0.3s;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        #default-image {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 70%;&ndash;&gt;-->
+<!--&lt;!&ndash;            height: 70%;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 15%;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 0px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        #userimage {&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    </style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<main>&ndash;&gt;-->
+<!--&lt;!&ndash;    <section class="main-left">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a th:href="@{'/'}" class="main-left-h1">AlmaTour</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="main-left-div">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://cdn1.iconfinder.com/data/icons/finance-banking-tiny-icons/16/seal_of_approval-1024.png">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="main-left-a" href="#">Bookings</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://cdn3.iconfinder.com/data/icons/business-vol-16/100/Artboard_9-1024.png">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="main-left-a" href="#">Sheduling</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://openclipart.org/image/800px/313294">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="main-left-a" href="#">Contacts</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/messages-1024.png">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="main-left-a" href="#">Messages</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/messages-1024.png">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="main-left-a" href="#">Admin Panel</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </section>&ndash;&gt;-->
+<!--&lt;!&ndash;    <section class="main-right">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="main-right-header">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="main-right-logo">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h1>Profile</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="main-right-info">&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://cdn0.iconfinder.com/data/icons/payment-76/512/notification-1024.png">&ndash;&gt;-->
+<!--&lt;!&ndash;                <img src="https://bazametrov.ru/uploads/new-agency/default_logo_user.jpg" id="userimage">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h4 th:text="${#authentication.principal.fullName}"></h4>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <img class="background">&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="main-right-div">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="m-1">&ndash;&gt;-->
+<!--&lt;!&ndash;                    &ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="m-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="main-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button>Account Settings</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button>Place an ad</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button>Requisites</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="content" id="content1">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label>Full Name:</label><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input th:value="${#authentication.principal.fullName}" type="text" readonly>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label>Last Name:</label><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label>E-mail address:</label><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input th:value="${#authentication.principal.email}" type="text" readonly>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label>City:</label><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input th:value="${#authentication.principal.city.name}" readonly type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <button type="submit">Update</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </section>&ndash;&gt;-->
+<!--&lt;!&ndash;</main>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script>&ndash;&gt;-->
+<!--&lt;!&ndash;    document.getElementById('file').addEventListener('change', function() {&ndash;&gt;-->
+<!--&lt;!&ndash;        // Проверка, выбран ли файл&ndash;&gt;-->
+<!--&lt;!&ndash;        if(this.files && this.files.length > 0) {&ndash;&gt;-->
+<!--&lt;!&ndash;            document.getElementById('uploadForm').submit(); // Автоматическая отправка формы&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--&lt;!&ndash;    function displayImage() {&ndash;&gt;-->
+<!--&lt;!&ndash;        const fileInput = document.getElementById('file');&ndash;&gt;-->
+<!--&lt;!&ndash;        const imageContainer = document.getElementById('image-container');&ndash;&gt;-->
+<!--&lt;!&ndash;        const userImage = document.getElementById('userimage');&ndash;&gt;-->
+<!--&lt;!&ndash;        const defaultImage = document.getElementById('default-image');&ndash;&gt;-->
+
+<!--&lt;!&ndash;        const file = fileInput.files[0];&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (file) {&ndash;&gt;-->
+<!--&lt;!&ndash;            const reader = new FileReader();&ndash;&gt;-->
+
+<!--&lt;!&ndash;            reader.onload = function (e) {&ndash;&gt;-->
+<!--&lt;!&ndash;                const img = document.createElement('img');&ndash;&gt;-->
+<!--&lt;!&ndash;                img.src = e.target.result;&ndash;&gt;-->
+
+<!--&lt;!&ndash;                imageContainer.innerHTML = '';&ndash;&gt;-->
+<!--&lt;!&ndash;                imageContainer.appendChild(img);&ndash;&gt;-->
+
+<!--&lt;!&ndash;                userImage.src = e.target.result;&ndash;&gt;-->
+<!--&lt;!&ndash;            };&ndash;&gt;-->
+
+<!--&lt;!&ndash;            reader.readAsDataURL(file);&ndash;&gt;-->
+<!--&lt;!&ndash;        } else {&ndash;&gt;-->
+<!--&lt;!&ndash;            imageContainer.innerHTML = '';&ndash;&gt;-->
+<!--&lt;!&ndash;            userImage.src = ''; // Если файл не выбран, можно установить изображение по умолчанию или оставить src пустым.&ndash;&gt;-->
+<!--&lt;!&ndash;            defaultImage.style.display = 'block'; // Показать изображение по умолчанию&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta http-equiv="content-type" content="text/html; charset=utf-8" />-->
+<!--    <title>Profile Screen</title>-->
+<!--    <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<main>-->
+<!--    <section class="main-left">-->
+<!--        <h1>AlmaTour</h1>-->
+<!--        <div class="main-left-div">-->
+<!--            <div>-->
+<!--                <img src="https://cdn1.iconfinder.com/data/icons/finance-banking-tiny-icons/16/seal_of_approval-1024.png">-->
+<!--                <a href="#">Bookings</a>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <img src="https://cdn3.iconfinder.com/data/icons/business-vol-16/100/Artboard_9-1024.png">-->
+<!--                <a href="#">Sheduling</a>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/messages-1024.png">-->
+<!--                <a href="#">Messages</a>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <img src="https://icon-library.com/images/control-system-icon/control-system-icon-0.jpg">-->
+<!--                <button class="admin-panel" onclick="changePage()">-->
+<!--                    <a>Admin Panel</a>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    <section class="main-right">-->
+<!--        <div class="main-right-header">-->
+<!--            <div class="main-right-logo">-->
+<!--                <h1>Profile</h1>-->
+<!--            </div>-->
+<!--            <div class="main-right-info">-->
+<!--                <img src="https://cdn0.iconfinder.com/data/icons/payment-76/512/notification-1024.png">-->
+<!--                <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" id="userimage">-->
+<!--                <h4>Amir Khaidarov</h4>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div>-->
+<!--                <img class="background">-->
+<!--            </div>-->
+<!--            <div class="admin-page" id="adminpage">-->
+<!--                <button id="close" onclick="closePage()">Close</button>-->
+<!--                <div class="container-btns">-->
+<!--                    <button onclick="changePanel()">User Panel</button>-->
+<!--                    <button onclick="changePanel2()">Accommodation Panel</button>-->
+<!--                </div>-->
+<!--                <hr>-->
+<!--                <div class="container" id="container">-->
+<!--                    <h3 class="container-h3">User Adminstration Panel:</h3>-->
+<!--                    <table class="table table-striped table-hover">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th>USER ID</th>-->
+<!--                            <th>FULL NAME</th>-->
+<!--                            <th>EMAIL</th>-->
+<!--                            <th>IS BLOCKED</th>-->
+<!--                            <th>ACTION</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--                <div class="container2" id="container2">-->
+<!--                    <h3 class="container-h3">Accommodation Adminstration Panel:</h3>-->
+<!--                    <table class="table table-striped table-hover">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th>ID</th>-->
+<!--                            <th>NAME</th>-->
+<!--                            <th>DESCRIPTION</th>-->
+<!--                            <th>START DATE</th>-->
+<!--                            <th>END DATE</th>-->
+<!--                            <th>PRICE</th>-->
+<!--                            <th>LOCATION</th>-->
+<!--                            <th>CITY</th>-->
+<!--                            <th>ACTION</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>-->
+<!--                                <button onclick="deleteUser(${user.id})" class="btn btn-danger">Delete</button>-->
+<!--                                <button onclick="blockUser(${user.id})" class="btn btn-warning">Block</button>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>daww</td>-->
+<!--                            <td>-->
+<!--                                <button onclick="deleteUser(${user.id})" class="btn btn-danger">Delete</button>-->
+<!--                                <button onclick="blockUser(${user.id})" class="btn btn-warning">Block</button>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="main-right-div" id="main2">-->
+<!--                <form th:action="@{'/upload-avatar'}" enctype="multipart/form-data" method="post">-->
+<!--                    <div class="m-1">-->
+<!--                        <div class="profile-photo">-->
+<!--                            <div id="image-container">-->
+<!--                                <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" id="default-image">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="file-input">-->
+<!--                            <input name="avatar" type="file" id="file" class="input" onchange="displayImage()" />                                <label for="file" class="button">-->
+<!--                            <img src="https://i.pinimg.com/originals/61/13/18/611318744eb4662cec330f9480d3740c.jpg" alt="Camera Icon" class="icon">-->
+<!--                        </label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="m-2">-->
+<!--                    <div class="main-2">-->
+<!--                        <button onclick="closeModal1()">Account Settings</button>-->
+<!--                        <button onclick="closeModal2()">Place an ad</button>-->
+<!--                        <button onclick="closeModal3()">Requisites</button>-->
+<!--                    </div>-->
+<!--                    <div class="content" id="content1">-->
+<!--                        <div>-->
+<!--                            <label>Name:</label><br>-->
+<!--                            <input type="text">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label>Last Name:</label><br>-->
+<!--                            <input type="text">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label>E-mail address:</label><br>-->
+<!--                            <input type="text">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label>Phone number:</label><br>-->
+<!--                            <input type="text">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label>City:</label><br>-->
+<!--                            <input type="text">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label>Country:</label><br>-->
+<!--                            <input type="text">-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <button type="submit">Update</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--        <div id="main3">-->
+<!--            <div class="main-2">-->
+<!--                <button onclick="closeModal1()">Account Settings</button>-->
+<!--                <button onclick="closeModal2()">Place an ad</button>-->
+<!--                <button onclick="closeModal3()">Requisites</button>-->
+<!--            </div>-->
+<!--            <div class="content" id="content1">-->
+<!--                <div>-->
+<!--                    <label>Category:</label><br>-->
+<!--                    <select>-->
+<!--                        <option>Historical places</option>-->
+<!--                        <option>Cultural events</option>-->
+<!--                        <option>Nature</option>-->
+<!--                        <option>Leisure</option>-->
+<!--                        <option>Entertainment</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Place name:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Description:</label><br>-->
+<!--                    <textarea></textarea>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Start time:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>End time:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Price:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Location:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>City:</label><br>-->
+<!--                    <select>-->
+<!--                        <option>Almaty</option>-->
+<!--                        <option>Astana</option>-->
+<!--                        <option>Turkistan</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <button type="submit">Submit</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="main4">-->
+<!--            <div class="main-2">-->
+<!--                <button onclick="closeModal1()">Account Settings</button>-->
+<!--                <button onclick="closeModal2()">Place an ad</button>-->
+<!--                <button onclick="closeModal3()">Requisites</button>-->
+<!--            </div>-->
+<!--            <div class="content" id="content3">-->
+
+<!--                <div>-->
+<!--                    <label>Full Name:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+
+<!--                <div>-->
+<!--                    <label>Card number:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>CVV:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>Expiration date:</label><br>-->
+<!--                    <input type="text">-->
+<!--                </div>-->
+
+<!--                <div>-->
+<!--                    <button type="submit">Submit</button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </section>-->
+<!--</main>-->
+
+<!--<script>-->
+<!--    function displayImage() {-->
+<!--        const fileInput = document.getElementById('file');-->
+<!--        const imageContainer = document.getElementById('image-container');-->
+<!--        const userImage = document.getElementById('userimage');-->
+<!--        const defaultImage = document.getElementById('default-image');-->
+
+<!--        const file = fileInput.files[0];-->
+
+<!--        if (file) {-->
+<!--            const reader = new FileReader();-->
+
+<!--            reader.onload = function(e) {-->
+<!--                const img = document.createElement('img');-->
+<!--                img.src = e.target.result;-->
+
+<!--                imageContainer.innerHTML = '';-->
+<!--                imageContainer.appendChild(img);-->
+
+<!--                userImage.src = e.target.result;-->
+<!--            };-->
+
+<!--            reader.readAsDataURL(file);-->
+<!--        } else {-->
+<!--            imageContainer.innerHTML = '';-->
+<!--            userImage.src = ''; // Если файл не выбран, можно установить изображение по умолчанию или оставить src пустым.-->
+<!--            defaultImage.style.display = 'block'; // Показать изображение по умолчанию-->
+<!--        }-->
+<!--    } function changePage() {-->
+<!--        document.getElementById('adminpage').style.display='block';-->
+<!--        document.getElementById('main2').style.display='none';-->
+<!--        document.getElementById('main3').style.display='none';-->
+<!--        document.getElementById('main4').style.display='none';-->
+
+
+<!--    }-->
+<!--    function closeModal1() {-->
+<!--        document.getElementById('main2').style.display='grid';-->
+<!--        document.getElementById('main3').style.display='none';-->
+<!--        document.getElementById('main4').style.display='none';-->
+<!--    }-->
+<!--    function closeModal2() {-->
+<!--        document.getElementById('main3').style.display='grid';-->
+<!--        document.getElementById('main2').style.display='none';-->
+<!--        document.getElementById('main4').style.display='none';-->
+<!--    }-->
+<!--    function closeModal3() {-->
+<!--        document.getElementById('main4').style.display='grid';-->
+<!--        document.getElementById('main3').style.display='none';-->
+<!--        document.getElementById('main2').style.display='none';-->
+<!--    }-->
+
+
+
+
+
+<!--    function closePage() {-->
+<!--        document.getElementById('adminpage').style.display='none';-->
+<!--        document.getElementById('main2').style.display='grid';-->
+
+
+<!--    }-->
+<!--    function changePanel() {-->
+<!--        document.getElementById('container').style.display = 'block';-->
+<!--        document.getElementById('container2').style.display = 'none';-->
+<!--    }-->
+
+<!--    function changePanel2() {-->
+<!--        document.getElementById('container').style.display = 'none';-->
+<!--        document.getElementById('container2').style.display = 'block';-->
+<!--    }-->
+
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        fetchUsers();-->
+<!--// Функция для получения и отображения списка пользователей-->
+<!--// function fetchUsers() {-->
+<!--//     fetch('/users')-->
+<!--//         .then(response => response.json())-->
+<!--//         .then(users => {-->
+<!--//             const tbody = document.querySelector('table tbody');-->
+<!--//             tbody.innerHTML = '';-->
+<!--//             users.forEach(user => {-->
+<!--//                 const row = `<tr>-->
+<!--//                                     <td>${user.id}</td>-->
+<!--//                                     <td>${user.fullName}</td>-->
+<!--//                                     <td>${user.email}</td>-->
+<!--//                                     <td>${user.isBlocked ? 'Yes' : 'No'}</td>-->
+<!--//                                     <td>-->
+<!--//                                         <button onclick="deleteUser(${user.id})" class="btn btn-danger">Delete</button>-->
+<!--//                                         <button onclick="blockUser(${user.id})" class="btn btn-warning">Block</button>-->
+<!--//                                     </td>-->
+<!--//                                  </tr>`;-->
+<!--//                 tbody.innerHTML += row;-->
+<!--//             });-->
+<!--//         });-->
+<!--// }-->
+<!--        function fetchUsers() {-->
+<!--            fetch('/users')-->
+<!--                .then(response => response.json())-->
+<!--                .then(users => {-->
+<!--                    const tbody = document.querySelector('table tbody');-->
+<!--                    tbody.innerHTML = ''; // Очищаем текущие строки таблицы-->
+<!--                    users.forEach(user => {-->
+<!--                        const row = `<tr>-->
+<!--                        <td>${user.id}</td>-->
+<!--                        <td>${user.fullName}</td>-->
+<!--                        <td>${user.email}</td>-->
+<!--                        <td>${user.blocked ? 'Yes' : 'No'}</td>-->
+<!--                        <td>-->
+<!--                            <button onclick="deleteUser(${user.id})" class="btn btn-danger">Delete</button>-->
+<!--                            <button onclick="blockUser(${user.id})" class="btn btn-warning">Block</button>-->
+<!--                        </td>-->
+<!--                     </tr>`;-->
+<!--                        tbody.innerHTML += row;-->
+<!--                    });-->
+<!--                });-->
+<!--        }-->
+
+<!--// Делаем функцию deleteUser глобально доступной, чтобы вызывать из HTML-->
+<!--        window.deleteUser = function(id) {-->
+<!--            fetch('/users/' + id, {-->
+<!--                method: 'DELETE'-->
+<!--            })-->
+<!--                .then(() => fetchUsers()) // Перезагрузка списка пользователей после удаления-->
+<!--                .catch(error => console.error('Error:', error));-->
+<!--        };-->
+
+<!--        window.blockUser = function(id) {-->
+<!--            fetch('/users/' + id + '/block', {-->
+<!--                method: 'PATCH',-->
+<!--                // Убедитесь, что добавили необходимые заголовки, если ваш API их требует-->
+<!--            })-->
+<!--                .then(response => {-->
+<!--                    if(response.ok) {-->
+<!--                        fetchUsers(); // Перезагрузка списка пользователей после блокировки-->
+<!--                    } else {-->
+<!--                        alert('Failed to block user');-->
+<!--                    }-->
+<!--                })-->
+<!--                .catch(error => console.error('Error:', error));-->
+<!--        };-->
+
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Profile Screen</title>
+    <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">
+    <style>
+        body{
+            width: 100%;
+            margin: 0px;
+            font-family: 'Segoe UI';
+        }
+        main{
+            display: grid;
+            grid-template-columns: 20% 80%;
+        }
+        .main-left{
+            border: 1px solid lightgray;
+            min-height: 738px;
+        }
+        .main-left-div{
+            margin-top: 50px;
+            display: grid;
+            padding: 0px 10%;
+            row-gap: 2em;
+        }
+        .main-left-div div{
+            display: grid;
+            grid-template-columns: 20% 80%;
+        }
+        .main-left img{
+            width: 30px;
+            opacity: 0.3;
+        }
+        .main-left a{
+            text-decoration: none;
+            color: darkslategray;
+            top: 5px;
+            position: relative;
+        }
+        .main-left h1{
+            position: relative;
+            left: 10%;
+            color: #092035;
+        }
+        .main-right{
+
+        }
+        .main-right-header{
+            display: grid;
+            grid-template-columns: 70% 30%;
+            border-top: 1px solid lightgray;
+            border-right: 1px solid lightgray;
+        }
+        .main-right-header img{
+            width: 30px;
+            height: 30px;
+            margin: auto;
+        }
+        .main-right-info{
+            display: grid;
+            grid-template-columns: 15% 15% 40%;
+        }
+        .main-right-info h4{
+            text-align: center;
+        }
+        .main-right-logo h1{
+            color: darkslategray;
+            position: relative;
+            left: 20px;
+        }
+        .background{
+            width: 100%;
+            height: 200px;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/003/452/115/non_2x/wildlife-elk-in-forest-nature-landscape-illustration-free-vector.jpg');
+            background-position: center;
+            background-size: cover;
+        }
+
+        form{
+            display: grid;
+            grid-template-columns: 35% 65%;
+            gap: 3em;
+            position: absolute;
+            width: 70%;
+            margin-top: -100px;
+            margin-left: 50px;
+            z-index: 1000;
+        }
+        .m-1{
+            border: 1px solid lightgray;
+            height: 310px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .m-2{
+            border: 1px solid lightgray;
+            min-height: 500px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #main2{
+            display: none;
+        }
+
+        .main-2{
+            border: 1px solid lightgray;
+            height: 50px;
+            padding-top: 13px;
+            padding-bottom: 14px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 40% 30% 30%;
+        }
+        .main-2 button{
+            background-color: white;
+            border: 0px ;
+            height: 50px;
+            color: darkslategray;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .main-2 button:hover{
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .file {
+            position: relative;
+        }
+        label{
+            font-family: Arial;
+            color: #999;
+        }
+        .input {
+            display: none;
+        }
+
+        .button {
+            width: 50px;
+            position: absolute;
+            margin-top: -105px;
+            margin-left: 220px;
+            z-index: 500;
+        }
+
+        .icon {
+            width: 50px;
+            cursor: pointer;
+            border-radius: 50px;
+        }
+
+        .profile-photo{
+            width: 200px;
+            margin: 50px auto;
+            box-shadow: 0px 2px 10px lightgray;
+            border-radius: 50%;
+            border: 1px solid whitesmoke;
+            height: 200px
+        }
+        .profile-photo img{
+            width: 200px;
+            border-radius: 50%;
+            margin: auto;
+            height: 200px;
+        }
+
+
+
+        .content{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-items: center;
+            row-gap: 1em;
+            margin-top: 40px;
+        }
+        .content label{
+            font-size: 18px;
+
+        }
+        .content input{
+            font-size: 17px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            width: 250px;
+        }
+        .content button{
+            background-color: #335da5;
+            color: white;
+            padding: 10px 30px;
+            font-size: 17px;
+            border-radius: 10px;
+            border: 0px solid ;
+            position: relative;
+            margin-left: -115px;
+            top: 20px;
+            box-shadow: 0px 5px 5px lightgray;
+        }
+        #user-image{
+            border-radius: 50px;
+        }
+        .content button:hover{
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        #default-image{
+            width: 70%;
+            height: 70%;
+            margin: 15%;
+            border-radius: 0px;
+        }
+        #userimage{
+            border-radius: 50px;
+        }
+        .admin-panel{
+            background-color: white;
+            border: 0px;
+            padding: 0px;
+            width: 90px;
+            margin-top: -10px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .admin-page{
+            opacity: 1000;
+            background-color: white;
+            width: 70%;
+            margin-left: 5%;
+            padding: 20px;
+            position: absolute;
+            top: 150px;
+            border-radius: 10px;
+            border: 1px solid lightgray;
+            padding-bottom: 50px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 0px solid lightgray;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 2px 5px lightgray;
+        }
+        .btn-danger{
+            background-color: crimson;
+            color: white;
+            padding: 5px 20px;
+            border: 0px;
+            border-radius: 5px;
+        }
+        .btn-warning{
+            background-color: orange;
+            color: white;
+            padding: 5px 20px;
+            border: 0px;
+            border-radius: 5px;
+        }
+        .container-btns{
+            display: grid;
+            position: absolute;
+            width: 80%;
+            left: 12%;
+            top: 0px;
+            grid-template-columns: 50% 50%;
+        }
+        .container-btns button{
+            border: 0px solid ;
+            padding-top: 20px;
+            font-size: 18px;
+            color: darkslategray;
+            cursor: pointer;
+            padding-bottom: 20px;
+            font-weight: 600;
+            background-color: white;
+        }
+        .container2{
+            display: none;
+        }
+        hr{
+            border: 1px solid lightgray;
+            position: absolute;
+            width: 100%;
+            left: 0px;
+            margin-top: -30px;
+        }
+        .admin-page{
+            display: none;
+        }
+        .container-btns button:hover{
+            opacity: 0.7;
+        }
+        .btn:hover{
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .table thead {
+            background-color: #5dcae3;
+            color: #fff;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tbody tr:hover {
+            background-color: #ebebeb;
+        }
+
+        .table tbody td:last-child {
+            text-align: center;
+        }
+        #close{
+            background-color: crimson;
+            color: white;
+            border: 1px solid ;
+            border-radius: 10px;
+            padding: 5px 20px;
+            font-size: 17px;
+            margin-bottom: 50px;
+        }
+
+        .container-h3{
+            margin-left: 20px;
+            font-weight: 450px;
+            color: darkslategray;
+            margin-top: -10px;
+
+        }
+        #close:hover{
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        #content3{
+            height: 250px;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-items: center;
+            row-gap: 1em;
+            position: absolute;
+            width: 80%;
+            top: 80px;
+            left: 120px;
+        }
+
+        #main3{
+            display: none;
+            background-color: white;
+            width: 73%;
+            border-radius: 10px;
+            margin-left: 50px;
+            top: 110px;
+            min-height: 600px;
+            z-index: 500;
+            overflow: hidden;
+            position: absolute;
+            border: 1px solid lightgray;
+        }
+        select{
+            font-size: 17px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            color: #999;
+            width: 272px;
+        }
+        textarea{
+            font-size: 17px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            color: #999;
+            min-width: 250px;
+            max-width: 250px;
+            min-height: 60px;
+            max-height: 60px;
+
+        }
+        #main4{
+            display: none;
+            background-color: white;
+            width: 73%;
+            border-radius: 10px;
+            margin-left: 50px;
+            margin-top: -50px;
+            min-height: 450px;
+            z-index: 500;
+            overflow: hidden;
+            position: absolute;
+            border: 1px solid lightgray;
+        }
+        #main2{
+            display: grid;
+        }
+        #main3 .content{
+            height: 400px;
+            margin-top: -20px;
+        }
+
+        #image-container{
+            width: 100%;
+            overflow: hidden;
+            height: 100%;
+            top: 0px;
+        }
+        #default-image{
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin-left: 0px;
+            margin-top: 0px;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body data-user-id="${userId}">
+<main>
+    <section class="main-left">
+        <h1>AlmaTour</h1>
+        <div class="main-left-div">
+            <div>
+                <img src="https://cdn1.iconfinder.com/data/icons/finance-banking-tiny-icons/16/seal_of_approval-1024.png">
+                <a href="#">Bookings</a>
+            </div>
+            <div>
+                <img src="https://cdn3.iconfinder.com/data/icons/business-vol-16/100/Artboard_9-1024.png">
+                <a href="#">Sheduling</a>
+            </div>
+            <div>
+                <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/messages-1024.png">
+                <a href="#">Messages</a>
+            </div>
+            <div>
+                <img src="https://icon-library.com/images/control-system-icon/control-system-icon-0.jpg">
+                <button class="admin-panel" onclick="changePage()">
+                    <a>Admin Panel</a>
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="main-right">
+        <div class="main-right-header">
+            <div class="main-right-logo">
+                <h1>Profile</h1>
+            </div>
+            <div class="main-right-info">
+                <img src="https://cdn0.iconfinder.com/data/icons/payment-76/512/notification-1024.png">
+                <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" id="userimage">
+                <h4>Amir Khaidarov</h4>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img class="background">
+            </div>
+            <div class="admin-page" id="adminpage">
+                <button id="close" onclick="closePage()">Close</button>
+                <div class="container-btns">
+                    <button onclick="changePanel()">User Panel</button>
+                    <button onclick="changePanel2()">Accommodation Panel</button>
+                </div>
+                <hr>
+                <div class="container" id="container">
+                    <h3 class="container-h3">User Adminstration Panel:</h3>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>USER ID</th>
+                            <th>FULL NAME</th>
+                            <th>EMAIL</th>
+                            <th>IS BLOCKED</th>
+                            <th>ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container2" id="container2">
+                    <h3 class="container-h3">Accommodation Adminstration Panel:</h3>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>LOCATION</th>
+                            <th>CITY</th>
+                            <th>USER ID</th>
+                            <th>USER FULL NAME</th>
+                            <th>USER EMAIL</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody id="accomodationTableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="main-right-div" id="main2">
+                <form th:action="@{'/upload-avatar'}" enctype="multipart/form-data" method="post" id="uploadForm">
+                    <div class="m-1">
+                            <div class="profile-photo">
+                                <div id="image-container">
+                                    <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" id="default-image" >
+                                </div>
+                            </div>
+                            <div class="file-input">
+                                <input name="avatar" type="file" id="file" class="input" onchange="displayImage()" />
+                                <label for="file" class="button">
+                                <img src="https://i.pinimg.com/originals/61/13/18/611318744eb4662cec330f9480d3740c.jpg" alt="Camera Icon" class="icon">
+                            </label>
+                            </div>
+                    </div>
+
+                    <div class="m-2">
+                        <div class="main-2">
+                            <button type="button" onclick="closeModal1()">Account Settings</button>
+                            <button type="button" onclick="closeModal2()">Place an ad</button>
+                            <button type="button" onclick="closeModal3()">Requisites</button>
+                        </div>
+                        <div class="content" id="content1">
+                            <div>
+                                <label>Name:</label><br>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>Last Name:</label><br>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>E-mail address:</label><br>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>Phone number:</label><br>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>City:</label><br>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label>Country:</label><br>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <button type="submit">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div id="main3">
+            <div class="main-2">
+                <button onclick="closeModal1()" >Account Settings</button>
+                <button onclick="closeModal2()">Place an ad</button>
+                <button onclick="closeModal3()">Requisites</button>
+            </div>
+            <div class="content" id="content1">
+                <div>
+                    <label>Category:</label><br>
+                    <select>
+                        <option>Historical places</option>
+                        <option>Cultural events</option>
+                        <option>Nature</option>
+                        <option>Leisure</option>
+                        <option>Entertainment</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Place name:</label><br>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Description:</label><br>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <label>Start time:</label><br>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>End time:</label><br>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Price:</label><br>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Location:</label><br>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>City:</label><br>
+                    <select>
+                        <option>Almaty</option>
+                        <option>Astana</option>
+                        <option>Turkistan</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="main4">
+            <div class="main-2">
+                <button onclick="closeModal1()">Account Settings</button>
+                <button onclick="closeModal2()">Place an ad</button>
+                <button onclick="closeModal3()">Requisites</button>
+            </div>
+            <div class="content" id="content3">
+                <div>
+                    <label>Full Name:</label><br>
+                    <input type="text" name="fullName">
+                </div>
+
+                <div>
+                    <label>Card number:</label><br>
+                    <input type="text" name="cardNumber">
+                </div>
+                <div>
+                    <label>CVV:</label><br>
+                    <input type="text" name="cvv">
+                </div>
+                <div>
+                    <label>Expiration date:</label><br>
+                    <input type="text" name="expirationDate">
+                </div>
+
+                <div>
+                    <button type="submit" id="submitCreditCard">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script>
+    function displayImage() {
+        const fileInput = document.getElementById('file');
+        const imageContainer = document.getElementById('image-container');
+        const userImage = document.getElementById('userimage');
+        const defaultImage = document.getElementById('default-image');
+
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
+                imageContainer.innerHTML = '';
+                imageContainer.appendChild(img);
+
+                userImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            imageContainer.innerHTML = '';
+            userImage.src = ''; // Если файл не выбран, можно установить изображение по умолчанию или оставить src пустым.
+            defaultImage.style.display = 'block'; // Показать изображение по умолчанию
+        }
+    } function changePage() {
+        document.getElementById('adminpage').style.display='block';
+        document.getElementById('main2').style.display='none';
+        document.getElementById('main3').style.display='none';
+        document.getElementById('main4').style.display='none';
+
+
+    }
+    function closeModal1() {
+        document.getElementById('main2').style.display='grid';
+        document.getElementById('main3').style.display='none';
+        document.getElementById('main4').style.display='none';
+    }
+    function closeModal2() {
+        document.getElementById('main3').style.display='grid';
+        document.getElementById('main2').style.display='none';
+        document.getElementById('main4').style.display='none';
+    }
+    function closeModal3() {
+        document.getElementById('main4').style.display='grid';
+        document.getElementById('main3').style.display='none';
+        document.getElementById('main2').style.display='none';
+    }
+
+    function closePage() {
+        document.getElementById('adminpage').style.display='none';
+        document.getElementById('main2').style.display='grid';
+
+
+    }
+    function changePanel() {
+        document.getElementById('container').style.display = 'block';
+        document.getElementById('container2').style.display = 'none';
+    }
+
+    function changePanel2() {
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('container2').style.display = 'block';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchUsers();
+        function fetchUsers() {
+            fetch('/users')
+                .then(response => response.json())
+                .then(users => {
+                    const tbody = document.querySelector('table tbody');
+                    tbody.innerHTML = ''; // Очищаем текущие строки таблицы
+                    users.forEach(user => {
+                        const row = `<tr>
+                        <td>${user.id}</td>
+                        <td>${user.fullName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.blocked ? 'Yes' : 'No'}</td>
+                        <td>
+                            <button onclick="deleteUser(${user.id})" class="btn btn-danger">Delete</button>
+                            <button onclick="blockUser(${user.id})" class="btn btn-warning">Block</button>
+                        </td>
+                     </tr>`;
+                        tbody.innerHTML += row;
+                    });
+                });
+        }
+
+// Делаем функцию deleteUser глобально доступной, чтобы вызывать из HTML
+        window.deleteUser = function(id) {
+            fetch('/users/' + id, {
+                method: 'DELETE'
+            })
+                .then(() => fetchUsers()) // Перезагрузка списка пользователей после удаления
+                .catch(error => console.error('Error:', error));
+        };
+
+        window.blockUser = function(id) {
+            fetch('/users/' + id + '/block', {
+                method: 'PATCH',
+                // Убедитесь, что добавили необходимые заголовки, если ваш API их требует
+            })
+                .then(response => {
+                    if(response.ok) {
+                        fetchUsers(); // Перезагрузка списка пользователей после блокировки
+                    } else {
+                        alert('Failed to block user');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        };
+
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userId = document.body.getAttribute('data-user-id');
+        document.getElementById('submitCreditCard').addEventListener('click', function() {
+            // Сбор данных из формы
+            const fullName = document.querySelector('#content3 input[name="fullName"]').value;
+            const cardNumber = document.querySelector('#content3 input[name="cardNumber"]').value;
+            const cvv = document.querySelector('#content3 input[name="cvv"]').value;
+            const expirationDate = document.querySelector('#content3 input[name="expirationDate"]').value;
+            console.log("fullName: "+fullName)
+            // Подставьте правильный ID пользователя
+           // о значение должно быть получено из вашего серверного кода
+         // <!-- Пример использования data-* атрибута для хранения userId -->
+
+            console.log("userid: "+userId)
+            // Формирование объекта данных для отправки
+            const creditCardDetails = {
+                fullName: fullName,
+                cardNumber: cardNumber,
+                cvv: cvv,
+                expirationDate: expirationDate,
+                userId: userId
+            };
+
+            // AJAX запрос с помощью Fetch API
+            fetch('http://localhost:1030/credit-card-details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Возможно потребуется добавить дополнительные заголовки, например для CSRF защиты
+                },
+                body: JSON.stringify(creditCardDetails)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    alert('Credit card details submitted successfully.');
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        });
+    });
+
+</script>
+</body>
+</html>

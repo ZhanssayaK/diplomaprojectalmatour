@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-...." crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            margin: 0px;
+            font-family: "Segoe UI";
+            width: 100%;
+            height: 900px;
+            overflow: hidden;
+        }
+        main{
+            min-height: 900px;
+            display: grid;
+            grid-template-columns: 40%60%;
+        }
+        .icon-plane{
+            width: 100px;
+            position: absolute;
+            left: -10px;
+            transform: rotate(10deg)
+        }
+        .main-div-w{
+            width: 100%;
+            z-index: -1;
+            min-height: 900px;
+            position: absolute;
+            background-size: cover;
+            background-position: left;
+            background-color: #3c4b6c;
+        }
+        .main-div{
+            min-height: 900px;
+        }
+        .main-div-div{
+            position: relative;
+            width: 100%;
+            margin-top: 0px;
+            display: grid;
+            justify-content: center;
+
+        }
+        .walpaper{
+            width: 100%;
+            height: 900px;
+        }
+        .quest{
+            display: grid;
+            position: absolute;
+            width: 50%;
+            bottom: 50px;
+            left: 25%;
+            grid-template-columns: 40% 20% 40%;
+        }
+        .quest h4{
+            padding-top: 15px;
+        }
+        i{
+            position: absolute;
+            margin-top: 45px;
+            margin-left: 20px;
+            color: lightgray;
+        }
+        input{
+            padding: 10px 50px;
+            font-size: 20px;
+            border-radius: 10px;
+            border: 0px solid white;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            color: #828282;
+        }
+        button{
+            font-size: 17px;
+            padding: 10px 20px;
+            margin-left: 32%;
+            margin-top: 25px;
+            margin-bottom: 80px;
+            background-color: #215da5;
+            color: white;
+            border: 0px solid ;
+            border-radius: 20px;
+        }
+        button:hover{
+
+        }
+        label{
+            padding: 5px 10px;
+            width: 60%;
+            margin-bottom: 10px;
+            color: whitesmoke;
+        }
+        .main-div div h1{
+            text-align: center;
+            color: white;
+            font-size: 50px;
+        }
+        .main-div div h4{
+            margin-top: -20px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #828282;
+            font-weight: 500;
+        }
+        button:hover{
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+        .login-a{
+            color: aliceblue;
+        }
+        .wal{
+            background-image: url('https://i.pinimg.com/originals/3b/d1/dc/3bd1dcda269b190a42c4a1a4522d910d.jpg');
+            background-size: cover;
+            background-position: center;
+            height:900px;
+        }
+        .d-2{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            width: 100%;
+            gap:1em;
+            margin-left: 50px;
+        }
+        .d-2 a{
+            position: relative;
+            top: -20px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="main-div">
+        <div class="main-div-w">
+
+        </div>
+        <div class="main-div-div">
+            <h1>Welcome</h1>
+            <h4>Registration</h4>
+            <form th:action = "@{'/to-sign-up'}" method="post">
+                <div>
+                    <i class="fas fa-user"></i>
+                    <label>Full Name</label>
+                    <br>
+                    <input type="text" name="user_fullName">
+                </div>
+                <div>
+                    <i class="fas fa-user"></i>
+                    <label>E-mail</label>
+                    <br>
+                    <input type="email" name="user_email">
+                </div>
+                <div>
+                    <i class="fas fa-key"></i>
+                    <label>Password</label>
+                    <br>
+                    <input type="password" name="user_password">
+                </div>
+                <div>
+                    <i class="fas fa-repeat"></i>
+                    <label>Repeat password</label>
+                    <br>
+                    <input type="password" name="user_repassword">
+                </div>
+                <button>REGISTER</button>
+            </form>
+            <div class="quest">
+                <div>
+                    <hr>
+                </div>
+                <div>
+                    <h4>OR</h4>
+                </div>
+                <div>
+                    <hr>
+                </div>
+            </div>
+            <div class="d-2">
+                <h4>Already have an account?</h4>
+                <a class="login-a" th:href="@{'/sign-in'}">Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="wal">
+        <img class="icon-plane" src="https://www.pinclipart.com/picdir/big/9-99650_airplane-flight-aircraft-logo-flying-plane-vector-png.png">
+    </div>
+</main>
+</body>
+</html>

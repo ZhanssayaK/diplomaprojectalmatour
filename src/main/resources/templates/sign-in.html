@@ -1,0 +1,345 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>-->
+<!--    <title></title>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"-->
+<!--          integrity="sha384-...." crossorigin="anonymous">-->
+<!--    <style>-->
+<!--        body {-->
+<!--            margin: 0px;-->
+<!--            body: 0px;-->
+<!--            font-family: "Segoe UI";-->
+<!--        }-->
+
+<!--        main {-->
+<!--            min-height: 800px;-->
+<!--            display: grid;-->
+<!--            grid-template-columns: 50%50%;-->
+<!--        }-->
+
+<!--        .main-div-w {-->
+<!--            width: 100%;-->
+<!--            z-index: -1;-->
+<!--            min-height: 800px;-->
+<!--            position: absolute;-->
+<!--            background-image: url('https://www.emperortraveline.com/wp-content/uploads/2017/09/slider7.jpg');-->
+<!--            background-size: cover;-->
+<!--            background-position: left;-->
+<!--        }-->
+
+<!--        .main-div {-->
+<!--            min-height: 800px;-->
+<!--            background-color: rgb(250, 250, 250, 0.9);-->
+<!--        }-->
+
+<!--        .main-div-div {-->
+<!--            position: relative;-->
+<!--            width: 90%;-->
+<!--            margin: 100px auto;-->
+<!--            display: grid;-->
+<!--            justify-content: center;-->
+<!--        }-->
+
+<!--        .walpaper {-->
+<!--            width: 100%;-->
+<!--            height: 800px;-->
+<!--        }-->
+
+<!--        .quest {-->
+<!--            display: grid;-->
+<!--            position: absolute;-->
+<!--            width: 50%;-->
+<!--            bottom: 50px;-->
+<!--            left: 25%;-->
+<!--            grid-template-columns: 40% 20% 40%;-->
+<!--        }-->
+
+<!--        .quest h4 {-->
+<!--            padding-top: 15px;-->
+<!--        }-->
+
+<!--        i {-->
+<!--            position: absolute;-->
+<!--            margin-top: 45px;-->
+<!--            margin-left: 20px;-->
+<!--            color: lightgray;-->
+<!--        }-->
+
+<!--        input {-->
+<!--            padding: 10px 50px;-->
+<!--            font-size: 20px;-->
+<!--            border-radius: 10px;-->
+<!--            border: 2px solid #215da5;-->
+<!--            margin-bottom: 10px;-->
+<!--            margin-top: 10px;-->
+<!--            color: #828282;-->
+<!--        }-->
+
+<!--        button {-->
+<!--            font-size: 17px;-->
+<!--            padding: 10px 20px;-->
+<!--            margin-left: 37%;-->
+<!--            margin-top: 25px;-->
+<!--            margin-bottom: 80px;-->
+<!--            background-color: #215da5;-->
+<!--            color: white;-->
+<!--            border: 0px solid;-->
+<!--            border-radius: 20px;-->
+<!--        }-->
+
+<!--        button:hover {-->
+
+<!--        }-->
+
+<!--        label {-->
+<!--            padding: 5px 10px;-->
+<!--            width: 60%;-->
+<!--            margin-bottom: 10px;-->
+<!--            color: #215da5;-->
+<!--        }-->
+
+<!--        .main-div div h1 {-->
+<!--            text-align: center;-->
+<!--            color: #215da5;-->
+<!--            font-size: 50px;-->
+<!--        }-->
+
+<!--        .main-div div h4 {-->
+<!--            margin-top: -20px;-->
+<!--            margin-bottom: 50px;-->
+<!--            text-align: center;-->
+<!--            color: #828282;-->
+<!--            font-weight: 500;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<main>-->
+<!--    <div class="main-div">-->
+<!--        <div class="main-div-w">-->
+
+<!--        </div>-->
+<!--        <div class="main-div-div">-->
+<!--            <h1>Welcome</h1>-->
+<!--            <h4>Login with Email</h4>-->
+<!--            <form th:action="@{'/to-sign-in'}" method="post">-->
+<!--                <div>-->
+<!--                    <i class="fas fa-user"></i>-->
+<!--                    <label>E-mail</label>-->
+<!--                    <br>-->
+<!--                    <input type="email" name="user_email">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <i class="fas fa-key"></i>-->
+<!--                    <label>Password</label>-->
+<!--                    <br>-->
+<!--                    <input type="password" name="user_password">-->
+<!--                </div>-->
+<!--                <button>LOGIN</button>-->
+<!--            </form>-->
+<!--            <div class="quest">-->
+<!--                <div>-->
+<!--                    <hr>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <h4>OR</h4>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <hr>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <h4>Don't have account? <a>Register Now</a></h4>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <img src="https://i.pinimg.com/564x/35/6d/c5/356dc501aa01175183f5521a12e61b5b.jpg" class="walpaper">-->
+<!--    </div>-->
+<!--</main>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-...." crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            margin: 0px;
+            font-family: "Segoe UI";
+            width: 100%;
+            height: 100px;
+            overflow: hidden;
+        }
+        main{
+            min-height: 700px;
+            display: grid;
+            grid-template-columns: 40%60%;
+        }
+        .icon-plane{
+            width: 100px;
+            position: absolute;
+            left: -10px;
+            transform: rotate(10deg)
+        }
+        .main-div-w{
+            width: 100%;
+            z-index: -1;
+            min-height: 900px;
+            position: absolute;
+            background-size: cover;
+            background-position: left;
+            background-color: #3c4b6c;
+        }
+        .main-div{
+            min-height: 700px;
+        }
+        .main-div-div{
+            position: relative;
+            width: 100%;
+            margin-top: 70px;
+            display: grid;
+            justify-content: center;
+
+        }
+
+
+        .walpaper{
+            width: 100%;
+            height: 700px;
+        }
+        .quest{
+            display: grid;
+            position: absolute;
+            width: 50%;
+            bottom: 50px;
+            left: 25%;
+            grid-template-columns: 40% 20% 40%;
+        }
+        .quest h4{
+            padding-top: 15px;
+        }
+        i{
+            position: absolute;
+            margin-top: 45px;
+            margin-left: 20px;
+            color: lightgray;
+        }
+        input{
+            padding: 10px 50px;
+            font-size: 20px;
+            border-radius: 10px;
+            border: 0px solid white;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            color: #828282;
+        }
+        button{
+            font-size: 17px;
+            padding: 10px 20px;
+            margin-left: 37%;
+            margin-top: 25px;
+            margin-bottom: 80px;
+            background-color: #215da5;
+            color: white;
+            border: 0px solid ;
+            border-radius: 20px;
+        }
+        button:hover{
+
+        }
+        label{
+            padding: 5px 10px;
+            width: 60%;
+            margin-bottom: 10px;
+            color: whitesmoke;
+        }
+        .main-div div h1{
+            text-align: center;
+            color: white;
+            font-size: 50px;
+        }
+        .main-div div h4{
+            margin-top: -20px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #828282;
+            font-weight: 500;
+        }
+        button:hover{
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+        .login-a{
+            color: aliceblue;
+        }
+        .wal{
+            background-image: url('https://i.pinimg.com/originals/3b/d1/dc/3bd1dcda269b190a42c4a1a4522d910d.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 900px;
+        }
+        .d-2{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            width: 80%;
+            gap:1em;
+            margin: auto;
+        }
+        .d-2 a{
+            position: relative;
+            top: -20px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="main-div">
+        <div class="main-div-w">
+
+        </div>
+        <div class="main-div-div">
+            <h1>Welcome</h1>
+            <h4>Login with Email</h4>
+            <form th:action="@{'/to-sign-in'}" method="post">
+                <div>
+                    <i class="fas fa-user"></i>
+                    <label>E-mail</label>
+                    <br>
+                    <input type="email" name="user_email">
+                </div>
+                <div>
+                    <i class="fas fa-key"></i>
+
+                    <label>Password</label>
+                    <br>
+                    <input type="password" name="user_password">
+                </div>
+                <button>LOGIN</button>
+            </form>
+            <div class="quest">
+                <div>
+                    <hr>
+                </div>
+                <div>
+                    <h4>OR</h4>
+                </div>
+                <div>
+                    <hr>
+                </div>
+            </div>
+            <div class="d-2">
+                <h4>Don't have account? </h4>
+                <a class="login-a" th:href="@{'/sign-up'}">Register Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="wal">
+        <img class="icon-plane" src="https://www.pinclipart.com/picdir/big/9-99650_airplane-flight-aircraft-logo-flying-plane-vector-png.png">
+    </div>
+</main>
+</body>
+</html>
