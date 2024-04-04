@@ -12,6 +12,8 @@ public class UserDTO {
     private Long id;
     private String email;
     private String fullName;
+    private String phoneNumber;
     private boolean isBlocked;
     private Long cityId;
+    private CreditCardDetailsDTO creditCardDetails;
 }

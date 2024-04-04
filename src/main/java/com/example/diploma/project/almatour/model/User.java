@@ -23,9 +23,13 @@ public class User implements UserDetails {
     private String password;
     private String fullName;
     private String avatarUrl;
+    private String phoneNumber;
 
     @ManyToOne
     private City city;
+
+    @ManyToOne
+    private CreditCardDetails creditCardDetails;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;

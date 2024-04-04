@@ -17,7 +17,7 @@ public interface AccommodationMapper {
 
     List<AccommodationDTO> toDtoList(List<Accommodation> accommodations);
 
-//    @Mapping(source = "userId", target = "user.id")
-//    @Mapping(source = "cityId", target = "city.id")
+    @Mapping(source = "userId", target = "user.id")
+    @Mapping(source = "cityId", target = "city.id")
     Accommodation toEntity(AccommodationDTO accommodationDTO);
 }

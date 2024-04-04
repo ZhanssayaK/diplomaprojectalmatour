@@ -26,6 +26,10 @@ public class UserService {
         return userDTOS;
     }
 
+    public UserDTO getUserById(Long id) {
+        return userMapper.toDto(userRepository.findById(id).orElse(null));
+    }
+
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }

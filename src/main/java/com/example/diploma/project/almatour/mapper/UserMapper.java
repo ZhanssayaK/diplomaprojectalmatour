@@ -14,9 +14,11 @@ public interface UserMapper {
     @Mapping(target = "user.password", ignore = true)
     @Mapping(source = "city.id", target = "cityId")
     @Mapping(source = "blocked", target = "isBlocked")
+    @Mapping(source = "creditCardDetails", target = "creditCardDetails")
     UserDTO toDto(User user);
 
 //    @Mapping(source = "cityId", target = "city.id")
+//    @Mapping(source = "creditCardDetailsId", target = "creditCardDetails.id")
     User toEntity(UserDTO userDTO);
 
     List<UserDTO> toDtoList(List<User> users);

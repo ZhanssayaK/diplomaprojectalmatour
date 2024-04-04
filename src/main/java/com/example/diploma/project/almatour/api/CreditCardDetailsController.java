@@ -25,11 +25,10 @@ public class CreditCardDetailsController {
         return creditCardDetailsService.creditCardDetailsById(id);
     }
 
-
-    @PostMapping
-    public CreditCardDetailsDTO addCreditCardDetailsById(@RequestBody CreditCardDetailsDTO creditCardDetailsDTO) {
-        return creditCardDetailsService.addCreditCardDetails(creditCardDetailsDTO.getUserId(), creditCardDetailsDTO);
-    }
+//    @PostMapping
+//    public CreditCardDetailsDTO addCreditCardDetailsById(@RequestBody CreditCardDetailsDTO creditCardDetailsDTO) {
+//        return creditCardDetailsService.addCreditCardDetails(creditCardDetailsDTO.getUserId(), creditCardDetailsDTO);
+//    }
 
     @DeleteMapping(value = "/{id}")
     public void deleteCreditCardDetailsById(@PathVariable Long id) {

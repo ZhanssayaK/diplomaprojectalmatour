@@ -19,7 +19,4 @@ public class CreditCardDetails {
     private String expirationDate;
 
     private String cvv;
-
-    @ManyToOne
-    private User user;
 }

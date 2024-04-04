@@ -1,10 +1,13 @@
 package com.example.diploma.project.almatour.api;
 
+import com.example.diploma.project.almatour.dto.CreditCardDetailsDTO;
 import com.example.diploma.project.almatour.dto.UserDTO;
 import com.example.diploma.project.almatour.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,9 +34,17 @@ public class UserController {
         return ResponseEntity.ok(blockedUser);
     }
 
-//    @GetMapping(value = "{id}/getByRoleId")
-//    public List<UserDTO> getUserByRoleId(@PathVariable Long id){
-//        List<UserDTO> users = userService.getUserByRoleId(id);
-//        return users;
-//    }
+    @GetMapping(value = "{id}")
+    public UserDTO getUserById(@PathVariable(name = "id") Long id){
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("/{id}/credit-card-details")
+    public CreditCardDetailsDTO getCreditCardDetailsByUserId(@PathVariable Long id) {
+        UserDTO userDTO = userService.getUserById(id);
+        if (userDTO.getCreditCardDetails() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Credit card details not found for user with id " + id);
+        }
+        return userDTO.getCreditCardDetails();
+    }
 }
