@@ -1,10 +1,12 @@
 package com.example.diploma.project.almatour.service;
 
+import com.example.diploma.project.almatour.dto.AccommodationDTO;
 import com.example.diploma.project.almatour.dto.CreditCardDetailsDTO;
 import com.example.diploma.project.almatour.mapper.CreditCardDetailsMapper;
 import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.CreditCardDetails;
 
+import com.example.diploma.project.almatour.model.User;
 import com.example.diploma.project.almatour.repository.CreditCardDetailsRepository;
 import com.example.diploma.project.almatour.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class CreditCardDetailsService {
     private final CreditCardDetailsRepository creditCardDetailsRepository;
     private final CreditCardDetailsMapper creditCardDetailsMapper;
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
     public List<CreditCardDetailsDTO> creditCardDetails() {
         return creditCardDetailsMapper.toDTOList(creditCardDetailsRepository.findAll());
@@ -27,12 +30,35 @@ public class CreditCardDetailsService {
         return creditCardDetailsMapper.toDTO(creditCardDetailsRepository.findById(id).orElse(null));
     }
 
+    public CreditCardDetailsDTO creditCardDetailsByUserId(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            return creditCardDetailsMapper.toDTO(user.getCreditCardDetails());
+        }
+        return null;
+    }
+
     public void deleteCreditCardDetailsById(Long id) {
         creditCardDetailsRepository.deleteById(id);
     }
 
-    public CreditCardDetailsDTO addCreditCardDetails(Long id, CreditCardDetailsDTO creditCardDetailsDTO) {
-        CreditCardDetails creditCardDetails1 = creditCardDetailsMapper.toEntity(creditCardDetailsDTO);
-        return creditCardDetailsMapper.toDTO(creditCardDetailsRepository.save(creditCardDetails1));
+    public CreditCardDetailsDTO addCreditCardDetails(CreditCardDetailsDTO dto) {
+        CreditCardDetails details = null;
+        if (dto.getId() != null && creditCardDetailsRepository.findById(dto.getId()).isPresent()) {
+            details = creditCardDetailsRepository.findById(dto.getId()).get();
+
+        } else {
+            details = new CreditCardDetails();
+        }
+        details.setCardNumber(dto.getCardNumber());
+        details.setCvv(dto.getCvv());
+        details.setFullName(dto.getFullName());
+        details.setExpirationDate(dto.getExpirationDate());
+        CreditCardDetails cr = creditCardDetailsRepository.save(details);
+
+        User user = authenticationService.getCurrentUser();
+        user.setCreditCardDetails(details);
+        userRepository.save(user);
+        return creditCardDetailsMapper.toDTO(cr);
     }
 }

@@ -460,8 +460,6 @@
             font-size: 21px;
             border-radius: 50px;
         }
-
-
     </style>
 </head>
 <body data-user-id="${userId}">
@@ -490,7 +488,7 @@
 
             <div style="border-top: 1px solid #999; position: relative; top: 320px; padding-top: 20px; ">
                 <img src="https://c3.klipartz.com/pngpicture/421/12/sticker-png-sword-art-online-vector-icons-logout-thumbnail.png">
-                <a href="sign-in.html">Sign Out</a>
+                <a th:href="@{'/exit'}">Sign Out</a>
             </div>
         </div>
     </section>
@@ -916,61 +914,47 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // The URL to your endpoint (change the user ID as needed)
-        const url = 'http://localhost:1080/users/1/credit-card-details';
+        document.getElementById('submitCreditCard').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращаем стандартную отправку формы
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok. Status: ' + response.status);
-                }
-                return response.json(); // Parse the JSON of the response
+            // Сбор данных из формы
+            const fullName = document.querySelector('input[name="fullName"]').value;
+            const cardNumber = document.querySelector('input[name="cardNumber"]').value;
+            const cvv = document.querySelector('input[name="cvv"]').value;
+            const expirationDate = document.querySelector('input[name="expirationDate"]').value;
+
+            // Собираем данные в объект для отправки
+            const creditCardDetails = {
+                fullName: fullName,
+                cardNumber: cardNumber,
+                cvv: cvv,
+                expirationDate: expirationDate,
+            };
+
+            // AJAX запрос с использованием Fetch API
+            fetch('http://localhost:1080/credit-card-details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(creditCardDetails) // Преобразуем объект данных в строку JSON
             })
-            .then(data => {
-                // Populate the input fields with the fetched data
-                document.querySelector('input[name="fullName"]').value = data.fullName || '';
-                document.querySelector('input[name="cardNumber"]').value = data.cardNumber || '';
-                document.querySelector('input[name="cvv"]').value = data.cvv || '';
-                document.querySelector('input[name="expirationDate"]').value = data.expirationDate || '';
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    alert('Credit card details submitted successfully.');
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                    alert('Failed to submit credit card details. Please try again.');
+                });
+        });
     });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Read the user ID from the hidden input field
-        const userId = document.querySelector('input[name="currentUserId"]').value;
-        const url = `http://localhost:1080/users/${userId}/credit-card-details`;
-
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    // If the response is not ok, throw an error to skip the next .then block
-                    throw new Error('Network response was not ok. Status: ' + response.status);
-                }
-                return response.json(); // Parse the JSON of the response
-            })
-            .then(data => {
-                // Check if the data is empty or null
-                if (data && Object.keys(data).length !== 0) {
-                    // Populate the input fields with the fetched data
-                    document.querySelector('input[name="fullName"]').value = data.fullName || '';
-                    document.querySelector('input[name="cardNumber"]').value = data.cardNumber || '';
-                    document.querySelector('input[name="cvv"]').value = data.cvv || '';
-                    document.querySelector('input[name="expirationDate"]').value = data.expirationDate || '';
-                } else {
-                    // If data is empty or null, log a message or handle as needed
-                    console.log('No data found for the given user ID.');
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                // Optionally clear the input fields or handle the error as needed
-            });
-    });
-</script>
-
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.example.diploma.project.almatour.api;
 
+import com.example.diploma.project.almatour.dto.AccommodationDTO;
 import com.example.diploma.project.almatour.dto.CreditCardDetailsDTO;
 import com.example.diploma.project.almatour.service.CreditCardDetailsService;
 
@@ -25,10 +26,15 @@ public class CreditCardDetailsController {
         return creditCardDetailsService.creditCardDetailsById(id);
     }
 
-//    @PostMapping
-//    public CreditCardDetailsDTO addCreditCardDetailsById(@RequestBody CreditCardDetailsDTO creditCardDetailsDTO) {
-//        return creditCardDetailsService.addCreditCardDetails(creditCardDetailsDTO.getUserId(), creditCardDetailsDTO);
-//    }
+    @GetMapping(value = "/getByUserId/{id}")
+    public CreditCardDetailsDTO getCreditCardDetailsByUserId(@PathVariable Long id) {
+        return creditCardDetailsService.creditCardDetailsByUserId(id);
+    }
+
+    @PostMapping
+    public CreditCardDetailsDTO addCreditCardDetails(@RequestBody CreditCardDetailsDTO creditCardDetailsDTO){
+        return creditCardDetailsService.addCreditCardDetails(creditCardDetailsDTO);
+    }
 
     @DeleteMapping(value = "/{id}")
     public void deleteCreditCardDetailsById(@PathVariable Long id) {
