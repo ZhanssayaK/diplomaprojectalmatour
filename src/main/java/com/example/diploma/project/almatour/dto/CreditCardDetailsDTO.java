@@ -18,4 +18,6 @@ public class CreditCardDetailsDTO {
 
     private String cvv;
 
+    private Long userId;
+
 }

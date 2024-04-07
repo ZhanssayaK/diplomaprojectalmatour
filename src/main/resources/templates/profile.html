@@ -861,6 +861,15 @@
                      </tr>`;
                         tbody.innerHTML += row;
                     });
+                    console.log(users);
+                    console.log(users[0].creditCardDetails);
+                    const userId = document.querySelector('input[name="currentUserId"]').value;
+                    if (users[0].id == userId) {
+                        document.querySelector('input[name="fullName"]').value = users[0].creditCardDetails.fullName;
+                        document.querySelector('input[name="cardNumber"]').value = users[0].creditCardDetails.cardNumber;
+                        document.querySelector('input[name="cvv"]').value = users[0].creditCardDetails.cvv;
+                        document.querySelector('input[name="expirationDate"]').value = users[0].creditCardDetails.expirationDate;
+                    }
                 });
         }
 
@@ -892,7 +901,7 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const userId = document.body.getAttribute('data-user-id');
+        const userId = document.querySelector('input[name="currentUserId"]').value;
         document.getElementById('submitCreditCard').addEventListener('click', function () {
             // Сбор данных из формы
             const fullName = document.querySelector('#content3 input[name="fullName"]').value;
@@ -915,7 +924,7 @@
             };
 
             // AJAX запрос с помощью Fetch API
-            fetch('http://localhost:1030/credit-card-details', {
+            fetch('http://localhost:1080/credit-card-details', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -972,50 +981,6 @@
                     console.error('Error fetching accommodations:', error);
                 });
         }
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('submitCreditCard').addEventListener('click', function(event) {
-            event.preventDefault(); // Предотвращаем стандартную отправку формы
-
-            // Сбор данных из формы
-            const fullName = document.querySelector('input[name="fullName"]').value;
-            const cardNumber = document.querySelector('input[name="cardNumber"]').value;
-            const cvv = document.querySelector('input[name="cvv"]').value;
-            const expirationDate = document.querySelector('input[name="expirationDate"]').value;
-
-            // Собираем данные в объект для отправки
-            const creditCardDetails = {
-                fullName: fullName,
-                cardNumber: cardNumber,
-                cvv: cvv,
-                expirationDate: expirationDate,
-            };
-
-            // AJAX запрос с использованием Fetch API
-            fetch('http://localhost:1080/credit-card-details', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(creditCardDetails) // Преобразуем объект данных в строку JSON
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok: ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data);
-                    alert('Credit card details submitted successfully.');
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                    alert('Failed to submit credit card details. Please try again.');
-                });
-        });
     });
 </script>
 
@@ -1088,36 +1053,6 @@
                         console.error('Error:', error);
                     });
             }
-        });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Вызывается, когда весь HTML был полностью загружен и разобран
-        document.getElementById('submitCreditCard').addEventListener('click', function() {
-            // Получаем userId, который может быть зашит в коде, получен от пользователя или из другого источника
-            const userIdshka = 1; // Пример userID, в вашем случае он может определяться иначе
-            console.log(userIdshka)
-            // Совершаем AJAX запрос для получения данных кредитной карты
-            fetch(`http://localhost:1080/credit-card-details/getByUserId/${userIdshka}`)
-                .then(response => {
-                    // Проверяем, что запрос успешно выполнен
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json(); // Преобразуем ответ в формат JSON
-                })
-                .then(data => {
-                    // Заполняем поля формы полученными данными
-                    document.querySelector('input[name="fullName"]').value = data.fullName;
-                    document.querySelector('input[name="cardNumber"]').value = data.cardNumber;
-                    document.querySelector('input[name="cvv"]').value = data.cvv;
-                    document.querySelector('input[name="expirationDate"]').value = data.expirationDate;
-                })
-                .catch(error => {
-                    // Обрабатываем возможные ошибки
-                    console.error('There has been a problem with your fetch operation:', error);
-                });
         });
     });
 </script>

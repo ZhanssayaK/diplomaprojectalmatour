@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @ManyToOne
     private City city;
 
-    @ManyToOne
+    @OneToOne
     private CreditCardDetails creditCardDetails;
 
     @ManyToMany(fetch = FetchType.EAGER)

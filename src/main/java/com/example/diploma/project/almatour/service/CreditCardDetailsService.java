@@ -44,21 +44,25 @@ public class CreditCardDetailsService {
 
     public CreditCardDetailsDTO addCreditCardDetails(CreditCardDetailsDTO dto) {
         CreditCardDetails details = null;
-        if (dto.getId() != null && creditCardDetailsRepository.findById(dto.getId()).isPresent()) {
-            details = creditCardDetailsRepository.findById(dto.getId()).get();
+        if (dto.getUserId() != null) {
+            if (userRepository.findById(dto.getUserId()).isPresent()) {
+                User user = userRepository.findById(dto.getUserId()).get();
+                if (user.getCreditCardDetails() != null) {
+                    details = user.getCreditCardDetails();
+                } else {
+                    details = new CreditCardDetails();
+                }
+                details.setCardNumber(dto.getCardNumber());
+                details.setCvv(dto.getCvv());
+                details.setFullName(dto.getFullName());
+                details.setExpirationDate(dto.getExpirationDate());
+                CreditCardDetails cr = creditCardDetailsRepository.save(details);
 
-        } else {
-            details = new CreditCardDetails();
+                user.setCreditCardDetails(details);
+                userRepository.save(user);
+                return creditCardDetailsMapper.toDTO(cr);
+            }
         }
-        details.setCardNumber(dto.getCardNumber());
-        details.setCvv(dto.getCvv());
-        details.setFullName(dto.getFullName());
-        details.setExpirationDate(dto.getExpirationDate());
-        CreditCardDetails cr = creditCardDetailsRepository.save(details);
-
-        User user = authenticationService.getCurrentUser();
-        user.setCreditCardDetails(details);
-        userRepository.save(user);
-        return creditCardDetailsMapper.toDTO(cr);
+        return null;
     }
 }
