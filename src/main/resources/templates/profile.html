@@ -1,75 +1,89 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Profile Screen</title>
     <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">
     <style>
-        body{
+        body {
             width: 100%;
             margin: 0px;
             font-family: 'Segoe UI';
         }
-        main{
+
+        main {
             display: grid;
             grid-template-columns: 20% 80%;
         }
-        .main-left{
+
+        .main-left {
             border: 1px solid lightgray;
             min-height: 738px;
         }
-        .main-left-div{
+
+        .main-left-div {
             margin-top: 50px;
             display: grid;
             padding: 0px 10%;
             row-gap: 2em;
         }
-        .main-left-div div{
+
+        .main-left-div div {
             display: grid;
             grid-template-columns: 20% 80%;
         }
-        .main-left img{
+
+        .main-left img {
             width: 30px;
             opacity: 0.3;
         }
-        .main-left a{
+
+        .main-left a {
             text-decoration: none;
             color: darkslategray;
             top: 5px;
             position: relative;
         }
-        .main-left h1{
+
+        .main-left h1 {
             position: relative;
             left: 10%;
             color: #092035;
         }
-        .main-right{
+
+        .main-right {
 
         }
-        .main-right-header{
+
+        .main-right-header {
             display: grid;
             grid-template-columns: 70% 30%;
             border-top: 1px solid lightgray;
             border-right: 1px solid lightgray;
         }
-        .main-right-header img{
+
+        .main-right-header img {
             width: 30px;
             height: 30px;
             margin: auto;
         }
-        .main-right-info{
+
+        .main-right-info {
             display: grid;
             grid-template-columns: 15% 15% 40%;
         }
-        .main-right-info h4{
+
+        .main-right-info h4 {
             text-align: center;
         }
-        .main-right-logo h1{
+
+        .main-right-logo h1 {
             color: darkslategray;
             position: relative;
             left: 20px;
         }
-        .background{
+
+        .background {
             width: 100%;
             height: 200px;
             background-image: url('https://static.vecteezy.com/system/resources/previews/003/452/115/non_2x/wildlife-elk-in-forest-nature-landscape-illustration-free-vector.jpg');
@@ -77,7 +91,7 @@
             background-size: cover;
         }
 
-        form{
+        form {
             display: grid;
             grid-template-columns: 35% 65%;
             gap: 3em;
@@ -87,25 +101,28 @@
             margin-left: 50px;
             z-index: 1000;
         }
-        .m-1{
+
+        .m-1 {
             border: 1px solid lightgray;
             height: 310px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
         }
-        .m-2{
+
+        .m-2 {
             border: 1px solid lightgray;
             min-height: 500px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
         }
-        #main2{
+
+        #main2 {
             display: none;
         }
 
-        .main-2{
+        .main-2 {
             border: 1px solid lightgray;
             height: 50px;
             padding-top: 13px;
@@ -114,9 +131,10 @@
             display: grid;
             grid-template-columns: 40% 30% 30%;
         }
-        .main-2 button{
+
+        .main-2 button {
             background-color: white;
-            border: 0px ;
+            border: 0px;
             height: 50px;
             color: darkslategray;
             cursor: pointer;
@@ -124,7 +142,7 @@
             font-weight: 600;
         }
 
-        .main-2 button:hover{
+        .main-2 button:hover {
             opacity: 0.7;
             transition: 0.3s;
         }
@@ -132,10 +150,12 @@
         .file {
             position: relative;
         }
-        label{
+
+        label {
             font-family: Arial;
             color: #999;
         }
+
         .input {
             display: none;
         }
@@ -154,7 +174,7 @@
             border-radius: 50px;
         }
 
-        .profile-photo{
+        .profile-photo {
             width: 200px;
             margin: 50px auto;
             box-shadow: 0px 2px 10px lightgray;
@@ -162,7 +182,8 @@
             border: 1px solid whitesmoke;
             height: 200px
         }
-        .profile-photo img{
+
+        .profile-photo img {
             width: 200px;
             border-radius: 50%;
             margin: auto;
@@ -170,19 +191,20 @@
         }
 
 
-
-        .content{
+        .content {
             display: grid;
             grid-template-columns: 50% 50%;
             justify-items: center;
             row-gap: 1em;
             margin-top: 40px;
         }
-        .content label{
+
+        .content label {
             font-size: 18px;
 
         }
-        .content input{
+
+        .content input {
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -190,35 +212,41 @@
             border-radius: 5px;
             width: 250px;
         }
-        .content button{
+
+        .content button {
             background-color: #335da5;
             color: white;
             padding: 10px 30px;
             font-size: 17px;
             border-radius: 10px;
-            border: 0px solid ;
+            border: 0px solid;
             position: relative;
             margin-left: -115px;
             top: 20px;
             box-shadow: 0px 5px 5px lightgray;
         }
-        #user-image{
+
+        #user-image {
             border-radius: 50px;
         }
-        .content button:hover{
+
+        .content button:hover {
             opacity: 0.7;
             transition: 0.3s;
         }
-        #default-image{
+
+        #default-image {
             width: 70%;
             height: 70%;
             margin: 15%;
             border-radius: 0px;
         }
-        #userimage{
+
+        #userimage {
             border-radius: 50px;
         }
-        .admin-panel{
+
+        .admin-panel {
             background-color: white;
             border: 0px;
             padding: 0px;
@@ -227,7 +255,8 @@
             font-size: 15px;
             cursor: pointer;
         }
-        .admin-page{
+
+        .admin-page {
             opacity: 1000;
             background-color: white;
             width: 70%;
@@ -239,6 +268,7 @@
             border: 1px solid lightgray;
             padding-bottom: 50px;
         }
+
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -248,21 +278,24 @@
             overflow: hidden;
             box-shadow: 0px 2px 5px lightgray;
         }
-        .btn-danger{
+
+        .btn-danger {
             background-color: crimson;
             color: white;
             padding: 5px 20px;
             border: 0px;
             border-radius: 5px;
         }
-        .btn-warning{
+
+        .btn-warning {
             background-color: orange;
             color: white;
             padding: 5px 20px;
             border: 0px;
             border-radius: 5px;
         }
-        .container-btns{
+
+        .container-btns {
             display: grid;
             position: absolute;
             width: 80%;
@@ -270,8 +303,9 @@
             top: 0px;
             grid-template-columns: 50% 50%;
         }
-        .container-btns button{
-            border: 0px solid ;
+
+        .container-btns button {
+            border: 0px solid;
             padding-top: 20px;
             font-size: 18px;
             color: darkslategray;
@@ -280,26 +314,32 @@
             font-weight: 600;
             background-color: white;
         }
-        .container2{
+
+        .container2 {
             display: none;
         }
-        hr{
+
+        hr {
             border: 1px solid lightgray;
             position: absolute;
             width: 100%;
             left: 0px;
             margin-top: -30px;
         }
-        .admin-page{
+
+        .admin-page {
             display: none;
         }
-        .container-btns button:hover{
+
+        .container-btns button:hover {
             opacity: 0.7;
         }
-        .btn:hover{
+
+        .btn:hover {
             opacity: 0.7;
             transition: 0.3s;
         }
+
         .table thead {
             background-color: #5dcae3;
             color: #fff;
@@ -321,29 +361,31 @@
         .table tbody td:last-child {
             text-align: center;
         }
-        #close{
+
+        #close {
             background-color: crimson;
             color: white;
-            border: 1px solid ;
+            border: 1px solid;
             border-radius: 10px;
             padding: 5px 20px;
             font-size: 17px;
             margin-bottom: 50px;
         }
 
-        .container-h3{
+        .container-h3 {
             margin-left: 20px;
             font-weight: 450px;
             color: darkslategray;
             margin-top: -10px;
 
         }
-        #close:hover{
+
+        #close:hover {
             opacity: 0.8;
             transition: 0.3s;
         }
 
-        #content3{
+        #content3 {
             height: 250px;
             display: grid;
             grid-template-columns: 50% 50%;
@@ -355,7 +397,7 @@
             left: 120px;
         }
 
-        #main3{
+        #main3 {
             display: none;
             background-color: white;
             width: 73%;
@@ -368,7 +410,8 @@
             position: absolute;
             border: 1px solid lightgray;
         }
-        select{
+
+        select {
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -377,7 +420,8 @@
             color: #999;
             width: 272px;
         }
-        textarea{
+
+        textarea {
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -390,14 +434,16 @@
             max-height: 60px;
 
         }
-        .btn-primary{
+
+        .btn-primary {
             background-color: orange;
             padding: 5px 20px;
-            border: 0px solid ;
+            border: 0px solid;
             color: white;
             border-radius: 5px;
         }
-        #main4{
+
+        #main4 {
             display: none;
             background-color: white;
             width: 73%;
@@ -410,21 +456,24 @@
             position: absolute;
             border: 1px solid lightgray;
         }
-        #main2{
+
+        #main2 {
             display: grid;
         }
-        #main3 .content{
+
+        #main3 .content {
             height: 400px;
             margin-top: -20px;
         }
 
-        #image-container{
+        #image-container {
             width: 100%;
             overflow: hidden;
             height: 100%;
             top: 0px;
         }
-        #default-image{
+
+        #default-image {
             width: 200px;
             height: 200px;
             position: relative;
@@ -432,14 +481,16 @@
             margin-top: 0px;
             border-radius: 50%;
         }
-        .modal{
+
+        .modal {
             position: absolute;
             width: 100%;
             display: none;
             top: 0px;
-            background-color: rgb(0,0,0,0.5);
+            background-color: rgb(0, 0, 0, 0.5);
         }
-        .modal-content{
+
+        .modal-content {
 
             width: 50%;
             background-color: white;
@@ -448,7 +499,8 @@
             min-height: 350px;
             border-radius: 10px;
         }
-        .close{
+
+        .close {
             background-color: crimson;
             padding: 5px 10px;
             box-shadow: 0px 0px 5px #999;
@@ -560,13 +612,14 @@
                     <div class="m-1">
                         <div class="profile-photo">
                             <div id="image-container">
-                                <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" id="default-image" >
+                                <img th:src="@{'/images/'+${#authentication.principal.avatarUrl}}" id="default-image">
                             </div>
                         </div>
                         <div class="file-input">
-                            <input name="avatar" type="file" id="file" class="input" onchange="displayImage()" />
+                            <input name="avatar" type="file" id="file" class="input" onchange="displayImage()"/>
                             <label for="file" class="button">
-                                <img src="https://i.pinimg.com/originals/61/13/18/611318744eb4662cec330f9480d3740c.jpg" alt="Camera Icon" class="icon">
+                                <img src="https://i.pinimg.com/originals/61/13/18/611318744eb4662cec330f9480d3740c.jpg"
+                                     alt="Camera Icon" class="icon">
                             </label>
                         </div>
                     </div>
@@ -606,55 +659,54 @@
 
         <div id="main3">
             <div class="main-2">
-                <button onclick="closeModal1()" >Account Settings</button>
+                <button onclick="closeModal1()">Account Settings</button>
                 <button onclick="closeModal2()">Place an ad</button>
                 <button onclick="closeModal3()">Requisites</button>
             </div>
-            <div class="content" id="content1">
+            <div class="content" id="content12">
                 <div>
                     <label>Category:</label><br>
-                    <select>
-                        <option>Historical places</option>
-                        <option>Cultural events</option>
-                        <option>Nature</option>
-                        <option>Leisure</option>
-                        <option>Entertainment</option>
+                    <select name="category">
+                        <option th:each="category : ${categories}" th:value="${category.id}"
+                                th:text="${category.name}"></option>
                     </select>
                 </div>
                 <div>
                     <label>Place name:</label><br>
-                    <input type="text">
+                    <input type="text" name="placeName">
                 </div>
                 <div>
                     <label>Description:</label><br>
-                    <textarea></textarea>
+                    <textarea name="description"></textarea>
                 </div>
                 <div>
                     <label>Start time:</label><br>
-                    <input type="text">
+                    <input type="text" name="startTime">
                 </div>
                 <div>
                     <label>End time:</label><br>
-                    <input type="text">
+                    <input type="text" name="endTime">
                 </div>
                 <div>
                     <label>Price:</label><br>
-                    <input type="text">
+                    <input type="text" name="price">
                 </div>
                 <div>
                     <label>Location:</label><br>
-                    <input type="text">
+                    <input type="text" name="location">
                 </div>
                 <div>
                     <label>City:</label><br>
-                    <select>
-                        <option>Almaty</option>
-                        <option>Astana</option>
-                        <option>Turkistan</option>
+                    <select name="city">
+                        <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
                     </select>
                 </div>
                 <div>
-                    <button type="submit">Submit</button>
+                    <label>Photos:</label><br>
+                    <input type="file" name="photos" multiple>
+                </div>
+                <div>
+                    <button type="submit" id="addAccommodation">Submit</button>
                 </div>
             </div>
         </div>
@@ -708,6 +760,7 @@
         // Отображение модального окна
         modal.style.display = 'block';
     }
+
     function closeModal() {
         document.getElementById('editAccommodationModal').style.display = 'none';
     }
@@ -725,7 +778,7 @@
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
 
@@ -741,36 +794,42 @@
             userImage.src = ''; // Если файл не выбран, можно установить изображение по умолчанию или оставить src пустым.
             defaultImage.style.display = 'block'; // Показать изображение по умолчанию
         }
-    } function changePage() {
-        document.getElementById('adminpage').style.display='block';
-        document.getElementById('main2').style.display='none';
-        document.getElementById('main3').style.display='none';
-        document.getElementById('main4').style.display='none';
+    }
+
+    function changePage() {
+        document.getElementById('adminpage').style.display = 'block';
+        document.getElementById('main2').style.display = 'none';
+        document.getElementById('main3').style.display = 'none';
+        document.getElementById('main4').style.display = 'none';
 
 
     }
+
     function closeModal1() {
-        document.getElementById('main2').style.display='grid';
-        document.getElementById('main3').style.display='none';
-        document.getElementById('main4').style.display='none';
+        document.getElementById('main2').style.display = 'grid';
+        document.getElementById('main3').style.display = 'none';
+        document.getElementById('main4').style.display = 'none';
     }
+
     function closeModal2() {
-        document.getElementById('main3').style.display='grid';
-        document.getElementById('main2').style.display='none';
-        document.getElementById('main4').style.display='none';
+        document.getElementById('main3').style.display = 'grid';
+        document.getElementById('main2').style.display = 'none';
+        document.getElementById('main4').style.display = 'none';
     }
+
     function closeModal3() {
-        document.getElementById('main4').style.display='grid';
-        document.getElementById('main3').style.display='none';
-        document.getElementById('main2').style.display='none';
+        document.getElementById('main4').style.display = 'grid';
+        document.getElementById('main3').style.display = 'none';
+        document.getElementById('main2').style.display = 'none';
     }
 
     function closePage() {
-        document.getElementById('adminpage').style.display='none';
-        document.getElementById('main2').style.display='grid';
+        document.getElementById('adminpage').style.display = 'none';
+        document.getElementById('main2').style.display = 'grid';
 
 
     }
+
     function changePanel() {
         document.getElementById('container').style.display = 'block';
         document.getElementById('container2').style.display = 'none';
@@ -781,8 +840,9 @@
         document.getElementById('container2').style.display = 'block';
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         fetchUsers();
+
         function fetchUsers() {
             fetch('/users')
                 .then(response => response.json())
@@ -806,7 +866,7 @@
         }
 
 // Делаем функцию deleteUser глобально доступной, чтобы вызывать из HTML
-        window.deleteUser = function(id) {
+        window.deleteUser = function (id) {
             fetch('/users/' + id, {
                 method: 'DELETE'
             })
@@ -814,13 +874,13 @@
                 .catch(error => console.error('Error:', error));
         };
 
-        window.blockUser = function(id) {
+        window.blockUser = function (id) {
             fetch('/users/' + id + '/block', {
                 method: 'PATCH',
                 // Убедитесь, что добавили необходимые заголовки, если ваш API их требует
             })
                 .then(response => {
-                    if(response.ok) {
+                    if (response.ok) {
                         fetchUsers(); // Перезагрузка списка пользователей после блокировки
                     } else {
                         alert('Failed to block user');
@@ -832,20 +892,20 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const userId = document.body.getAttribute('data-user-id');
-        document.getElementById('submitCreditCard').addEventListener('click', function() {
+        document.getElementById('submitCreditCard').addEventListener('click', function () {
             // Сбор данных из формы
             const fullName = document.querySelector('#content3 input[name="fullName"]').value;
             const cardNumber = document.querySelector('#content3 input[name="cardNumber"]').value;
             const cvv = document.querySelector('#content3 input[name="cvv"]').value;
             const expirationDate = document.querySelector('#content3 input[name="expirationDate"]').value;
-            console.log("fullName: "+fullName)
+            console.log("fullName: " + fullName)
             // Подставьте правильный ID пользователя
             // о значение должно быть получено из вашего серверного кода
             // <!-- Пример использования data-* атрибута для хранения userId -->
 
-            console.log("userid: "+userId)
+            console.log("userid: " + userId)
             // Формирование объекта данных для отправки
             const creditCardDetails = {
                 fullName: fullName,
@@ -882,8 +942,9 @@
 
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         fetchAccommodations();
+
         function fetchAccommodations() {
             fetch('http://localhost:1080/accomodations')
                 .then(response => response.json())
@@ -915,7 +976,7 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // The URL to your endpoint (change the user ID as needed)
         const url = 'http://localhost:1080/users/1/credit-card-details';
 
@@ -939,7 +1000,7 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Read the user ID from the hidden input field
         const userId = document.querySelector('input[name="currentUserId"]').value;
         const url = `http://localhost:1080/users/${userId}/credit-card-details`;
@@ -969,6 +1030,79 @@
                 console.error('Fetch error:', error);
                 // Optionally clear the input fields or handle the error as needed
             });
+    });
+</script>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const userId = document.querySelector('input[name="currentUserId"]').value;
+        document.getElementById('addAccommodation').addEventListener('click', function () {
+            console.log("lwnalkdnwal")
+
+            const category = document.querySelector('#content12 select[name="category"]').value;
+            const description = document.querySelector('#content12 textarea[name="description"]').value;
+            const endTime = document.querySelector('#content12 input[name="endTime"]').value;
+            const location = document.querySelector('#content12 input[name="location"]').value;
+            const name = document.querySelector('#content12 input[name="placeName"]').value;
+            const startTime = document.querySelector('#content12 input[name="startTime"]').value;
+            const price = document.querySelector('#content12 input[name="price"]').value;
+            const city = document.querySelector('#content12 select[name="city"]').value;
+            const files = document.querySelector('#content12 input[name="photos"]').files;
+
+            const accommodationDetails = {
+                categoryId: category,
+                description: description,
+                endTime: endTime,
+                location: location,
+                name: name,
+                startTime: startTime,
+                price: price,
+                cityId: city,
+                userId: userId,
+                status: false,
+            };
+            fetch('http://localhost:1080/accommodations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(accommodationDetails)
+            })
+                .then(response => {
+                    return response.json();
+                }).then(data => {
+                console.log(data.id);
+                sendSecondRequest(data.id);
+            })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+
+            function sendSecondRequest(id) {
+                const formData = new FormData();
+                formData.append('id', id);
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('photos', files[i]);
+                }
+
+                fetch('http://localhost:1080/accommodations/uploadFiles', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
     });
 </script>
 
