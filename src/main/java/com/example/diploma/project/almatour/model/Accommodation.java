@@ -1,8 +1,7 @@
 package com.example.diploma.project.almatour.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Accommodation {
 
     @Id
@@ -25,14 +26,15 @@ public class Accommodation {
     private String location;
     private Timestamp startTime;
     private Timestamp endTime;
-    private boolean isStatus;
+    private boolean status;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
     private City city;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Category> categories;
+    @ManyToOne
+    private Category categories;
 }

@@ -1,7 +1,9 @@
 package com.example.diploma.project.almatour.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +15,8 @@ import java.util.List;
 @Table(name = "users")
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id

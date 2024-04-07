@@ -10,11 +10,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "user.avatarUrl", ignore = true)
-    @Mapping(target = "user.password", ignore = true)
+//    @Mapping(target = "user.avatarUrl", ignore = true)
+//    @Mapping(target = "user.password", ignore = true)
     @Mapping(source = "city.id", target = "cityId")
-    @Mapping(source = "blocked", target = "isBlocked")
-    @Mapping(source = "creditCardDetails", target = "creditCardDetails")
     UserDTO toDto(User user);
 
 //    @Mapping(source = "cityId", target = "city.id")
