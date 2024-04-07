@@ -13,6 +13,8 @@ public interface AccommodationMapper {
 
     AccommodationMapper INSTANCE = Mappers.getMapper(AccommodationMapper.class);
 
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "city.id", target = "cityId")
     AccommodationDTO toDto(Accommodation accommodation);
 
     List<AccommodationDTO> toDtoList(List<Accommodation> accommodations);

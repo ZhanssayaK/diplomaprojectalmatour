@@ -516,6 +516,7 @@
 </head>
 <body data-user-id="${userId}">
 <main>
+    <input type="hidden" name="userIdshka" th:value="${#authentication.principal.id}">
     <section class="main-left">
         <h1>AlmaTour</h1>
         <div class="main-left-div">
@@ -944,7 +945,7 @@
         fetchAccommodations();
 
         function fetchAccommodations() {
-            fetch('http://localhost:1080/accomodations')
+            fetch('http://localhost:1080/accommodations')
                 .then(response => response.json())
                 .then(accommodations => {
                     const tbody = document.querySelector('#accomodationTableBody');
@@ -1090,6 +1091,35 @@
         });
     });
 </script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Вызывается, когда весь HTML был полностью загружен и разобран
+        document.getElementById('submitCreditCard').addEventListener('click', function() {
+            // Получаем userId, который может быть зашит в коде, получен от пользователя или из другого источника
+            const userIdshka = 1; // Пример userID, в вашем случае он может определяться иначе
+            console.log(userIdshka)
+            // Совершаем AJAX запрос для получения данных кредитной карты
+            fetch(`http://localhost:1080/credit-card-details/getByUserId/${userIdshka}`)
+                .then(response => {
+                    // Проверяем, что запрос успешно выполнен
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Преобразуем ответ в формат JSON
+                })
+                .then(data => {
+                    // Заполняем поля формы полученными данными
+                    document.querySelector('input[name="fullName"]').value = data.fullName;
+                    document.querySelector('input[name="cardNumber"]').value = data.cardNumber;
+                    document.querySelector('input[name="cvv"]').value = data.cvv;
+                    document.querySelector('input[name="expirationDate"]').value = data.expirationDate;
+                })
+                .catch(error => {
+                    // Обрабатываем возможные ошибки
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        });
+    });
+</script>
 </body>
 </html>

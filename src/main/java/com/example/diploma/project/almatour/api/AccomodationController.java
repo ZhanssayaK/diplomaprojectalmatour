@@ -40,8 +40,7 @@ public class AccomodationController {
     }
 
     @PostMapping()
-    public ResponseEntity<AccommodationDTO> addAccomodation(@RequestBody AccommodationDTO dto
-    ) {
+    public ResponseEntity<AccommodationDTO> addAccomodation(@RequestBody AccommodationDTO dto) {
         return ResponseEntity.ok(accomodationService.addAccommodation(dto));
     }
 

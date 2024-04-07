@@ -1,9 +1,7 @@
 package com.example.diploma.project.almatour.api;
 
-import com.example.diploma.project.almatour.dto.AccommodationDTO;
 import com.example.diploma.project.almatour.dto.CreditCardDetailsDTO;
 import com.example.diploma.project.almatour.service.CreditCardDetailsService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
