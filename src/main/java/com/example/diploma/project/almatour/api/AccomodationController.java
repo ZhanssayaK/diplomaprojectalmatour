@@ -61,7 +61,8 @@ public class AccomodationController {
 
                     AccommodationPhoto photo = new AccommodationPhoto();
                     photo.setAccommodation(accommodationMapper.toEntity(accommodation));
-                    photo.setName(fileName);
+                    photo.setName(file.getOriginalFilename());
+                    photo.setPath(fileName);
                     accommodationPhotoRepository.save(photo);
                 } catch (IOException e) {
                     e.printStackTrace();
