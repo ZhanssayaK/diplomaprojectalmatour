@@ -1,6 +1,7 @@
 package com.example.diploma.project.almatour.api;
 
 import com.example.diploma.project.almatour.dto.AccommodationDTO;
+import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
 import com.example.diploma.project.almatour.repository.AccommodationPhotoRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,7 +37,7 @@ public class AccomodationController {
     private String uploadPath;
 
     @GetMapping
-    public List<AccommodationDTO> getAccomodations() {
+    public List<AccommodationShowDTO> getAccomodations() throws MalformedURLException {
         return accomodationService.getAccomodations();
     }
 
