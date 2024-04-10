@@ -1209,28 +1209,21 @@
 </header>
 <main>
     <section class="filter">
-        <form>
+        <form action="#" th:action="@{/accommodations}" method="get">
             <div class="filter-search">
                 <img class="search-icon-logo"
                      src="https://cdn2.iconfinder.com/data/icons/ui-thick-lines/620/search-1024.png">
                 <input class="search-input">
             </div>
             <div style="margin-left: 20px">
-                <select>
-                    <option selected disabled>Filter by category</option>
-                    <option>Historical places</option>
-                    <option>Cultural events</option>
-                    <option>Nature</option>
-                    <option>Leisure</option>
-                    <option>Entertaimnet</option>
+                <select name="category">
+                    <option th:each="category : ${categories}" th:value="${category.name}"
+                            th:text="${category.name}"></option>
                 </select>
             </div>
             <div style="margin-left: 40px">
-                <select>
-                    <option selected disabled>Filter by city</option>
-                    <option>Almaty</option>
-                    <option>Astana</option>
-                    <option>Turkistan</option>
+                <select name="city">
+                    <option th:each="city : ${cities}" th:value="${city.name}" th:text="${city.name}"></option>
                 </select>
             </div>
             <div class="input-from-till" style="margin-left: 40px">

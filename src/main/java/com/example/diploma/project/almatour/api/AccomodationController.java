@@ -1,6 +1,7 @@
 package com.example.diploma.project.almatour.api;
 
 import com.example.diploma.project.almatour.dto.AccommodationDTO;
+import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
@@ -20,6 +21,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -37,8 +39,20 @@ public class AccomodationController {
     private String uploadPath;
 
     @GetMapping
-    public List<AccommodationShowDTO> getAccomodations() throws MalformedURLException {
-        return accomodationService.getAccomodations();
+    public List<AccommodationShowDTO> getAccomodations(@RequestParam(required = false) String name,
+                                                       @RequestParam(required = false) String category,
+                                                       @RequestParam(required = false) String city,
+                                                       @RequestParam(required = false) Timestamp fromDate,
+                                                       @RequestParam(required = false) Timestamp toDate,
+                                                       @RequestParam(required = false) Integer price) throws MalformedURLException {
+        AccommodationSearchDTO dto = new AccommodationSearchDTO();
+        dto.setName(name);
+        dto.setCategory(category);
+        dto.setCity(city);
+        dto.setFromDate(fromDate);
+        dto.setToDate(toDate);
+        dto.setPrice(price);
+        return accomodationService.getAccomodations(dto);
     }
 
     @PostMapping()

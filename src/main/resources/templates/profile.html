@@ -990,15 +990,25 @@
         document.getElementById('addAccommodation').addEventListener('click', function () {
             console.log("lwnalkdnwal")
 
-            const category = document.querySelector('#content12 select[name="category"]').value;
-            const description = document.querySelector('#content12 textarea[name="description"]').value;
-            const endTime = document.querySelector('#content12 input[name="endTime"]').value;
-            const location = document.querySelector('#content12 input[name="location"]').value;
-            const name = document.querySelector('#content12 input[name="placeName"]').value;
-            const startTime = document.querySelector('#content12 input[name="startTime"]').value;
-            const price = document.querySelector('#content12 input[name="price"]').value;
-            const city = document.querySelector('#content12 select[name="city"]').value;
-            const files = document.querySelector('#content12 input[name="photos"]').files;
+            const categoryInput = document.querySelector('#content12 select[name="category"]');
+            const descriptionInput = document.querySelector('#content12 textarea[name="description"]');
+            const endTimeInput = document.querySelector('#content12 input[name="endTime"]');
+            const locationInput = document.querySelector('#content12 input[name="location"]');
+            const nameInput = document.querySelector('#content12 input[name="placeName"]');
+            const startTimeInput = document.querySelector('#content12 input[name="startTime"]');
+            const priceInput = document.querySelector('#content12 input[name="price"]');
+            const cityInput = document.querySelector('#content12 select[name="city"]');
+            const filesInput = document.querySelector('#content12 input[name="photos"]');
+
+            const category = categoryInput.value;
+            const description = descriptionInput.value;
+            const endTime = endTimeInput.value;
+            const location = locationInput.value;
+            const name = nameInput.value;
+            const startTime = startTimeInput.value;
+            const price = priceInput.value;
+            const city = cityInput.value;
+            const files = filesInput.files;
 
             const accommodationDetails = {
                 categoryId: category,
@@ -1024,6 +1034,15 @@
                 }).then(data => {
                 console.log(data.id);
                 sendSecondRequest(data.id);
+                categoryInput.value = '';
+                descriptionInput.value = '';
+                endTimeInput.value = '';
+                locationInput.value = '';
+                nameInput.value = '';
+                startTimeInput.value = '';
+                priceInput.value = '';
+                cityInput.value = '';
+                filesInput.value = '';
             })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);

@@ -1,7 +1,9 @@
 package com.example.diploma.project.almatour.service;
 
 import com.example.diploma.project.almatour.dto.AccommodationDTO;
+import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
+import com.example.diploma.project.almatour.exception.AccommmodationExistException;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
 import com.example.diploma.project.almatour.mapper.AccommodationShowMapper;
 import com.example.diploma.project.almatour.mapper.UserMapper;
@@ -9,8 +11,10 @@ import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
 import com.example.diploma.project.almatour.repository.AccommodationPhotoRepository;
 import com.example.diploma.project.almatour.repository.AccomodationRepository;
+import com.example.diploma.project.almatour.specification.AccommodationSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -33,8 +37,8 @@ public class AccomodationService {
     private final AccommodationShowMapper accommodationShowMapper;
     private final AccommodationPhotoRepository accommodationPhotoRepository;
 
-    public List<AccommodationShowDTO> getAccomodations() throws MalformedURLException {
-        List<Accommodation> accommodations = accomodationRepository.findAll();
+    public List<AccommodationShowDTO> getAccomodations(AccommodationSearchDTO searchDto) throws MalformedURLException {
+        List<Accommodation> accommodations = accomodationRepository.findAll(AccommodationSpecification.withDynamicQuery(searchDto));
         List<AccommodationShowDTO> result = new ArrayList<>();
         for (Accommodation ac : accommodations) {
             List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(ac.getId());
@@ -51,6 +55,9 @@ public class AccomodationService {
     }
 
     public AccommodationDTO addAccommodation(AccommodationDTO dto) {
+        if (accomodationRepository.findByName(dto.getName()) != null) {
+            throw new AccommmodationExistException("Accommodation is exist", HttpStatus.BAD_REQUEST);
+        }
         Accommodation accommodation = accommodationMapper.toEntity(dto);
         return accommodationMapper.toDto(accomodationRepository.save(accommodation));
     }
