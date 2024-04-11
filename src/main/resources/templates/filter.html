@@ -1209,11 +1209,11 @@
 </header>
 <main>
     <section class="filter">
-        <form action="#" th:action="@{/accommodations}" method="get">
+        <form id="filterForm" action="#" th:action="@{/accommodations}" method="get">
             <div class="filter-search">
                 <img class="search-icon-logo"
                      src="https://cdn2.iconfinder.com/data/icons/ui-thick-lines/620/search-1024.png">
-                <input class="search-input">
+                <input class="search-input" name="name" placeholder="Name">
             </div>
             <div style="margin-left: 20px">
                 <select name="category">
@@ -1227,20 +1227,21 @@
                 </select>
             </div>
             <div class="input-from-till" style="margin-left: 40px">
-                <input class="from-input" placeholder="From">
+                <input class="from-input" type="datetime-local" name="fromDate" placeholder="From">
             </div>
             <div class="input-from-till" style="margin-left: 40px">
                 <h3>-</h3>
             </div>
             <div class="input-from-till" style="margin-left: 40px">
-                <input class="till-input" placeholder="Till">
+                <input class="till-input" type="datetime-local" name="toDate" placeholder="Till">
             </div>
             <div style="margin-left: 40px">
-                <input placeholder="Price" type="number" class="price-input">
+                <input placeholder="Price" type="number" class="price-input" name="price">
             </div>
             <button type="submit">Search</button>
         </form>
     </section>
+
     <section class="cards-block">
         <h3 class="cards-block-h3">Accommodations:</h3>
         <div class="cards" id="cards-container-1">
@@ -1305,7 +1306,6 @@
 <script>
     // Функция для создания и добавления карточек на страницу
     function createCard(data, container) {
-        console.log("BBBB " + data.path);
         var card = document.createElement('div');
         card.className = 'card';
 
@@ -1324,7 +1324,7 @@
 
         var priceH3 = document.createElement('h3');
         priceH3.textContent = data.startTime;
-        console.log("almat " + img);
+
         cardDiv.appendChild(titleH3);
         cardDiv.appendChild(countryH4);
         cardDiv.appendChild(priceH3);
@@ -1346,7 +1346,7 @@
                 return response.json();
             })
             .then(function (data) {
-                // Предполагается, что data - это массив объектов
+                container.innerHTML = ''; // Clear previous data
                 data.forEach(function (item) {
                     createCard(item, container);
                 });
@@ -1358,6 +1358,36 @@
 
     // Вызов функции загрузки данных при загрузке страницы
     document.addEventListener('DOMContentLoaded', loadData);
+
+    document.getElementById('filterForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+
+        fetch('/accommodations?' + new URLSearchParams(formData).toString(), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse response data as JSON
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+            })
+            .then(data => {
+                const container = document.getElementById('cards-container-1');
+                container.innerHTML = ''; // Clear previous data
+                data.forEach(item => {
+                    createCard(item, container);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
 </script>
 
 </body>

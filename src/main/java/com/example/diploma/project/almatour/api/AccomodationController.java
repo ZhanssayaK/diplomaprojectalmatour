@@ -22,6 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -42,15 +44,28 @@ public class AccomodationController {
     public List<AccommodationShowDTO> getAccomodations(@RequestParam(required = false) String name,
                                                        @RequestParam(required = false) String category,
                                                        @RequestParam(required = false) String city,
-                                                       @RequestParam(required = false) Timestamp fromDate,
-                                                       @RequestParam(required = false) Timestamp toDate,
+                                                       @RequestParam(required = false) String fromDate,
+                                                       @RequestParam(required = false) String toDate,
                                                        @RequestParam(required = false) Integer price) throws MalformedURLException {
+        Timestamp fromTimestamp = null;
+        Timestamp toTimestamp = null;
+
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime fromLocalDateTime = LocalDateTime.parse(fromDate, formatter);
+            LocalDateTime toLocalDateTime = LocalDateTime.parse(toDate, formatter);
+
+            fromTimestamp = Timestamp.valueOf(fromLocalDateTime);
+            toTimestamp = Timestamp.valueOf(toLocalDateTime);
+        } catch (Exception e) {
+
+        }
         AccommodationSearchDTO dto = new AccommodationSearchDTO();
         dto.setName(name);
         dto.setCategory(category);
         dto.setCity(city);
-        dto.setFromDate(fromDate);
-        dto.setToDate(toDate);
+        dto.setFromDate(fromTimestamp);
+        dto.setToDate(toTimestamp);
         dto.setPrice(price);
         return accomodationService.getAccomodations(dto);
     }

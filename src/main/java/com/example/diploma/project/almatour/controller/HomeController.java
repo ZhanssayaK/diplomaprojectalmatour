@@ -48,7 +48,12 @@ public class HomeController {
     }
 
     @GetMapping(value = "/filter")
-    public String filter() {
+    public String filter(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        model.addAttribute("userId", userId);
+        model.addAttribute("cities", cityService.getCityList());
+        model.addAttribute("categories", categoryService.getCategoryList());
         return "filter";
     }
 }

@@ -5,7 +5,6 @@ import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.exception.AccommmodationExistException;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
-import com.example.diploma.project.almatour.mapper.AccommodationShowMapper;
 import com.example.diploma.project.almatour.mapper.UserMapper;
 import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
@@ -34,21 +33,22 @@ public class AccomodationService {
 
     private final AccomodationRepository accomodationRepository;
     private final AccommodationMapper accommodationMapper;
-    private final AccommodationShowMapper accommodationShowMapper;
     private final AccommodationPhotoRepository accommodationPhotoRepository;
 
     public List<AccommodationShowDTO> getAccomodations(AccommodationSearchDTO searchDto) throws MalformedURLException {
-        List<Accommodation> accommodations = accomodationRepository.findAll(AccommodationSpecification.withDynamicQuery(searchDto));
+        List<Accommodation> accommodations = accomodationRepository.findAll(AccommodationSpecification.accommodationSpecification(searchDto));
         List<AccommodationShowDTO> result = new ArrayList<>();
         for (Accommodation ac : accommodations) {
             List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(ac.getId());
-            String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
             AccommodationShowDTO dto = AccommodationShowDTO.builder()
                     .name(ac.getName())
                     .location(ac.getLocation())
                     .startTime(ac.getStartTime())
-                    .path(path)
                     .build();
+            if (!photos.isEmpty()) {
+                String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
+                dto.setPath(path);
+            }
             result.add(dto);
         }
         return result;
