@@ -26,5 +26,6 @@ public class AccommodationDetailDTO {
     private City city;
     private User user;
     private boolean status;
-    private List<String> path;
+    private String mainPhoto;
+    private List<String> otherPhoto;
 }

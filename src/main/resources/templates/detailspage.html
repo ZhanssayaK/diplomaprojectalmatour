@@ -11,9 +11,10 @@
 <body>
 <div class="detail-container">
     <div class="left-section">
-<!--        <img th:src="${accommodation.path[0]}" class="main-photo">-->
-<!--        <img class="card-img" th:src="@{${accommodation.path[0]}}">-->
-        <img class="card-img" th:src="@{'/images/' + ${accommodation.path[0].substring(accommodation.path[0].lastIndexOf('/') + 1)}}">
+        <!--        <img th:src="${accommodation.path[0]}" class="main-photo">-->
+        <!--        <img class="card-img" th:src="@{${accommodation.path[0]}}">-->
+        <img class="card-img"
+             th:src="@{'/images/' + ${accommodation.mainPhoto.substring(accommodation.mainPhoto.lastIndexOf('/') + 1)}}">
     </div>
     <div class="right-section">
         <h1>Name: <span th:text="${accommodation.name}">Accommodation Name</span></h1>
@@ -30,9 +31,9 @@
     <div class="bottom-right-section">
         <h3>Other Photos</h3>
         <div class="other-photos">
-<!--            <img src="other-photo-1-url" class="other-photo">-->
-<!--            <img src="other-photo-2-url" class="other-photo">-->
-            <!-- Add more images as needed -->
+            <th:block th:each="photo : ${accommodation.otherPhoto}">
+                <img th:src="@{'/images/' + ${photo.substring(photo.lastIndexOf('/') + 1)}}" class="other-photo">
+            </th:block>
         </div>
     </div>
 </div>

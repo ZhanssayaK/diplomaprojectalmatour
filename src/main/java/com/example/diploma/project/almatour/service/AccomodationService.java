@@ -73,19 +73,22 @@ public class AccomodationService {
         Accommodation accommodation = accomodationRepository.findById(id).orElseThrow();
         List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(accommodation.getId());
         AccommodationDetailDTO dto = accommodationMapper.toDtoDetail(accommodation);
-//            AccommodationShowDTO.builder()
-//                    .id(accommodation.getId())
-//                    .name(accommodation.getName())
-//                    .location(accommodation.getLocation())
-//                    .startTime(accommodation.getStartTime())
-//                    .build();
         if (!photos.isEmpty()) {
-            String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
-            dto.setPath(Arrays.asList(path));
+            List<String> otherPhotos = new ArrayList<>();
+
+            for (int i = 0; i < photos.size(); i++) {
+                String photoPath = Paths.get(showPath, photos.get(i).getPath() + ".jpg").toString();
+
+                if (i == 0) {
+                    dto.setMainPhoto(photoPath);
+                } else {
+                    otherPhotos.add(photoPath);
+                }
+            }
+            dto.setOtherPhoto(otherPhotos);
         }
+
         return dto;
-//        result.add(dto);
-//        return accommodationMapper.toDtoDetail(accomodationRepository.findById(id).
     }
 
     public AccommodationDTO updateAccommodation(AccommodationDTO dto) {
