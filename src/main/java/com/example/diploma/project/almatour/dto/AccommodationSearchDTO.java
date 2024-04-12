@@ -7,10 +7,12 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class AccommodationSearchDTO {
+    private Long id;
     private String name;
     private String category;
     private String city;
     private Timestamp fromDate;
     private Timestamp toDate;
-    private Integer price;
+    private Integer minPrice;
+    private Integer maxPrice;
 }

@@ -1,5 +1,7 @@
 package com.example.diploma.project.almatour.controller;
 
+import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
+import com.example.diploma.project.almatour.service.AccomodationService;
 import com.example.diploma.project.almatour.service.CategoryService;
 import com.example.diploma.project.almatour.service.CityService;
 import com.example.diploma.project.almatour.service.UserService;
@@ -10,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,6 +21,8 @@ public class HomeController {
     private final UserService userService;
     private final CityService cityService;
     private final CategoryService categoryService;
+
+    private final AccomodationService accomodationService;
 
     @GetMapping(value = "/")
     public String index() {
@@ -55,5 +60,13 @@ public class HomeController {
         model.addAttribute("cities", cityService.getCityList());
         model.addAttribute("categories", categoryService.getCategoryList());
         return "filter";
+    }
+
+    @GetMapping(value = "accommodationdetail/{id}")
+    public String getAccommodation(@PathVariable(name = "id") Long id,
+                                   Model model) {
+        AccommodationDetailDTO accommodation = accomodationService.getAccommodation(id);
+        model.addAttribute("accommodation", accommodation);
+        return "detailspage";
     }
 }

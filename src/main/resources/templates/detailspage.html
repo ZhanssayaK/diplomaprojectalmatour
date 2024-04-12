@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Accommodation Details</title>
+    <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha384-...." crossorigin="anonymous">
 </head>
 <body>
+<div class="detail-container">
+    <div class="left-section">
+<!--        <img th:src="${accommodation.path[0]}" class="main-photo">-->
+<!--        <img class="card-img" th:src="@{${accommodation.path[0]}}">-->
+        <img class="card-img" th:src="@{'/images/' + ${accommodation.path[0].substring(accommodation.path[0].lastIndexOf('/') + 1)}}">
+    </div>
+    <div class="right-section">
+        <h1>Name: <span th:text="${accommodation.name}">Accommodation Name</span></h1>
+        <p>Description: <span th:text="${accommodation.description}">Description</span></p>
+        <p>Category: <span th:text="${accommodation.category.name}">Category Name</span></p>
+        <p>Start Time: <span th:text="${accommodation.startTime}">Start Time</span></p>
+        <p>End Time: <span th:text="${accommodation.endTime}">End Time</span></p>
+        <p>Location: <span th:text="${accommodation.location}">Location</span></p>
+        <p>Price: <span th:text="${accommodation.price}">Price</span></p>
+        <p>City: <span th:text="${accommodation.city.name}">City Name</span></p>
+        <p>User: <span th:text="${accommodation.user.fullName}">User Name</span></p>
+        <p>Status: <span th:text="${accommodation.status}">Status</span></p>
+    </div>
+    <div class="bottom-right-section">
+        <h3>Other Photos</h3>
+        <div class="other-photos">
+<!--            <img src="other-photo-1-url" class="other-photo">-->
+<!--            <img src="other-photo-2-url" class="other-photo">-->
+            <!-- Add more images as needed -->
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

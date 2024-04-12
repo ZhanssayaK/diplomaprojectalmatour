@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccommodationSpecification {
-    public static Specification<Accommodation> accommodationSpecification(AccommodationSearchDTO dto){
+    public static Specification<Accommodation> accommodationSpecification(AccommodationSearchDTO dto) {
         return ((root, query, builder) -> {
-            List<Predicate> predicates=new ArrayList<>();
+            List<Predicate> predicates = new ArrayList<>();
 
-            if(dto.getName()!=null){
+            if (dto.getName() != null) {
                 predicates.add(builder.like(builder.lower(root.get("name")), "%" + dto.getName().toLowerCase() + "%"));
             }
             if (dto.getCategory() != null) {
@@ -25,9 +25,14 @@ public class AccommodationSpecification {
             if (dto.getFromDate() != null && dto.getToDate() != null) {
                 predicates.add(builder.between(root.get("startTime"), dto.getFromDate(), dto.getToDate()));
             }
-            if (dto.getPrice() != null) {
-                predicates.add(builder.equal(root.get("price"), dto.getPrice()));
+            if (dto.getMinPrice() != null && dto.getMaxPrice() != null) {
+                predicates.add(builder.between(root.get("price"), dto.getMinPrice(), dto.getMaxPrice()));
+            } else if (dto.getMinPrice() != null) {
+                predicates.add(builder.greaterThanOrEqualTo(root.get("price"), dto.getMinPrice()));
+            } else if (dto.getMaxPrice() != null) {
+                predicates.add(builder.lessThanOrEqualTo(root.get("price"), dto.getMaxPrice()));
             }
+
             return builder.and(predicates.toArray(new Predicate[0]));
 
         });

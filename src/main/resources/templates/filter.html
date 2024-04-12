@@ -1236,7 +1236,10 @@
                 <input class="till-input" type="datetime-local" name="toDate" placeholder="Till">
             </div>
             <div style="margin-left: 40px">
-                <input placeholder="Price" type="number" class="price-input" name="price">
+                <input placeholder="From Price" type="number" class="price-input" name="minPrice">
+            </div>
+            <div style="margin-left: 40px">
+                <input placeholder="To Price" type="number" class="price-input" name="maxPrice">
             </div>
             <button type="submit">Search</button>
         </form>
@@ -1318,6 +1321,10 @@
 
         var titleH3 = document.createElement('h3');
         titleH3.textContent = data.name;
+
+        titleH3.addEventListener('click', function() {
+            window.location.href = '/accommodationdetail/' + data.id; // Navigate to detail page
+        });
 
         var countryH4 = document.createElement('h4');
         countryH4.textContent = data.location;

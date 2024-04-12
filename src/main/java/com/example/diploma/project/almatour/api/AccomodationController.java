@@ -1,6 +1,7 @@
 package com.example.diploma.project.almatour.api;
 
 import com.example.diploma.project.almatour.dto.AccommodationDTO;
+import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
 import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -46,7 +48,8 @@ public class AccomodationController {
                                                        @RequestParam(required = false) String city,
                                                        @RequestParam(required = false) String fromDate,
                                                        @RequestParam(required = false) String toDate,
-                                                       @RequestParam(required = false) Integer price) throws MalformedURLException {
+                                                       @RequestParam(name = "minPrice", required = false) Integer minPrice,
+                                                       @RequestParam(name = "maxPrice", required = false) Integer maxPrice) throws MalformedURLException {
         Timestamp fromTimestamp = null;
         Timestamp toTimestamp = null;
 
@@ -66,7 +69,8 @@ public class AccomodationController {
         dto.setCity(city);
         dto.setFromDate(fromTimestamp);
         dto.setToDate(toTimestamp);
-        dto.setPrice(price);
+        dto.setMinPrice(minPrice);
+        dto.setMaxPrice(maxPrice);
         return accomodationService.getAccomodations(dto);
     }
 
@@ -87,10 +91,10 @@ public class AccomodationController {
                     String fileName = DigestUtils.sha1Hex(authenticationService.getCurrentUser().getId() + randInt + "_diplomaprojectalmatour!");
                     Path path = Paths.get(uploadPath + fileName + ".jpg");
                     Files.write(path, bytes);
-                    AccommodationDTO accommodation = accomodationService.getAccommodation(Long.valueOf(id));
+                    AccommodationDetailDTO accommodation = accomodationService.getAccommodation(Long.valueOf(id));
 
                     AccommodationPhoto photo = new AccommodationPhoto();
-                    photo.setAccommodation(accommodationMapper.toEntity(accommodation));
+                    photo.setAccommodation(accommodationMapper.toEntityDetail(accommodation));
                     photo.setName(file.getOriginalFilename());
                     photo.setPath(fileName);
                     accommodationPhotoRepository.save(photo);
@@ -108,8 +112,11 @@ public class AccomodationController {
     }
 
     @GetMapping(value = "{id}")
-    public AccommodationDTO getAccommodation(@PathVariable(name = "id") Long id) {
-        return accomodationService.getAccommodation(id);
+    public String getAccommodation(@PathVariable(name = "id") Long id,
+                                   Model model) {
+        AccommodationDetailDTO accommodation = accomodationService.getAccommodation(id);
+        model.addAttribute("accommodation", accommodation);
+        return "detailspage";
     }
 
     @DeleteMapping(value = "{id}")

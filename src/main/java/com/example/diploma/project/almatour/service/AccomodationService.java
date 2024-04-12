@@ -1,6 +1,7 @@
 package com.example.diploma.project.almatour.service;
 
 import com.example.diploma.project.almatour.dto.AccommodationDTO;
+import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
 import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.exception.AccommmodationExistException;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -27,6 +29,9 @@ public class AccomodationService {
 
     @Value("${file.places.show}")
     private String showPath;
+
+    @Value("${file.places.uploadpath}")
+    private String ptah;
 
     private final UserService userService;
     private final UserMapper userMapper;
@@ -41,6 +46,7 @@ public class AccomodationService {
         for (Accommodation ac : accommodations) {
             List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(ac.getId());
             AccommodationShowDTO dto = AccommodationShowDTO.builder()
+                    .id(ac.getId())
                     .name(ac.getName())
                     .location(ac.getLocation())
                     .startTime(ac.getStartTime())
@@ -63,8 +69,23 @@ public class AccomodationService {
     }
 
 
-    public AccommodationDTO getAccommodation(Long id) {
-        return accommodationMapper.toDto(accomodationRepository.findById(id).orElseThrow());
+    public AccommodationDetailDTO getAccommodation(Long id) {
+        Accommodation accommodation = accomodationRepository.findById(id).orElseThrow();
+        List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(accommodation.getId());
+        AccommodationDetailDTO dto = accommodationMapper.toDtoDetail(accommodation);
+//            AccommodationShowDTO.builder()
+//                    .id(accommodation.getId())
+//                    .name(accommodation.getName())
+//                    .location(accommodation.getLocation())
+//                    .startTime(accommodation.getStartTime())
+//                    .build();
+        if (!photos.isEmpty()) {
+            String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
+            dto.setPath(Arrays.asList(path));
+        }
+        return dto;
+//        result.add(dto);
+//        return accommodationMapper.toDtoDetail(accomodationRepository.findById(id).
     }
 
     public AccommodationDTO updateAccommodation(AccommodationDTO dto) {
