@@ -6,6 +6,7 @@ import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.exception.AccommmodationExistException;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
+import com.example.diploma.project.almatour.mapper.AccommodationShowMapper;
 import com.example.diploma.project.almatour.mapper.UserMapper;
 import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
@@ -37,6 +39,7 @@ public class AccomodationService {
     private final UserMapper userMapper;
 
     private final AccomodationRepository accomodationRepository;
+    private final AccommodationShowMapper accommodationShowMapper;
     private final AccommodationMapper accommodationMapper;
     private final AccommodationPhotoRepository accommodationPhotoRepository;
 
@@ -45,12 +48,8 @@ public class AccomodationService {
         List<AccommodationShowDTO> result = new ArrayList<>();
         for (Accommodation ac : accommodations) {
             List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(ac.getId());
-            AccommodationShowDTO dto = AccommodationShowDTO.builder()
-                    .id(ac.getId())
-                    .name(ac.getName())
-                    .location(ac.getLocation())
-                    .startTime(ac.getStartTime())
-                    .build();
+
+            AccommodationShowDTO dto=accommodationShowMapper.toDto(ac);
             if (!photos.isEmpty()) {
                 String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
                 dto.setPath(path);
@@ -95,7 +94,9 @@ public class AccomodationService {
         return accommodationMapper.toDto(accomodationRepository.save(accommodationMapper.toEntity(dto)));
     }
 
+    @Transactional
     public void deleteAccommodation(Long id) {
+        accommodationPhotoRepository.deleteAccommodationPhotosByAccommodationId(id);
         accomodationRepository.deleteById(id);
     }
 }

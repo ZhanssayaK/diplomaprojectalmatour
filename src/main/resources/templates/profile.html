@@ -593,8 +593,8 @@
                             <th>ID</th>
                             <th>NAME</th>
                             <th>LOCATION</th>
-                            <th>CITY ID</th>
-                            <th>USER ID</th>
+                            <th>CITY NAME</th>
+                            <th>USER NAME</th>
                             <th>STATUS</th>
                             <th>ACTION</th>
                         </tr>
@@ -950,10 +950,7 @@
 
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetchAccommodations();
-
-        function fetchAccommodations() {
+    function fetchAccommodations() {
             fetch('http://localhost:1080/accommodations')
                 .then(response => response.json())
                 .then(accommodations => {
@@ -965,8 +962,8 @@
                         <td>${accommodation.id}</td>
                         <td>${accommodation.name}</td>
                         <td>${accommodation.location}</td>
-                        <td>${accommodation.cityId}</td> <!-- City name needs to be dynamically resolved -->
-                        <td>${accommodation.userId}</td>
+                        <td>${accommodation.city.name}</td> <!-- City name needs to be dynamically resolved -->
+                        <td>${accommodation.user.fullName}</td>
                         <td>${accommodation.status ? 'Active' : 'Inactive'}</td>
                         <td>
                             <!-- Example actions -->
@@ -981,7 +978,31 @@
                     console.error('Error fetching accommodations:', error);
                 });
         }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchAccommodations();
     });
+
+    function deleteAccommodation(accommodationId) {
+        fetch(`/accommodations/${accommodationId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete accommodation');
+                }
+                // Handle success response
+                console.log('Accommodation deleted successfully');
+                fetchAccommodations();
+            })
+            .catch(error => {
+                // Handle error
+                console.error('Error deleting accommodation:', error);
+            });
+    }
 </script>
 
 <script type="text/javascript">
@@ -1075,5 +1096,6 @@
         });
     });
 </script>
+
 </body>
 </html>

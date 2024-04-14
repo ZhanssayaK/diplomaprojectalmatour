@@ -11,4 +11,5 @@ import java.util.List;
 @Transactional
 public interface AccommodationPhotoRepository extends JpaRepository<AccommodationPhoto,Long> {
     List<AccommodationPhoto> findAllByAccommodationId(Long id);
+    void deleteAccommodationPhotosByAccommodationId(Long id);
 }

@@ -15,4 +15,8 @@ public class AccommodationShowDTO {
     private Timestamp startTime;
     private String location;
     private String path;
+    private boolean status;
+    private UserDTO user;
+    private CityDTO city;
+
 }
