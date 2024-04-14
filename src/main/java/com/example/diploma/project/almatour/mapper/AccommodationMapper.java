@@ -28,7 +28,6 @@ public interface AccommodationMapper {
     @Mapping(target = "categories.id", source = "accommodationDTO.categoryId")
     Accommodation toEntity(AccommodationDTO accommodationDTO);
 
-
     @Mapping(target = "categories", source = "accommodationDTO.category")
     Accommodation toEntityDetail(AccommodationDetailDTO accommodationDTO);
 }
