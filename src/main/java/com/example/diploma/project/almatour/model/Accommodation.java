@@ -27,6 +27,7 @@ public class Accommodation {
     private Timestamp startTime;
     private Timestamp endTime;
     private boolean status;
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

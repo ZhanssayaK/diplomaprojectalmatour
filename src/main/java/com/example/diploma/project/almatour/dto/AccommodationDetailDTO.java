@@ -27,4 +27,5 @@ public class AccommodationDetailDTO {
     private boolean status;
     private String mainPhoto;
     private List<String> otherPhoto;
+    private String comment;
 }

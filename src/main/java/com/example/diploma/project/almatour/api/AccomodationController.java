@@ -1,9 +1,6 @@
 package com.example.diploma.project.almatour.api;
 
-import com.example.diploma.project.almatour.dto.AccommodationDTO;
-import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
-import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
-import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
+import com.example.diploma.project.almatour.dto.*;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
 import com.example.diploma.project.almatour.repository.AccommodationPhotoRepository;
@@ -112,16 +109,26 @@ public class AccomodationController {
     }
 
     @GetMapping(value = "{id}")
-    public String getAccommodation(@PathVariable(name = "id") Long id,
-                                   Model model) {
+    public AccommodationDetailDTO getAccommodation(@PathVariable(name = "id") Long id,
+                                                   Model model) {
         AccommodationDetailDTO accommodation = accomodationService.getAccommodation(id);
-        model.addAttribute("accommodation", accommodation);
-        return "detailspage";
+        model.addAttribute("aaa", accommodation);
+        return accommodation;
     }
 
     @DeleteMapping(value = "{id}")
     public void deleteAccommodation(@PathVariable(name = "id") Long id) {
         accomodationService.deleteAccommodation(id);
+    }
+
+    @PostMapping(value = "/reject-accommodation")
+    public void rejectAccomodation(@RequestBody RejectDTO dto) {
+        accomodationService.rejectAccommodation(dto);
+    }
+
+    @PostMapping(value = "/accept-accommodation")
+    public void acceptAccomodation(@RequestParam Long id) {
+        accomodationService.acceptAccommodation(id);
     }
 
 }

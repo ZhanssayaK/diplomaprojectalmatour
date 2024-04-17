@@ -742,27 +742,161 @@
     </section>
 </main>
 <div id="editAccommodationModal" class="modal">
-    <div class="modal-content">
-        <!-- Кнопка закрытия модального окна -->
-        <span class="close" onclick="closeModal()">×</span>
-        <h2>Edit Accommodation</h2>
-        <p>Here goes the form for editing accommodation details...</p>
-    </div>
+<!--    <div class="modal-content">-->
+<!--        &lt;!&ndash; Кнопка закрытия модального окна &ndash;&gt;-->
+<!--        <span class="close" onclick="closeModal()">×</span>-->
+<!--        <h2>Edit Accommodation</h2>-->
+<!--        <section class="detail-card">-->
+<!--            <div class="left-section">-->
+<!--                <h1>Name: <span th:if="${aaa != null}" th:text="${aaa.name}">Accommodation Name</span></h1>-->
+<!--                <img class="card-img" th:if="${aaa != null}" th:src="@{'/images/' + ${accommodation.mainPhoto.substring(accommodation.mainPhoto.lastIndexOf('/') + 1)}}"> &lt;!&ndash; Assuming accommodation.mainPhoto is a full path to the image &ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <div class="right-section">-->
+<!--                <p>Description: <span th:if="${aaa != null}" th:text="${aaa.description}">Description</span></p>-->
+<!--                <p>Category: <span th:if="${aaa != null}" th:text="${aaa.category != null ? aaa.category.name : 'Category Name'}">Category Name</span></p>-->
+<!--                <p>Start Time: <span th:if="${aaa != null}" th:text="${aaa.startTime}">Start Time</span></p>-->
+<!--                <p>End Time: <span th:if="${aaa != null}" th:text="${aaa.endTime}">End Time</span></p>-->
+<!--                <p>Location: <span th:if="${aaa != null}" th:text="${aaa.location}">Location</span></p>-->
+<!--                <p>City: <span th:if="${aaa != null}" th:text="${aaa.city != null ? aaa.city.name : 'City Name'}">City Name</span></p>-->
+<!--                <p>User: <span th:if="${aaa != null}" th:text="${aaa.user != null ? aaa.user.fullName : 'User Name'}">User Name</span></p>-->
+<!--                <p>Status: <span th:if="${aaa != null}" th:text="${aaa.status}">Status</span></p>-->
+<!--                <h3>Price: <span th:if="${aaa != null}" th:text="${aaa.price}">Price</span></h3>-->
+<!--                <form th:if="${aaa != null}">-->
+<!--                    <button>Book</button>-->
+<!--                </form>-->
+<!--            </div>-->
+
+<!--            <div class="bottom-right-section">-->
+<!--                <h3>Other Photos</h3>-->
+<!--                <div class="other-photos">-->
+<!--                    <th:block th:if="${aaa!= null}">-->
+<!--                        <th:block th:each="photo : ${aaa.otherPhoto}">-->
+<!--                            <img th:src="@{'/images/' + ${photo.substring(photo.lastIndexOf('/') + 1)}}" class="other-photo">-->
+<!--                        </th:block>-->
+<!--                    </th:block>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--    </div>-->
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function editAccommodation(id) {
-        // Открывает модальное окно для редактирования размещения
-        console.log('Edit accommodation with ID:', id);
-        // Предположим, у вас есть модальное окно с id="editAccommodationModal"
-        const modal = document.getElementById('editAccommodationModal');
+        // Fetch accommodation data by ID
+        fetch(`/accommodations/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                // Display modal
+                const modal = document.getElementById('editAccommodationModal');
+                modal.innerHTML = createModalContent(data);
 
-        // Отображение модального окна
-        modal.style.display = 'block';
+                // Display modal
+                modal.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching accommodation:', error);
+            });
+    }
+
+    function createModalContent(data) {
+        return `
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <h2>Edit Accommodation</h2>
+            <section class="detail-card">
+                <div class="left-section">
+                    <h1>Name: <span>${data.name}</span></h1>
+                    <img class="card-img" src="/images/${data.mainPhoto.substring(data.mainPhoto.lastIndexOf('/') + 1)}">
+                </div>
+                <div class="right-section">
+                    <p>Description: <span>${data.description}</span></p>
+                    <p>Category: <span>${data.category != null ? data.category.name : 'Category Name'}</span></p>
+                    <p>Start Time: <span>${data.startTime}</span></p>
+                    <p>End Time: <span>${data.endTime}</span></p>
+                    <p>Location: <span>${data.location}</span></p>
+                    <p>City: <span>${data.city != null ? data.city.name : 'City Name'}</span></p>
+                    <p>User: <span>${data.user != null ? data.user.fullName : 'User Name'}</span></p>
+                    <p>Status: <span>${data.status}</span></p>
+                    <h3>Price: <span>${data.price}</span></h3>
+                </div>
+                <div class="bottom-right-section">
+                    <h3>Other Photos</h3>
+                    <div class="other-photos">
+                        ${data.otherPhoto.map(photo => `<img src="/images/${photo.substring(photo.lastIndexOf('/') + 1)}" class="other-photo">`).join('')}
+                    </div>
+                </div>
+                <div>
+                    <textarea id="comment" placeholder="Enter your comment here">${data.comment ? data.comment : ''}</textarea>
+                    <div class="button-container">
+                        <button id="rejectButton" onclick="rejectAccommodation(${data.id})">Reject</button>
+                        <button id="acceptButton" onclick="acceptAccommodation(${data.id})">Accept</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    `;
     }
 
     function closeModal() {
         document.getElementById('editAccommodationModal').style.display = 'none';
+    }
+
+    function rejectAccommodation(id) {
+        const rejectButton = document.getElementById('rejectButton');
+        const acceptButton = document.getElementById('acceptButton');
+        rejectButton.disabled = true;
+        acceptButton.disabled = true;
+
+        const comment = document.getElementById('comment').value;
+        const requestData = { id: id, comment: comment };
+
+        fetch('/accommodations/reject-accommodation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful rejection
+                    console.log('Accommodation rejected successfully');
+                    closeModal();
+                } else {
+                    throw new Error('Failed to reject accommodation');
+                }
+            })
+            .catch(error => {
+                console.error('Error rejecting accommodation:', error);
+            });
+    }
+
+    function acceptAccommodation(id) {
+        const rejectButton = document.getElementById('rejectButton');
+        const acceptButton = document.getElementById('acceptButton');
+        rejectButton.disabled = true;
+        acceptButton.disabled = true;
+
+        fetch(`/accommodations/accept-accommodation?id=${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful acceptance
+                    console.log('Accommodation accepted successfully');
+                    closeModal();
+                } else {
+                    throw new Error('Failed to accept accommodation');
+                }
+            })
+            .catch(error => {
+                console.error('Error accepting accommodation:', error);
+            });
     }
 
 </script>

@@ -1,9 +1,6 @@
 package com.example.diploma.project.almatour.service;
 
-import com.example.diploma.project.almatour.dto.AccommodationDTO;
-import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
-import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
-import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
+import com.example.diploma.project.almatour.dto.*;
 import com.example.diploma.project.almatour.exception.AccommmodationExistException;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
 import com.example.diploma.project.almatour.mapper.AccommodationShowMapper;
@@ -98,5 +95,23 @@ public class AccomodationService {
     public void deleteAccommodation(Long id) {
         accommodationPhotoRepository.deleteAccommodationPhotosByAccommodationId(id);
         accomodationRepository.deleteById(id);
+    }
+
+    public void rejectAccommodation(RejectDTO dto){
+        if(accomodationRepository.findById(dto.getId()).isPresent()) {
+            Accommodation accommodation = accomodationRepository.findById(dto.getId()).get();
+            accommodation.setComment(dto.getComment());
+            accommodation.setStatus(false);
+            accomodationRepository.save(accommodation);
+        }
+    }
+
+    public void acceptAccommodation(Long id){
+        if(accomodationRepository.findById(id).isPresent()) {
+            Accommodation accommodation = accomodationRepository.findById(id).get();
+            accommodation.setComment("");
+            accommodation.setStatus(true);
+            accomodationRepository.save(accommodation);
+        }
     }
 }
