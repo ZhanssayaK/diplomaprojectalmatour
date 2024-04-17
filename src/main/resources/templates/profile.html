@@ -749,6 +749,7 @@
         <p>Here goes the form for editing accommodation details...</p>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function editAccommodation(id) {
         // Открывает модальное окно для редактирования размещения
@@ -1096,6 +1097,29 @@
         });
     });
 </script>
+<script>
+    // Получаем ID текущего пользователя из поля ввода
+    const userId = document.querySelector('input[name="currentUserId"]').value;
+    console.log('USER ID -> '+userId)
+    // Делаем GET-запрос для получения деталей кредитной карты
+    $.ajax({
+        url: 'http://localhost:1080/users/' + userId + '/credit-card-details',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            // При успешном запросе заполняем поля формы полученными данными
+            $('input[name="fullName"]').val(response.fullName);
+            $('input[name="cardNumber"]').val(response.cardNumber);
+            $('input[name="cvv"]').val(response.cvv);
+            $('input[name="expirationDate"]').val(response.expirationDate);
+        },
+        error: function(xhr, status, error) {
+            // Обрабатываем ошибки здесь
+            console.error('Error:', error);
+        }
+    });
+</script>
+
 
 </body>
 </html>

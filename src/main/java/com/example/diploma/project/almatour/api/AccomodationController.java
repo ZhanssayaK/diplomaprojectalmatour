@@ -5,7 +5,6 @@ import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
 import com.example.diploma.project.almatour.dto.AccommodationSearchDTO;
 import com.example.diploma.project.almatour.dto.AccommodationShowDTO;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
-import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
 import com.example.diploma.project.almatour.repository.AccommodationPhotoRepository;
 import com.example.diploma.project.almatour.service.AccomodationService;

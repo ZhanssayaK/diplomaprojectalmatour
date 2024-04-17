@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           integrity="sha384-...." crossorigin="anonymous">
     <style>
-        .cards {
+        .cards{
             display: none;
             width: 80%;
             margin: 100px auto;
@@ -1195,22 +1195,98 @@
         .right-section{
             padding-top: 50px;
         }
+        .right-section p{
+            font-size: 18px;
+
+        }
+        .right-section h3{
+            font-size: 25px;
+        }
         .left-section h1{
             margin-top: 0px;
             margin-bottom: 20px;
         }
         .right-section span{
             opacity: 0.6;
+            font-style: italic;
+
         }
         .card-img{
             width: 80%;
         }
         .other-photos{
             display: grid;
+            gap: 1em;
             grid-template-columns: repeat(3,1fr);
         }
         .other-photos img{
             width: 100%;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        .comments{
+            width: 80%;
+            margin: auto;
+            padding-bottom: 50px;
+        }
+        .comments hr{
+            width: 100%;
+            margin: 50px auto;
+        }
+        .add-comm{
+            background-color: steelblue;
+            border: 0px solid ;
+            padding: 10px 20px;
+            color: white;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+        .form-control{
+            width: 100%;
+
+        }
+        .user-comment{
+            display: grid;
+            gap: 1em;
+            grid-template-columns: 5% 70%;
+        }
+        .user-comment img{
+            width: 90%;
+            height: 60px;
+            border-radius: 50px;
+            box-shadow: 0px 2px 5px #999;
+        }
+        .user-comment h3{
+            margin-top: 0px;
+        }
+        .comment-div{
+            width: 100%;
+            padding: 10px;
+        }
+        .user-comment h4{
+            margin-top: -5px;
+            opacity: 0.7;
+        }
+
+        .comm-addtext textarea{
+            border-radius: 15px 15px 0px 0px;
+            padding: 20px 20px 0px;
+            border-color: #999;
+            font-size: 17px;
+        }
+
+        .right-section button{
+            background-color: steelblue;
+            padding: 7px 30px;
+            color: white;
+            font-size: 17px;
+            border: 0px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px #999;
+        }
+        .right-section button:hover{
+            opacity: 0.8;
+            transition: 0.5s;
         }
     </style>
 </head>
@@ -1263,7 +1339,9 @@
             <p>User: <span th:text="${accommodation.user.fullName}">User Name</span></p>
             <p>Status: <span th:text="${accommodation.status}">Status</span></p>
             <h3>Price: <span th:text="${accommodation.price}">Price</span></h3>
-
+            <form>
+                <button>Book</button>
+            </form>
         </div>
         <div class="bottom-right-section">
             <h3>Other Photos</h3>
@@ -1274,6 +1352,68 @@
             </div>
         </div>
     </section>
+    <section class="comments">
+        <hr>
+        <div class="row mt-3">
+            <div class="col-8 mx-auto">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h3 class="text-center">Comments</h3>            </div>
+                </div>
+
+                <div class="list-group mt-3">
+                    <div th:each = "comm : ${comments}" class="list-group-item list-group-item-action">
+                        <div class="comment-div">
+                            <div class="user-comment">
+                                <img src="https://www.zastavki.com/pictures/originals/2021Men___Male_Celebrity_Blue-eyed_actor_James_McAvoy_on_a_black_background_156528_.jpg" alt="img">
+                                <div>
+                                    <h3>Name User</h3>
+                                    <h4 class="mb-1" th:text = "${comm.comment}">Good!</h4>
+                                    <small class="text-body-secondary py-1" th:text = "${#temporals.format(comm.addedTime, 'dd MMMM yyyy HH:mm')}"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:each = "comm : ${comments}" class="list-group-item list-group-item-action">
+                        <div class="comment-div">
+                            <div class="user-comment">
+                                <img src="https://www.zastavki.com/pictures/originals/2021Men___Male_Celebrity_Blue-eyed_actor_James_McAvoy_on_a_black_background_156528_.jpg" alt="img">
+                                <div>
+                                    <h3>Name User</h3>
+                                    <h4 class="mb-1" th:text = "${comm.comment}">Good!</h4>
+                                    <small class="text-body-secondary py-1" th:text = "${#temporals.format(comm.addedTime, 'dd MMMM yyyy HH:mm')}"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:each = "comm : ${comments}" class="list-group-item list-group-item-action">
+                        <div class="comment-div">
+                            <div class="user-comment">
+                                <img src="https://www.zastavki.com/pictures/originals/2021Men___Male_Celebrity_Blue-eyed_actor_James_McAvoy_on_a_black_background_156528_.jpg" alt="img">
+                                <div>
+                                    <h3>Name User</h3>
+                                    <h4 class="mb-1" th:text = "${comm.comment}">Good!</h4>
+                                    <small class="text-body-secondary py-1" th:text = "${#temporals.format(comm.addedTime, 'dd MMMM yyyy HH:mm')}"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="comm-addtext">
+                            <form >
+<!--                                <input type="hidden" name="taskId" th:value = "${task.id}">-->
+                                <textarea class="form-control" name="comment" placeholder="Insert comment" required></textarea>
+                                <button class="add-comm">ADD FEEDBACK</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <section class="under-footer">
         <div>
             <img src="https://i.pinimg.com/originals/7b/c1/1b/7bc11b6ddf91c7e4eca253b05aadc8fb.jpg" class="background">
@@ -1417,6 +1557,7 @@
                 console.error('Error:', error);
             });
     });
+
 </script>
 </body>
 </html>
