@@ -13,13 +13,13 @@ public class AccommodationSpecification {
         return ((root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (dto.getName() != null) {
+            if (dto.getName() != null && !dto.getName().isEmpty()) {
                 predicates.add(builder.like(builder.lower(root.get("name")), "%" + dto.getName().toLowerCase() + "%"));
             }
-            if (dto.getCategory() != null) {
+            if (dto.getCategory() != null && !dto.getCategory().isEmpty()) {
                 predicates.add(builder.equal(root.get("categories").get("name"), dto.getCategory()));
             }
-            if (dto.getCity() != null) {
+            if (dto.getCity() != null && !dto.getCity().isEmpty()) {
                 predicates.add(builder.equal(root.get("city").get("name"), dto.getCity()));
             }
             if (dto.getFromDate() != null && dto.getToDate() != null) {

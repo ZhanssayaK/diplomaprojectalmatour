@@ -522,7 +522,7 @@
         <div class="main-left-div">
             <div>
                 <img src="https://cdn1.iconfinder.com/data/icons/finance-banking-tiny-icons/16/seal_of_approval-1024.png">
-                <a href="#">Bookings</a>
+                <a th:href="@{'/myBooking'}">Bookings</a>
             </div>
             <div>
                 <img src="https://cdn3.iconfinder.com/data/icons/business-vol-16/100/Artboard_9-1024.png">
@@ -530,7 +530,7 @@
             </div>
             <div>
                 <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/messages-1024.png">
-                <a href="#">Messages</a>
+                <a th:href="@{'/messages'}">Messages</a>
             </div>
             <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
                 <img src="https://icon-library.com/images/control-system-icon/control-system-icon-0.jpg">
@@ -632,19 +632,21 @@
                         <div class="content" id="content1">
                             <div>
                                 <label>Full Name:</label><br>
-                                <input type="text" th:value="${#authentication.principal.fullName}">
+                                <input name="userFullName" type="text" th:value="${#authentication.principal.fullName}">
                             </div>
                             <div>
                                 <label>E-mail address:</label><br>
-                                <input type="text" th:value="${#authentication.principal.email}">
+                                <input disabled type="text" th:value="${#authentication.principal.email}">
                             </div>
                             <div>
                                 <label>Phone number:</label><br>
-                                <input type="text" th:value="${#authentication.principal.phoneNumber}">
+                                <input name="userPhoneNumber" type="text" th:value="${#authentication.principal.phoneNumber}">
                             </div>
                             <div>
                                 <label>City:</label><br>
-                                <input type="text" th:value="${#authentication.principal.city.name}">
+                                <select name="userCity">
+                                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" th:selected="${#authentication.principal.city != null and city.id == #authentication.principal.city.id}"></option>
+                                </select>
                             </div>
                             <div>
                                 <button type="submit">Update</button>
@@ -655,11 +657,10 @@
             </div>
         </div>
 
-
         <div id="main3">
             <div class="main-2">
                 <button onclick="closeModal1()">Account Settings</button>
-                <button onclick="closeModal2()">Place an ad</button>
+                <button onclick="closeModal2()">Place an Add</button>
                 <button onclick="closeModal3()">Requisites</button>
             </div>
             <div class="content" id="content12">
@@ -713,7 +714,7 @@
         <div id="main4">
             <div class="main-2">
                 <button onclick="closeModal1()">Account Settings</button>
-                <button onclick="closeModal2()">Place an ad</button>
+                <button onclick="closeModal2()">Place an add</button>
                 <button onclick="closeModal3()">Requisites</button>
             </div>
             <div class="content" id="content3">
@@ -742,44 +743,7 @@
     </section>
 </main>
 <div id="editAccommodationModal" class="modal">
-<!--    <div class="modal-content">-->
-<!--        &lt;!&ndash; Кнопка закрытия модального окна &ndash;&gt;-->
-<!--        <span class="close" onclick="closeModal()">×</span>-->
-<!--        <h2>Edit Accommodation</h2>-->
-<!--        <section class="detail-card">-->
-<!--            <div class="left-section">-->
-<!--                <h1>Name: <span th:if="${aaa != null}" th:text="${aaa.name}">Accommodation Name</span></h1>-->
-<!--                <img class="card-img" th:if="${aaa != null}" th:src="@{'/images/' + ${accommodation.mainPhoto.substring(accommodation.mainPhoto.lastIndexOf('/') + 1)}}"> &lt;!&ndash; Assuming accommodation.mainPhoto is a full path to the image &ndash;&gt;-->
-<!--            </div>-->
 
-<!--            <div class="right-section">-->
-<!--                <p>Description: <span th:if="${aaa != null}" th:text="${aaa.description}">Description</span></p>-->
-<!--                <p>Category: <span th:if="${aaa != null}" th:text="${aaa.category != null ? aaa.category.name : 'Category Name'}">Category Name</span></p>-->
-<!--                <p>Start Time: <span th:if="${aaa != null}" th:text="${aaa.startTime}">Start Time</span></p>-->
-<!--                <p>End Time: <span th:if="${aaa != null}" th:text="${aaa.endTime}">End Time</span></p>-->
-<!--                <p>Location: <span th:if="${aaa != null}" th:text="${aaa.location}">Location</span></p>-->
-<!--                <p>City: <span th:if="${aaa != null}" th:text="${aaa.city != null ? aaa.city.name : 'City Name'}">City Name</span></p>-->
-<!--                <p>User: <span th:if="${aaa != null}" th:text="${aaa.user != null ? aaa.user.fullName : 'User Name'}">User Name</span></p>-->
-<!--                <p>Status: <span th:if="${aaa != null}" th:text="${aaa.status}">Status</span></p>-->
-<!--                <h3>Price: <span th:if="${aaa != null}" th:text="${aaa.price}">Price</span></h3>-->
-<!--                <form th:if="${aaa != null}">-->
-<!--                    <button>Book</button>-->
-<!--                </form>-->
-<!--            </div>-->
-
-<!--            <div class="bottom-right-section">-->
-<!--                <h3>Other Photos</h3>-->
-<!--                <div class="other-photos">-->
-<!--                    <th:block th:if="${aaa!= null}">-->
-<!--                        <th:block th:each="photo : ${aaa.otherPhoto}">-->
-<!--                            <img th:src="@{'/images/' + ${photo.substring(photo.lastIndexOf('/') + 1)}}" class="other-photo">-->
-<!--                        </th:block>-->
-<!--                    </th:block>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--        </section>-->
-<!--    </div>-->
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -808,7 +772,7 @@
             <section class="detail-card">
                 <div class="left-section">
                     <h1>Name: <span>${data.name}</span></h1>
-                    <img class="card-img" src="/images/${data.mainPhoto.substring(data.mainPhoto.lastIndexOf('/') + 1)}">
+                    <img width="20%" class="card-img" src="/images/${data.mainPhoto.substring(data.mainPhoto.lastIndexOf('/') + 1)}">
                 </div>
                 <div class="right-section">
                     <p>Description: <span>${data.description}</span></p>
@@ -824,7 +788,7 @@
                 <div class="bottom-right-section">
                     <h3>Other Photos</h3>
                     <div class="other-photos">
-                        ${data.otherPhoto.map(photo => `<img src="/images/${photo.substring(photo.lastIndexOf('/') + 1)}" class="other-photo">`).join('')}
+                        ${data.otherPhoto.map(photo => `<img width="20%" src="/images/${photo.substring(photo.lastIndexOf('/') + 1)}" class="other-photo">`).join('')}
                     </div>
                 </div>
                 <div>
@@ -1234,7 +1198,6 @@
 <script>
     // Получаем ID текущего пользователя из поля ввода
     const userId = document.querySelector('input[name="currentUserId"]').value;
-    console.log('USER ID -> '+userId)
     // Делаем GET-запрос для получения деталей кредитной карты
     $.ajax({
         url: 'http://localhost:1080/users/' + userId + '/credit-card-details',
@@ -1253,7 +1216,5 @@
         }
     });
 </script>
-
-
 </body>
 </html>

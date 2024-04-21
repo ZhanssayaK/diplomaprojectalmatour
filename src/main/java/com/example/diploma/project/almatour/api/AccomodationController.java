@@ -130,5 +130,4 @@ public class AccomodationController {
     public void acceptAccomodation(@RequestParam Long id) {
         accomodationService.acceptAccommodation(id);
     }
-
 }

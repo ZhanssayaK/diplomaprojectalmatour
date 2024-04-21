@@ -1229,12 +1229,14 @@
             </div>
             <div style="margin-left: 20px">
                 <select name="category" class="slct">
+                    <option value="">Select Category</option>
                     <option class="slct2" th:each="category : ${categories}" th:value="${category.name}"
                             th:text="${category.name}">Category</option>
                 </select>
             </div>
             <div style="margin-left: 40px">
                 <select name="city">
+                    <option value="">Select City</option>
                     <option th:each="city : ${cities}" th:value="${city.name}" th:text="${city.name}">City</option>
                 </select>
             </div>

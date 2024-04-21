@@ -1,10 +1,7 @@
 package com.example.diploma.project.almatour.controller;
 
 import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
-import com.example.diploma.project.almatour.service.AccomodationService;
-import com.example.diploma.project.almatour.service.CategoryService;
-import com.example.diploma.project.almatour.service.CityService;
-import com.example.diploma.project.almatour.service.UserService;
+import com.example.diploma.project.almatour.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,6 +18,7 @@ public class HomeController {
     private final UserService userService;
     private final CityService cityService;
     private final CategoryService categoryService;
+    private final AuthenticationService authenticationService;
 
     private final AccomodationService accomodationService;
 
@@ -33,12 +31,11 @@ public class HomeController {
     @GetMapping(value = "/profile")
     public String profile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName(); // Получаем идентификатор пользователя из объекта аутентификации
-
-
+        String userId = authentication.getName();
         model.addAttribute("userId", userId);
         model.addAttribute("cities", cityService.getCityList());
         model.addAttribute("categories", categoryService.getCategoryList());
+        model.addAttribute("currentUser", authenticationService.getCurrentUser());
         return "profile";
     }
 
@@ -68,5 +65,15 @@ public class HomeController {
         AccommodationDetailDTO accommodation = accomodationService.getAccommodation(id);
         model.addAttribute("accommodation", accommodation);
         return "detailspage";
+    }
+
+    @GetMapping(value = "/myBooking")
+    public String myBooking() {
+        return "booking";
+    }
+
+    @GetMapping(value = "/messages")
+    public String messages() {
+        return "messages";
     }
 }

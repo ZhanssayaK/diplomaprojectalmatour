@@ -42,13 +42,4 @@ public class UserService {
 
         return userMapper.toDto(updatedUser);
     }
-
-//    public List<UserDTO> getUserByRoleId(Long roleId){
-//        List<UserDTO> userDTOS = new ArrayList<>();
-//        List<User> usersByRole = userRepository.findByRoleId(roleId);
-//        for (User user : usersByRole) {
-//            userDTOS.add(userMapper.toDto(user));
-//        }
-//        return userDTOS;
-//    }
 }
