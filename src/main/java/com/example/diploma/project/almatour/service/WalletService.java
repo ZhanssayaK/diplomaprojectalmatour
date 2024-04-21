@@ -17,13 +17,13 @@ public class WalletService {
     private final WalletMapper walletMapper;
     private final WalletRepository walletRepository;
 
-    public List<WalletDTO> getAllWallets(){
+    public List<WalletDTO> getAllWallets() {
         return walletMapper.toDtoList(walletRepository.findAll());
     }
 
     public void depositToWallet(DepositToWalletDTO dto) {
         Wallet wallet = walletRepository.findById(dto.getWalletId()).orElseThrow();
-        wallet.setBalance(dto.getBalance());
+        wallet.setBalance(wallet.getBalance() + dto.getBalance());
 
         walletRepository.save(wallet);
     }
