@@ -24,11 +24,6 @@ public class CreditCardDetailsController {
         return creditCardDetailsService.creditCardDetailsById(id);
     }
 
-//    @GetMapping(value = "/getByUserId/{id}")
-//    public CreditCardDetailsDTO getCreditCardDetailsByUserId(@PathVariable Long id) {
-//        return creditCardDetailsService.creditCardDetailsByUserId(id);
-//    }
-
     @PostMapping
     public CreditCardDetailsDTO addCreditCardDetails(@RequestBody CreditCardDetailsDTO creditCardDetailsDTO){
         return creditCardDetailsService.addCreditCardDetails(creditCardDetailsDTO);

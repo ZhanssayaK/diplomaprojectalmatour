@@ -130,4 +130,9 @@ public class AccomodationController {
     public void acceptAccomodation(@RequestParam Long id) {
         accomodationService.acceptAccommodation(id);
     }
+
+    @GetMapping(value = "/findByUserId/{userId}")
+    public List<AccommodationDTO> getAccomodationsByUser(@PathVariable(value = "userId") Long userId){
+        return accomodationService.getAccomodationsByUserId(userId);
+    }
 }

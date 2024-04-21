@@ -114,4 +114,8 @@ public class AccomodationService {
             accomodationRepository.save(accommodation);
         }
     }
+
+    public List<AccommodationDTO> getAccomodationsByUserId(Long userId){
+        return accommodationMapper.toDtoList(accomodationRepository.findByUserId(userId));
+    }
 }

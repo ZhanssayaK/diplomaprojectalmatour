@@ -8,6 +8,190 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           integrity="sha384-...." crossorigin="anonymous">
     <style>
+        .booking-modal{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            display: none;
+            background-color: rgb(0,0,0,0.5);
+            z-index: 7000;
+        }
+        .right-section button{
+            margin-top: 10px;
+            font-size: 20px;
+            padding: 10px 50px;
+        }
+        .booking-modal-div{
+            background-color: white;
+            width: 50%;
+            margin: 150px auto;
+            padding: 20px 50px;
+        }
+        .booking-modal-div h3{
+            margin-top: 50px;
+            width: 1000%;
+            color: darkslategray;
+            font-weight: 400;
+            font-size: 25px;
+        }
+        .booking-modal-div h1{
+            margin-top: 50px;
+        }
+        .balans{
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+        .balans h1{
+            font-size: 70px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .balans span{
+            font-size: 25px;
+            font-style: italic;
+        }
+        .close-modal-btn{
+            background-color: crimson;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 10px;
+            border: 0px;
+            box-shadow: 0px 3px 5px #999;
+            font-size: 17px;
+            position: absolute;
+            margin-top: -100px;
+            margin-left: 730px;
+        }
+        .add-fav-btn{
+            padding: 10px 75px;
+            font-size: 25px;
+            background-color: silver;
+            border: 0px solid ;
+            position: absolute;
+            margin-left: 380px;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 2px;
+            box-shadow: 0px 5px 5px #999;
+            border-radius: 5px;
+        }
+        .form-booking-modal button{
+            padding: 10px 150px;
+            font-size: 25px;
+            background-color: teal;
+            border: 0px solid ;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 2px;
+            box-shadow: 0px 5px 5px #999;
+            border-radius: 5px;
+            margin-left: 0px;
+        }
+        .form-div{
+            display: grid;
+            padding-top: 30px;
+            margin: auto;
+            width: 50%;
+            grid-template-columns: 15% 80%;
+        }
+        .form-div input{
+            width: 30px;
+            box-shadow: 0px 0px #999;
+            border-radius: 10px;
+        }
+        .form-div p{
+            opacity: 0.7;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 1000px;
+            text-align: center;
+        }
+        .modal h4{
+            font-size: 25px;
+            color: darkslategray;
+            font-weight: 400;
+
+        }
+        .tr-img{
+            width: 70px;
+            margin-left: 5px;
+        }
+        .action-btns-buy{
+            background-color: teal;
+            color: white;
+            box-shadow: 0px 2px 5px #ddd;
+            border: 0px solid ;
+            padding: 5px 20px;
+            border-radius: 5px;
+        }
+        .action-btns-delete{
+            background-color: crimson;
+            color: white;
+            box-shadow: 0px 2px 5px #ddd;
+            border: 0px solid ;
+            padding: 5px 20px;
+            border-radius: 5px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Стили для таблицы */
+        .modal-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        /* Стили для ячеек заголовка таблицы */
+        .modal-content th {
+            border-bottom: 1px solid #ddd; /* Нижняя граница для заголовка */
+            padding: 8px;
+            text-align: center; /* Выравнивание содержимого по центру */
+        }
+
+        /* Стили для ячеек данных таблицы */
+        .modal-content td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: center; /* Выравнивание содержимого по центру */
+        }
+
+
+
+
+
+
+
+
         .cards{
             display: none;
             width: 80%;
@@ -1309,17 +1493,48 @@
             <a class="header-nav-ul-li" href="#blog">BLOG</a>
         </div>
         <div class="header-grid-links">
-            <button>
+            <button onclick="openFav()">
                 <i class="fas fa-heart"></i>
             </button>
-<!--            <button>-->
-                <a th:href="@{'/profile'}" class="profile-icon">
+            <button>
+                <a src="" class="profile-icon">
                     <i class="fas fa-user"></i>
                 </a>
-<!--            </button>-->
+            </button>
         </div>
     </div>
 </header>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <button style="background-color: crimson; position: absolute; margin-top: 0px; border: 0px; padding:10px 20px; color: white; border-radius: 5px;
+          box-shadow:0px 2px 5px #ddd; font-size: 17px; margin-left: 350px" onclick="closeFav()">
+            Close
+        </button>
+        <h4>Your saved data is here:</h4>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Price</td>
+                <td>
+                    <img class="tr-img" src="">
+                </td>
+                <td class="action-btns">
+                    <button class="action-btns-buy">Buy</button>
+                    <button class="action-btns-delete">Delete</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
 <main>
     <section class="detail-card">
         <div class="left-section">
@@ -1339,9 +1554,7 @@
             <p>User: <span th:text="${accommodation.user.fullName}">User Name</span></p>
             <p>Status: <span th:text="${accommodation.status}">Status</span></p>
             <h3>Price: <span th:text="${accommodation.price}">Price</span></h3>
-            <form>
-                <button>Book</button>
-            </form>
+            <button onclick="openModal()">Book</button>
         </div>
         <div class="bottom-right-section">
             <h3>Other Photos</h3>
@@ -1352,13 +1565,48 @@
             </div>
         </div>
     </section>
+    <section class="booking-modal">
+        <div class="booking-modal-div">
+            <div>
+                <h1>Medeo</h1>
+                <button onclick="closeModal()" class="close-modal-btn">
+                    Close
+                </button>
+                <div class="balans">
+                    <h3>Your account has a balance of:</h3>
+                    <h1>150 <span>KZT</span></h1>
+                </div>
+                <hr>
+                <button onclick="addToFavoritesAndCloseModal()" class="add-fav-btn">ADD TO FAVORITES</button>
+            </div>
+
+            <form class="form-booking-modal" onsubmit="return handleSubmit()">
+                <button type="submit" >BUY</button>
+                <div class="form-div">
+                    <input type="checkbox">
+                    <p>I have previously read all the rules and agree to the rules</p>
+                </div>
+            </form>
+
+        </div>
+
+
+    </section>
+    <div id="notification" style="display: none; position: fixed; top: 70px; right: 50px; background-color: seagreen; color: white; padding: 10px 50px; z-index: 1000; border-radius: 5px; font-size:20px;">
+        Added successfully!
+    </div>
+    <div id="notification2" style="display: none; position: fixed; top: 70px; right: 50px; background-color: seagreen; color: white; padding: 10px 50px; z-index: 1000; border-radius: 5px; font-size:20px;">
+        Purchase successful!
+    </div>
+
     <section class="comments">
         <hr>
         <div class="row mt-3">
             <div class="col-8 mx-auto">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <h3 class="text-center">Comments</h3>            </div>
+                        <h3 class="text-center">Comments</h3>
+                    </div>
                 </div>
 
                 <div class="list-group mt-3">
@@ -1401,8 +1649,8 @@
                     </div>
                     <div class="row">
                         <div class="comm-addtext">
-                            <form >
-<!--                                <input type="hidden" name="taskId" th:value = "${task.id}">-->
+                            <form th:action = "@{'/comment/add'}" method="post">
+                                <input type="hidden" name="taskId" >
                                 <textarea class="form-control" name="comment" placeholder="Insert comment" required></textarea>
                                 <button class="add-comm">ADD FEEDBACK</button>
                             </form>
@@ -1557,7 +1805,160 @@
                 console.error('Error:', error);
             });
     });
+    function closeModal() {
+        var elements = document.getElementsByClassName('booking-modal');
+        if (elements.length > 0) {  // Check if the element exists
+            elements[0].style.display = "none";  // Access the first element in the collection
+        }
+    }
+    function openModal() {
+        var elements = document.getElementsByClassName('booking-modal');
+        if (elements.length > 0) {  // Check if the element exists
+            elements[0].style.display = "block";  // Access the first element in the collection
+        }
+    }
+    function addToFavoritesAndCloseModal() {
+        // Close the modal
+        var elements = document.getElementsByClassName('booking-modal');
+        if (elements.length > 0) {
+            elements[0].style.display = "none";
+        }
 
+        // Display the notification
+        alert("Added successfully!");
+    }
+    function addToFavoritesAndCloseModal() {
+        // Close the modal
+        var elements = document.getElementsByClassName('booking-modal');
+        if (elements.length > 0) {
+            elements[0].style.display = "none";
+        }
+
+        // Display the notification
+        var notification = document.getElementById('notification');
+        notification.style.display = "block";
+        setTimeout(function() {
+            notification.style.display = "none";
+        }, 3000); // Hides the notification after 3 seconds
+    }
+    function handleSubmit() {
+        // Предотвращаем фактическую отправку формы
+        event.preventDefault();
+        var elements = document.getElementsByClassName('booking-modal');
+        if (elements.length > 0) {
+            elements[0].style.display = "none";
+        }
+        // Отображение уведомления
+        var notification = document.getElementById('notification2');
+        notification.innerText = "Purchase successful!"; // Настройте текст уведомления
+        notification.style.display = "block";
+
+        // Скрываем уведомление после некоторого времени
+        setTimeout(function() {
+            notification.style.display = "none";
+        }, 3000); // Уведомление исчезнет через 3 секунды
+
+        return false; // Возвращаем false чтобы окончательно предотвратить отправку формы
+    }
+    var modal = document.getElementById('myModal');
+    var btn = document.getElementById("openModalBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    // Функция для открытия модального окна
+    function openFav() {
+        var modals = document.getElementsByClassName('modal');
+        for (var i = 0; i < modals.length; i++) {
+            modals[i].style.display = "block";
+        }
+    }
+    function closeFav(){
+        var modals = document.getElementsByClassName('modal');
+        for (var i = 0; i < modals.length; i++) {
+            modals[i].style.display = "none";
+        }
+    }
+
+    // Закрываем модальное окно при клике на крестик
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Закрываем модальное окно при клике вне его
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Добавляем обработчик событий для кнопки
+    btn.onclick = function() {
+        openModal();
+    }
+
+</script>
+<script>
+    function addToFavoritesAndCloseModal() {
+        // Close the modal
+        var elements = document.getElementsByClassName('booking-modal');
+        if (elements.length > 0) {
+            elements[0].style.display = "none";
+        }
+
+        // Get the data to save
+        var accommodationData = {
+            name: document.querySelector('.right-section h1').textContent,
+            description: document.querySelector('.right-section p:nth-of-type(1) span').textContent,
+            price: document.querySelector('.right-section h3 span').textContent,
+            image: document.querySelector('.card-img').src
+        };
+
+        // Save data to local storage
+        var savedData = JSON.parse(localStorage.getItem('savedData'))  [];
+        savedData.push(accommodationData);
+        localStorage.setItem('savedData', JSON.stringify(savedData));
+
+        // Display the notification
+        var notification = document.getElementById('notification');
+        notification.style.display = "block";
+        setTimeout(function() {
+            notification.style.display = "none";
+        }, 3000); // Hides the notification after 3 seconds
+    }
+
+    // Function to open the modal and display saved data
+    function openFav() {
+        var modal = document.getElementById('myModal');
+        var modalContent = modal.querySelector('.modal-content');
+        var savedData = JSON.parse(localStorage.getItem('savedData'))  [];
+
+        // Clear previous data
+        modalContent.innerHTML = '';
+
+        // Display saved data in modal
+        savedData.forEach(function(data) {
+            var row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${data.name}</td>
+            <td>${data.description}</td>
+            <td>${data.price}</td>
+            <td><img class="tr-img" src="${data.image}"></td>
+            <td class="action-btns">
+                <button class="action-btns-buy">Buy</button>
+                <button class="action-btns-delete">Delete</button>
+            </td>
+        `;
+            modalContent.appendChild(row);
+        });
+
+        // Open modal
+        modal.style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeFav(){
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
+    }
 </script>
 </body>
 </html>
