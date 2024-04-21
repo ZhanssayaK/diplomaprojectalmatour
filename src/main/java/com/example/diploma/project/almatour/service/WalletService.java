@@ -3,7 +3,9 @@ package com.example.diploma.project.almatour.service;
 import com.example.diploma.project.almatour.dto.DepositToWalletDTO;
 import com.example.diploma.project.almatour.dto.WalletDTO;
 import com.example.diploma.project.almatour.mapper.WalletMapper;
+import com.example.diploma.project.almatour.model.User;
 import com.example.diploma.project.almatour.model.Wallet;
+import com.example.diploma.project.almatour.repository.UserRepository;
 import com.example.diploma.project.almatour.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,9 @@ public class WalletService {
 
     private final WalletMapper walletMapper;
     private final WalletRepository walletRepository;
+    private final UserRepository userRepository;
 
-    public List<WalletDTO> getAllWallets() {
+    public List<WalletDTO> getAllWallets(){
         return walletMapper.toDtoList(walletRepository.findAll());
     }
 
@@ -26,5 +29,21 @@ public class WalletService {
         wallet.setBalance(wallet.getBalance() + dto.getBalance());
 
         walletRepository.save(wallet);
+    }
+
+    public void withdrawFromWallet(DepositToWalletDTO dto){
+        Wallet wallet = walletRepository.findById(dto.getWalletId()).orElseThrow();
+        int newBalance = wallet.getBalance() - dto.getBalance();
+        if (newBalance < 0) {
+            throw new IllegalArgumentException("No Money!");
+        }
+
+        wallet.setBalance(newBalance);
+        walletRepository.save(wallet);
+    }
+
+    public WalletDTO findWalletByUserId(Long userId){
+        User user = userRepository.findById(userId).orElseThrow();
+        return walletMapper.toEntity(walletRepository.findByUser(user));
     }
 }

@@ -1472,6 +1472,50 @@
             opacity: 0.8;
             transition: 0.5s;
         }
+        /* Скрыть оригинальный флажок */
+        .form-div input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        /* Стилизовать кастомный флажок */
+        .form-div label {
+            position: relative;
+            padding-left: 25px; /* добавляем отступ слева для имитации флажка */
+            cursor: pointer;
+        }
+
+        .form-div label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #999;
+            border-radius: 4px;
+        }
+
+        /* Стилизация флажка, когда он отмечен */
+        .form-div input[type="checkbox"]:checked + label:before {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        /* Дополнительные стили по желанию */
+        .form-div label {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+            width: 500px;
+            padding-left: 30px;
+        }
+
+        /* Изменение внешнего вида при наведении */
+        .form-div label:hover:before {
+            border-color: #666;
+        }
+
     </style>
 </head>
 <body>
@@ -1568,13 +1612,18 @@
     <section class="booking-modal">
         <div class="booking-modal-div">
             <div>
-                <h1>Medeo</h1>
+                <h1 th:text="${accommodation.name}"></h1>
                 <button onclick="closeModal()" class="close-modal-btn">
                     Close
                 </button>
                 <div class="balans">
-                    <h3>Your account has a balance of:</h3>
-                    <h1>150 <span>KZT</span></h1>
+                    <h3>Price Of Accomodation:</h3>
+                    <h1 th:text="${accommodation.price + ' '}"></h1>
+                </div>
+                <div class="balans">
+                    <input type="hidden" name="userId" th:value="${onlineUser != null and onlineUser.getId() != 0 ? onlineUser.getId() : ''}">
+                    <h3>Your Balance:</h3>
+                    <h1 id="user-balance"></h1>
                 </div>
                 <hr>
                 <button onclick="addToFavoritesAndCloseModal()" class="add-fav-btn">ADD TO FAVORITES</button>
@@ -1583,14 +1632,11 @@
             <form class="form-booking-modal" onsubmit="return handleSubmit()">
                 <button type="submit" >BUY</button>
                 <div class="form-div">
-                    <input type="checkbox">
-                    <p>I have previously read all the rules and agree to the rules</p>
+                    <input type="checkbox" id="agree">
+                    <label for="agree">I have previously read all the rules and agree to the rules</label>
                 </div>
             </form>
-
         </div>
-
-
     </section>
     <div id="notification" style="display: none; position: fixed; top: 70px; right: 50px; background-color: seagreen; color: white; padding: 10px 50px; z-index: 1000; border-radius: 5px; font-size:20px;">
         Added successfully!
@@ -1959,6 +2005,39 @@
         var modal = document.getElementById('myModal');
         modal.style.display = "none";
     }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var inputElement = document.querySelector('input[name="userId"]');
+        // You might want to retrieve the userId from somewhere; assuming it's available as a global variable or from another source
+        var userId = inputElement.value;; // Replace with actual logic to determine the userId
+
+        function fetchBalance() {
+            if (userId === null) {
+                // Set balance to 0 if userId is null
+                document.getElementById("user-balance").innerHTML = "0 <span>KZT</span>";
+            } else {
+                // Make the AJAX call to fetch balance if userId is not null
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:1080/wallets/findByUserId/${userId}`, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        var balance = response.balance;
+                        document.getElementById("user-balance").innerHTML = balance + " <span>KZT</span>";
+                    }
+                };
+                xhr.onerror = function() {
+                    console.error("An error occurred during the AJAX request");
+                    // Optionally set balance to zero on error
+                    document.getElementById("user-balance").innerHTML = "0 <span>KZT</span>";
+                };
+                xhr.send();
+            }
+        }
+
+        fetchBalance(); // Call this function when the document is loaded
+    });
 </script>
 </body>
 </html>

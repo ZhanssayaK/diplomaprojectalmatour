@@ -1,6 +1,7 @@
 package com.example.diploma.project.almatour.controller;
 
 import com.example.diploma.project.almatour.dto.AccommodationDetailDTO;
+import com.example.diploma.project.almatour.model.User;
 import com.example.diploma.project.almatour.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,12 +65,10 @@ public class HomeController {
                                    Model model) {
         AccommodationDetailDTO accommodation = accomodationService.getAccommodation(id);
         model.addAttribute("accommodation", accommodation);
-        return "detailspage";
-    }
 
-    @GetMapping(value = "/myBooking")
-    public String myBooking() {
-        return "booking";
+        User user = authenticationService.getCurrentUser();
+        model.addAttribute("onlineUser", user);
+        return "detailspage";
     }
 
     @GetMapping(value = "/messages")

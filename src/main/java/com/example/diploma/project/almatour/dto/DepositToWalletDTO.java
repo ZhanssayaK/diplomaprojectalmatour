@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class DepositToWalletDTO {
-    Long walletId;
-    int balance;
+    private Long walletId;
+    private int balance;
 }

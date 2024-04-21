@@ -2,6 +2,7 @@ package com.example.diploma.project.almatour.api;
 
 import com.example.diploma.project.almatour.dto.DepositToWalletDTO;
 import com.example.diploma.project.almatour.dto.WalletDTO;
+import com.example.diploma.project.almatour.model.Wallet;
 import com.example.diploma.project.almatour.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,11 @@ public class WalletController {
     @PostMapping(value = "/deposit")
     public ResponseEntity<Void> depositToWallet(@RequestBody DepositToWalletDTO dto){
         walletService.depositToWallet(dto);
-        return ResponseEntity.ok().build(); // Возвращаем статус 200 OK
+        return ResponseEntity.ok().build();
     }
 
+    @GetMapping(value = "/findByUserId/{userId}")
+    public WalletDTO findByUserId(@PathVariable(value = "userId") Long userId){
+        return walletService.findWalletByUserId(userId);
+    }
 }

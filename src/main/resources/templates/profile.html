@@ -5,85 +5,79 @@
     <title>Profile Screen</title>
     <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">
     <style>
-        body {
+        body{
             width: 100%;
             margin: 0px;
             font-family: 'Segoe UI';
         }
-
-        main {
+        main{
             display: grid;
             grid-template-columns: 20% 80%;
         }
-
-        .main-left {
+        .logo{
+            position: absolute;
+            left: 15%;
+            font-size: 30px;
+        }
+        .logo:hover{
+            opacity: 0.7;
+        }
+        .main-left{
             border: 1px solid lightgray;
             min-height: 738px;
         }
-
-        .main-left-div {
+        .main-left-div{
             margin-top: 50px;
             display: grid;
             padding: 0px 10%;
             row-gap: 2em;
         }
-
-        .main-left-div div {
+        .main-left-div div{
             display: grid;
             grid-template-columns: 20% 80%;
         }
-
-        .main-left img {
+        .main-left img{
             width: 30px;
             opacity: 0.3;
         }
-
-        .main-left a {
+        .main-left a{
             text-decoration: none;
             color: darkslategray;
             top: 5px;
             position: relative;
         }
-
-        .main-left h1 {
+        .main-left h1{
             position: relative;
             left: 10%;
             color: #092035;
         }
-
-        .main-right {
-
+        .main-right{
+            height: 940px;
         }
-
-        .main-right-header {
+        .main-right-header{
             display: grid;
             grid-template-columns: 70% 30%;
             border-top: 1px solid lightgray;
             border-right: 1px solid lightgray;
         }
-
-        .main-right-header img {
+        .main-right-header img{
             width: 30px;
             height: 30px;
             margin: auto;
         }
-
-        .main-right-info {
+        .main-right-info{
             display: grid;
             grid-template-columns: 15% 15% 40%;
         }
-
-        .main-right-info h4 {
+        .main-right-info h4{
             text-align: center;
         }
-
-        .main-right-logo h1 {
+        .main-right-logo h1{
             color: darkslategray;
             position: relative;
             left: 20px;
         }
-
-        .background {
+        .background{
             width: 100%;
             height: 200px;
             background-image: url('https://static.vecteezy.com/system/resources/previews/003/452/115/non_2x/wildlife-elk-in-forest-nature-landscape-illustration-free-vector.jpg');
@@ -91,7 +85,7 @@
             background-size: cover;
         }
 
-        form {
+        form{
             display: grid;
             grid-template-columns: 35% 65%;
             gap: 3em;
@@ -101,28 +95,25 @@
             margin-left: 50px;
             z-index: 1000;
         }
-
-        .m-1 {
+        .m-1{
             border: 1px solid lightgray;
             height: 310px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
         }
-
-        .m-2 {
+        .m-2{
             border: 1px solid lightgray;
             min-height: 500px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
         }
-
-        #main2 {
+        #main2{
             display: none;
         }
 
-        .main-2 {
+        .main-2{
             border: 1px solid lightgray;
             height: 50px;
             padding-top: 13px;
@@ -131,10 +122,9 @@
             display: grid;
             grid-template-columns: 40% 30% 30%;
         }
-
-        .main-2 button {
+        .main-2 button{
             background-color: white;
-            border: 0px;
+            border: 0px ;
             height: 50px;
             color: darkslategray;
             cursor: pointer;
@@ -142,7 +132,7 @@
             font-weight: 600;
         }
 
-        .main-2 button:hover {
+        .main-2 button:hover{
             opacity: 0.7;
             transition: 0.3s;
         }
@@ -150,12 +140,10 @@
         .file {
             position: relative;
         }
-
-        label {
+        label{
             font-family: Arial;
             color: #999;
         }
-
         .input {
             display: none;
         }
@@ -174,7 +162,7 @@
             border-radius: 50px;
         }
 
-        .profile-photo {
+        .profile-photo{
             width: 200px;
             margin: 50px auto;
             box-shadow: 0px 2px 10px lightgray;
@@ -182,8 +170,7 @@
             border: 1px solid whitesmoke;
             height: 200px
         }
-
-        .profile-photo img {
+        .profile-photo img{
             width: 200px;
             border-radius: 50%;
             margin: auto;
@@ -191,20 +178,19 @@
         }
 
 
-        .content {
+
+        .content{
             display: grid;
             grid-template-columns: 50% 50%;
             justify-items: center;
             row-gap: 1em;
             margin-top: 40px;
         }
-
-        .content label {
+        .content label{
             font-size: 18px;
 
         }
-
-        .content input {
+        .content input{
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -212,41 +198,35 @@
             border-radius: 5px;
             width: 250px;
         }
-
-        .content button {
+        .content button{
             background-color: #335da5;
             color: white;
             padding: 10px 30px;
             font-size: 17px;
             border-radius: 10px;
-            border: 0px solid;
+            border: 0px solid ;
             position: relative;
             margin-left: -115px;
             top: 20px;
             box-shadow: 0px 5px 5px lightgray;
         }
-
-        #user-image {
+        #user-image{
             border-radius: 50px;
         }
-
-        .content button:hover {
+        .content button:hover{
             opacity: 0.7;
             transition: 0.3s;
         }
-
-        #default-image {
+        #default-image{
             width: 70%;
             height: 70%;
             margin: 15%;
             border-radius: 0px;
         }
-
-        #userimage {
+        #userimage{
             border-radius: 50px;
         }
-
-        .admin-panel {
+        .admin-panel{
             background-color: white;
             border: 0px;
             padding: 0px;
@@ -255,8 +235,7 @@
             font-size: 15px;
             cursor: pointer;
         }
-
-        .admin-page {
+        .admin-page{
             opacity: 1000;
             background-color: white;
             width: 70%;
@@ -268,7 +247,6 @@
             border: 1px solid lightgray;
             padding-bottom: 50px;
         }
-
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -278,24 +256,21 @@
             overflow: hidden;
             box-shadow: 0px 2px 5px lightgray;
         }
-
-        .btn-danger {
+        .btn-danger{
             background-color: crimson;
             color: white;
             padding: 5px 20px;
             border: 0px;
             border-radius: 5px;
         }
-
-        .btn-warning {
+        .btn-warning{
             background-color: orange;
             color: white;
             padding: 5px 20px;
             border: 0px;
             border-radius: 5px;
         }
-
-        .container-btns {
+        .container-btns{
             display: grid;
             position: absolute;
             width: 80%;
@@ -303,9 +278,8 @@
             top: 0px;
             grid-template-columns: 50% 50%;
         }
-
-        .container-btns button {
-            border: 0px solid;
+        .container-btns button{
+            border: 0px solid ;
             padding-top: 20px;
             font-size: 18px;
             color: darkslategray;
@@ -314,32 +288,26 @@
             font-weight: 600;
             background-color: white;
         }
-
-        .container2 {
+        .container2{
             display: none;
         }
-
-        hr {
+        hr{
             border: 1px solid lightgray;
             position: absolute;
             width: 100%;
             left: 0px;
             margin-top: -30px;
         }
-
-        .admin-page {
+        .admin-page{
             display: none;
         }
-
-        .container-btns button:hover {
+        .container-btns button:hover{
             opacity: 0.7;
         }
-
-        .btn:hover {
+        .btn:hover{
             opacity: 0.7;
             transition: 0.3s;
         }
-
         .table thead {
             background-color: #5dcae3;
             color: #fff;
@@ -361,31 +329,29 @@
         .table tbody td:last-child {
             text-align: center;
         }
-
-        #close {
+        #close{
             background-color: crimson;
             color: white;
-            border: 1px solid;
+            border: 1px solid ;
             border-radius: 10px;
             padding: 5px 20px;
             font-size: 17px;
             margin-bottom: 50px;
         }
 
-        .container-h3 {
+        .container-h3{
             margin-left: 20px;
             font-weight: 450px;
             color: darkslategray;
             margin-top: -10px;
 
         }
-
-        #close:hover {
+        #close:hover{
             opacity: 0.8;
             transition: 0.3s;
         }
 
-        #content3 {
+        #content3{
             height: 250px;
             display: grid;
             grid-template-columns: 50% 50%;
@@ -396,22 +362,36 @@
             top: 80px;
             left: 120px;
         }
+        .cont-div{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-items: center;
+            width: 50%;
+        }
+        .cont-div input{
+            width: 100px;
+        }
 
-        #main3 {
+        .signout-btn{
+            border-top: 1px solid #999;
+            padding-top: 20px;
+            position: relative;
+            top: 550px;
+        }
+        #main3{
             display: none;
             background-color: white;
             width: 73%;
             border-radius: 10px;
             margin-left: 50px;
             top: 110px;
-            min-height: 600px;
+            min-height: 620px;
             z-index: 500;
             overflow: hidden;
             position: absolute;
             border: 1px solid lightgray;
         }
-
-        select {
+        select{
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -420,8 +400,7 @@
             color: #999;
             width: 272px;
         }
-
-        textarea {
+        textarea{
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -434,16 +413,7 @@
             max-height: 60px;
 
         }
-
-        .btn-primary {
-            background-color: orange;
-            padding: 5px 20px;
-            border: 0px solid;
-            color: white;
-            border-radius: 5px;
-        }
-
-        #main4 {
+        #main4{
             display: none;
             background-color: white;
             width: 73%;
@@ -456,24 +426,21 @@
             position: absolute;
             border: 1px solid lightgray;
         }
-
-        #main2 {
+        #main2{
             display: grid;
         }
-
-        #main3 .content {
+        #main3 .content{
             height: 400px;
             margin-top: -20px;
         }
 
-        #image-container {
+        #image-container{
             width: 100%;
             overflow: hidden;
             height: 100%;
             top: 0px;
         }
-
-        #default-image {
+        #default-image{
             width: 200px;
             height: 200px;
             position: relative;
@@ -482,36 +449,86 @@
             border-radius: 50%;
         }
 
-        .modal {
-            position: absolute;
-            width: 100%;
+
+
+
+        #bookings{
             display: none;
-            top: 0px;
-            background-color: rgb(0, 0, 0, 0.5);
         }
-
-        .modal-content {
-
-            width: 50%;
-            background-color: white;
-            margin: 150px auto;
-            padding: 50px;
-            min-height: 350px;
-            border-radius: 10px;
-        }
-
-        .close {
-            background-color: crimson;
-            padding: 5px 10px;
-            box-shadow: 0px 0px 5px #999;
+        .container-btns-2{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            width: 80%;
+            margin-left: 12%;
+            margin-top: -80px;
             position: absolute;
-            margin-left: 50%;
-            margin-top: -30px;
-            color: white;
-            font-weight: bold;
-            font-size: 21px;
-            border-radius: 50px;
         }
+        #announcements{
+            display: none;
+        }
+        .container-btns-2 button{
+            background-color: white;
+            border: 0px;
+            font-size: 20px;
+            color: darkslategray;
+        }
+        .bookings-cards{
+            width: 80%;
+            margin: auto;
+            position: relative;
+            top: -50px;
+            background-color: white;
+            padding: 20px 50px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .booking-card{
+            display: grid;
+            grid-template-columns: 15% 70%;
+            gap: 1em;
+        }
+        .booking-card img{
+            width: 80%;
+            height: 100px;
+        }
+
+        .booking-card-info{
+            margin-top: 0px;
+        }
+        .booking-card-info h1{
+            font-size: 18px;
+        }
+        .booking-card-info p{
+            font-size: 15px;
+            color: red;
+            margin-top: -10px;
+            margin-bottom: -10px;
+        }
+
+
+
+
+
+        .btn-close-booking{
+            background-color: crimson;
+            border: 0px;
+
+            padding: 5px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            color: white;
+            box-shadow: 0px 2px 5px #ddd;
+            position: absolute;
+            margin-bottom: 0px;
+            margin-left: 81%;
+        }
+
+
+
+
+
+
+
     </style>
 </head>
 <body data-user-id="${userId}">
@@ -522,12 +539,11 @@
         <div class="main-left-div">
             <div>
                 <img src="https://cdn1.iconfinder.com/data/icons/finance-banking-tiny-icons/16/seal_of_approval-1024.png">
-                <a th:href="@{'/myBooking'}">Bookings</a>
+                <button class="admin-panel" onclick="changePage2()">
+                    <a>My Bookings</a>
+                </button>
             </div>
-            <div>
-                <img src="https://cdn3.iconfinder.com/data/icons/business-vol-16/100/Artboard_9-1024.png">
-                <a href="#">Sheduling</a>
-            </div>
+
             <div>
                 <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/messages-1024.png">
                 <a th:href="@{'/messages'}">Messages</a>
@@ -539,7 +555,7 @@
                 </button>
             </div>
 
-            <div style="border-top: 1px solid #999; position: relative; top: 320px; padding-top: 20px; ">
+            <div class="signout-btn">
                 <img src="https://c3.klipartz.com/pngpicture/421/12/sticker-png-sword-art-online-vector-icons-logout-thumbnail.png">
                 <a th:href="@{'/exit'}">Sign Out</a>
             </div>
@@ -656,7 +672,46 @@
                 </form>
             </div>
         </div>
+        <div id="bookings">
+            <div class="bookings-cards">
 
+                <button id="close" onclick="closeBooking()">Close</button>
+                <div class="container-btns-2">
+                    <button onclick="changeBook1()">Bookings Panel</button>
+                    <button onclick="changeBook2()">Announcements Panel</button>
+                </div>
+                <hr>
+                <div id="bookingss">
+                    <h1>My bookings:</h1>
+
+
+                    <div class="booking-card"><!--МЫНДА ФОР ИЧ КОЯСЫН-->
+                        <div>
+                            <img>
+                        </div>
+                        <div class="booking-card-info">
+                            <h1>Name</h1>
+                            <p>Description</p>
+                            <h1>Price</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="announcements">
+                    <h1>My announcements</h1>
+                    <div class="booking-card"><!--МЫНДА ФОР ИЧ КОЯСЫН-->
+                        <div>
+                            <img>
+                        </div>
+                        <div class="booking-card-info">
+                            <h1>Name</h1>
+                            <p>Description</p>
+                            <h1>Price</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="main3">
             <div class="main-2">
                 <button onclick="closeModal1()">Account Settings</button>
@@ -899,6 +954,7 @@
         document.getElementById('main2').style.display = 'none';
         document.getElementById('main3').style.display = 'none';
         document.getElementById('main4').style.display = 'none';
+        document.getElementById('bookings').style.display = 'none';
 
 
     }
@@ -1050,14 +1106,14 @@
 </script>
 <script>
     function fetchAccommodations() {
-            fetch('http://localhost:1080/accommodations')
-                .then(response => response.json())
-                .then(accommodations => {
-                    const tbody = document.querySelector('#accomodationTableBody');
-                    tbody.innerHTML = ''; // Clear current table rows
+        fetch('http://localhost:1080/accommodations')
+            .then(response => response.json())
+            .then(accommodations => {
+                const tbody = document.querySelector('#accomodationTableBody');
+                tbody.innerHTML = ''; // Clear current table rows
 
-                    accommodations.forEach(accommodation => {
-                        const row = `<tr>
+                accommodations.forEach(accommodation => {
+                    const row = `<tr>
                         <td>${accommodation.id}</td>
                         <td>${accommodation.name}</td>
                         <td>${accommodation.location}</td>
@@ -1070,13 +1126,13 @@
                             <button onclick="deleteAccommodation(${accommodation.id})" class="btn btn-danger">Delete</button>
                         </td>
                      </tr>`;
-                        tbody.innerHTML += row;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching accommodations:', error);
+                    tbody.innerHTML += row;
                 });
-        }
+            })
+            .catch(error => {
+                console.error('Error fetching accommodations:', error);
+            });
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         fetchAccommodations();
@@ -1103,7 +1159,31 @@
             });
     }
 </script>
+<script>
+    function changeBook1(){
+        document.getElementById('bookingss').style.display="block";
+        document.getElementById('announcements').style.display="none";
+    }
+    function changeBook2(){
+        document.getElementById('bookingss').style.display="none";
+        document.getElementById('announcements').style.display="block";
+    }
+    function closeBooking() {
+        document.getElementById('bookings').style.display='none';
+        document.getElementById('main2').style.display='block';
 
+
+    }
+    function changePage2() {
+        document.getElementById('bookings').style.display='block';
+        document.getElementById('adminpage').style.display='none';
+        document.getElementById('main2').style.display='none';
+        document.getElementById('main3').style.display='none';
+        document.getElementById('main4').style.display='none';
+
+
+    }
+</script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         const userId = document.querySelector('input[name="currentUserId"]').value;
