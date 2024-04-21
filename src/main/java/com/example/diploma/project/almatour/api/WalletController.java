@@ -28,6 +28,12 @@ public class WalletController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping(value = "/withdraw")
+    public ResponseEntity<Void> withdrawFromWallet(@RequestBody DepositToWalletDTO dto){
+        walletService.withdrawFromWallet(dto);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(value = "/findByUserId/{userId}")
     public WalletDTO findByUserId(@PathVariable(value = "userId") Long userId){
         return walletService.findWalletByUserId(userId);

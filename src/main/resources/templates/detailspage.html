@@ -1618,7 +1618,7 @@
                 </button>
                 <div class="balans">
                     <h3>Price Of Accomodation:</h3>
-                    <h1 th:text="${accommodation.price + ' '}"></h1>
+                    <h1 id="accomodationPriceCheck" th:text="${accommodation.price + ' '}"></h1>
                 </div>
                 <div class="balans">
                     <input type="hidden" name="userId" th:value="${onlineUser != null and onlineUser.getId() != 0 ? onlineUser.getId() : ''}">
@@ -1630,7 +1630,7 @@
             </div>
 
             <form class="form-booking-modal" onsubmit="return handleSubmit()">
-                <button type="submit" >BUY</button>
+                <button id="buyButton" type="submit" >BUY</button>
                 <div class="form-div">
                     <input type="checkbox" id="agree">
                     <label for="agree">I have previously read all the rules and agree to the rules</label>
@@ -2009,8 +2009,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var inputElement = document.querySelector('input[name="userId"]');
-        // You might want to retrieve the userId from somewhere; assuming it's available as a global variable or from another source
-        var userId = inputElement.value;; // Replace with actual logic to determine the userId
+        var userId = inputElement.value;;
 
         function fetchBalance() {
             if (userId === null) {
@@ -2038,6 +2037,45 @@
 
         fetchBalance(); // Call this function when the document is loaded
     });
+</script>
+<script>
+    document.getElementById('buyButton').addEventListener('click', function() {
+        var userId = document.getElementById('userId').value; // Assuming you have the user's ID available, possibly retrieved from session or local storage
+
+        // Step 1: Fetch the Wallet ID
+        var xhrWallet = new XMLHttpRequest();
+        xhrWallet.open("GET", `http://localhost:1080/wallets/findByUserId/${userId}`, true);
+        xhrWallet.onreadystatechange = function () {
+            if (xhrWallet.readyState === 4 && xhrWallet.status === 200) {
+                var walletData = JSON.parse(xhrWallet.responseText);
+                var walletId = walletData.id; // Extract wallet ID from response
+                var priceElement = document.getElementById('accomodationPriceCheck');
+                var price = parseFloat(priceElement.innerText.trim()); // Get the price and convert it to a float
+
+                // Step 2: Proceed to make the withdrawal
+                var requestData = {
+                    walletId: walletId,
+                    balance: price
+                };
+
+                var xhrWithdraw = new XMLHttpRequest();
+                xhrWithdraw.open("POST", "http://localhost:1080/wallets/withdraw", true);
+                xhrWithdraw.setRequestHeader("Content-Type", "application/json");
+                xhrWithdraw.onreadystatechange = function () {
+                    if (xhrWithdraw.readyState === 4 && xhrWithdraw.status === 200) {
+                        alert('Payment Successful!');
+                    } else if (xhrWithdraw.readyState === 4) {
+                        alert('Payment Failed: ' + xhrWithdraw.responseText);
+                    }
+                };
+                xhrWithdraw.send(JSON.stringify(requestData));
+            } else if (xhrWallet.readyState === 4) {
+                alert('Failed to fetch wallet information');
+            }
+        };
+        xhrWallet.send();
+    });
+
 </script>
 </body>
 </html>
