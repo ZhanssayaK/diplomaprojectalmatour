@@ -18,5 +18,4 @@ public class AccommodationShowDTO {
     private boolean status;
     private UserDTO user;
     private CityDTO city;
-
 }

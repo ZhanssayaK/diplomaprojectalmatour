@@ -2,6 +2,7 @@ package com.example.diploma.project.almatour.api;
 
 import com.example.diploma.project.almatour.dto.DepositToWalletDTO;
 import com.example.diploma.project.almatour.dto.WalletDTO;
+import com.example.diploma.project.almatour.dto.WithdrawAndBookDTO;
 import com.example.diploma.project.almatour.model.Wallet;
 import com.example.diploma.project.almatour.service.WalletService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,11 @@ public class WalletController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "/withdraw")
-    public ResponseEntity<Void> withdrawFromWallet(@RequestBody DepositToWalletDTO dto){
-        walletService.withdrawFromWallet(dto);
+    @PostMapping("/withdraw")
+    public ResponseEntity<Void> withdrawFromWalletAndBookAccommodation(
+            @RequestBody WithdrawAndBookDTO dto) {
+        walletService.withdrawFromWallet(
+                dto.getDepositDto(), dto.getAccommodationId(), dto.getUserId());
         return ResponseEntity.ok().build();
     }
 

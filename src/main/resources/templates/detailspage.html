@@ -1616,12 +1616,13 @@
                 <button onclick="closeModal()" class="close-modal-btn">
                     Close
                 </button>
-                <div class="balans">
+                <div class="balans" style="display: grid; grid-template-columns: 60% 30% 10%">
                     <h3>Price Of Accomodation:</h3>
                     <h1 id="accomodationPriceCheck" th:text="${accommodation.price + ' '}"></h1>
+                    <h3>KZT</h3>
                 </div>
                 <div class="balans">
-                    <input type="hidden" name="userId" th:value="${onlineUser != null and onlineUser.getId() != 0 ? onlineUser.getId() : ''}">
+                    <input type="hidden" id="userId" name="userId" th:value="${onlineUser != null && onlineUser.getId() != 0 ? onlineUser.getId() : ''}">
                     <h3>Your Balance:</h3>
                     <h1 id="user-balance"></h1>
                 </div>
@@ -2040,42 +2041,39 @@
 </script>
 <script>
     document.getElementById('buyButton').addEventListener('click', function() {
-        var userId = document.getElementById('userId').value; // Assuming you have the user's ID available, possibly retrieved from session or local storage
+        const userId = document.getElementById('userId').value;
 
         // Step 1: Fetch the Wallet ID
-        var xhrWallet = new XMLHttpRequest();
-        xhrWallet.open("GET", `http://localhost:1080/wallets/findByUserId/${userId}`, true);
-        xhrWallet.onreadystatechange = function () {
-            if (xhrWallet.readyState === 4 && xhrWallet.status === 200) {
-                var walletData = JSON.parse(xhrWallet.responseText);
-                var walletId = walletData.id; // Extract wallet ID from response
-                var priceElement = document.getElementById('accomodationPriceCheck');
-                var price = parseFloat(priceElement.innerText.trim()); // Get the price and convert it to a float
+        fetch(`http://localhost:1080/wallets/findByUserId/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch wallet information');
+                }
+                return response.json();
+            })
+            .then(walletData => {
+                const walletId = walletData.id;
+                const price = parseFloat(document.getElementById('accomodationPriceCheck').innerText.trim());
 
                 // Step 2: Proceed to make the withdrawal
-                var requestData = {
-                    walletId: walletId,
-                    balance: price
-                };
-
-                var xhrWithdraw = new XMLHttpRequest();
-                xhrWithdraw.open("POST", "http://localhost:1080/wallets/withdraw", true);
-                xhrWithdraw.setRequestHeader("Content-Type", "application/json");
-                xhrWithdraw.onreadystatechange = function () {
-                    if (xhrWithdraw.readyState === 4 && xhrWithdraw.status === 200) {
-                        alert('Payment Successful!');
-                    } else if (xhrWithdraw.readyState === 4) {
-                        alert('Payment Failed: ' + xhrWithdraw.responseText);
-                    }
-                };
-                xhrWithdraw.send(JSON.stringify(requestData));
-            } else if (xhrWallet.readyState === 4) {
-                alert('Failed to fetch wallet information');
-            }
-        };
-        xhrWallet.send();
+                const requestData = { walletId, balance: price };
+                return fetch("http://localhost:1080/wallets/withdraw", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestData)
+                });
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload(); // Обновление страницы после успешной транзакции
+                } else {
+                    response.text().then(text => alert('Payment Failed: ' + text));
+                }
+            })
+            .catch(error => {
+                alert(error.message);
+            });
     });
-
 </script>
 </body>
 </html>

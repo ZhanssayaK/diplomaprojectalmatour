@@ -1,5 +1,6 @@
 package com.example.diploma.project.almatour.model;
 
+import com.example.diploma.project.almatour.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,7 @@ public class Booking {
 
     @ManyToOne
     private Accommodation accommodation;
+
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 }
