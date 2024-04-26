@@ -1541,7 +1541,7 @@
                 <i class="fas fa-heart"></i>
             </button>
             <button>
-                <a src="" class="profile-icon">
+                <a th:href="@{'/profile'}" class="profile-icon">
                     <i class="fas fa-user"></i>
                 </a>
             </button>
@@ -1597,6 +1597,7 @@
             <p>City: <span th:text="${accommodation.city.name}">City Name</span></p>
             <p>User: <span th:text="${accommodation.user.fullName}">User Name</span></p>
             <p>Status: <span th:text="${accommodation.status}">Status</span></p>
+            <input type="hidden" th:value="${accommodation.id}" id="accommodationId">
             <h3>Price: <span th:text="${accommodation.price}">Price</span></h3>
             <button onclick="openModal()">Book</button>
         </div>
@@ -2042,6 +2043,7 @@
 <script>
     document.getElementById('buyButton').addEventListener('click', function() {
         const userId = document.getElementById('userId').value;
+        const accommodationId = document.getElementById('accommodationId').value; // Assuming there's an input with id 'accommodationId'
 
         // Step 1: Fetch the Wallet ID
         fetch(`http://localhost:1080/wallets/findByUserId/${userId}`)
@@ -2055,8 +2057,17 @@
                 const walletId = walletData.id;
                 const price = parseFloat(document.getElementById('accomodationPriceCheck').innerText.trim());
 
-                // Step 2: Proceed to make the withdrawal
-                const requestData = { walletId, balance: price };
+                // Step 2: Prepare the data for the withdrawal and booking
+                const requestData = {
+                    depositDto: { // Nesting the walletId and balance into depositDto
+                        walletId: walletId,
+                        balance: price
+                    },
+                    userId: userId,
+                    accommodationId: accommodationId
+                };
+
+                // Step 3: Proceed to make the withdrawal and booking
                 return fetch("http://localhost:1080/wallets/withdraw", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -2065,13 +2076,13 @@
             })
             .then(response => {
                 if (response.ok) {
-                    window.location.reload(); // Обновление страницы после успешной транзакции
+                    window.location.reload(); // Reload page after successful transaction
                 } else {
                     response.text().then(text => alert('Payment Failed: ' + text));
                 }
             })
             .catch(error => {
-                alert(error.message);
+                alert('Error: ' + error.message);
             });
     });
 </script>

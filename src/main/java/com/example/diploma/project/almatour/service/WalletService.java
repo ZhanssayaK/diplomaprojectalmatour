@@ -14,6 +14,7 @@ import com.example.diploma.project.almatour.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,7 +34,6 @@ public class WalletService {
     public void depositToWallet(DepositToWalletDTO dto) {
         Wallet wallet = walletRepository.findById(dto.getWalletId()).orElseThrow();
         wallet.setBalance(wallet.getBalance() + dto.getBalance());
-
         walletRepository.save(wallet);
     }
 

@@ -6,6 +6,7 @@ import com.example.diploma.project.almatour.dto.WithdrawAndBookDTO;
 import com.example.diploma.project.almatour.model.Wallet;
 import com.example.diploma.project.almatour.service.WalletService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,11 +31,13 @@ public class WalletController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<Void> withdrawFromWalletAndBookAccommodation(
-            @RequestBody WithdrawAndBookDTO dto) {
-        walletService.withdrawFromWallet(
-                dto.getDepositDto(), dto.getAccommodationId(), dto.getUserId());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> withdrawFromWalletAndBookAccommodation(@RequestBody WithdrawAndBookDTO dto) {
+        try {
+            walletService.withdrawFromWallet(dto.getDepositDto(), dto.getAccommodationId(), dto.getUserId());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping(value = "/findByUserId/{userId}")
