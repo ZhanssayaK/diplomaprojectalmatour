@@ -27,4 +27,8 @@ public class BookingService {
     public List<BookingDTO> getBookings(){
         return bookingMapper.toDtoList(bookingRepository.findAll());
     }
+
+    public List<BookingDTO> getBookingByUserId(Long userId){
+        return bookingMapper.toDtoList(bookingRepository.findByUserId(userId));
+    }
 }

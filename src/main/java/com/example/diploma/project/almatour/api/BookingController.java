@@ -23,4 +23,9 @@ public class BookingController {
     public List<BookingDTO> getBookings(){
         return bookingService.getBookings();
     }
+
+    @GetMapping(value = "/findByUserId/{currentUserId}")
+    public List<BookingDTO> getBookingByUserId(@PathVariable(value = "currentUserId") Long currentUserId){
+        return bookingService.getBookingByUserId(currentUserId);
+    }
 }

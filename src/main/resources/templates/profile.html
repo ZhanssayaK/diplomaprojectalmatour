@@ -685,32 +685,12 @@
                 <hr>
                 <div id="bookingss">
                     <h1>My bookings:</h1>
-
-
-                    <div class="booking-card"><!--МЫНДА ФОР ИЧ КОЯСЫН-->
-                        <div>
-                            <img>
-                        </div>
-                        <div class="booking-card-info">
-                            <h1>Name</h1>
-                            <p>Description</p>
-                            <h1>Price</h1>
-                        </div>
-                    </div>
+                    <div id="bookingCardsContainerQ"></div>
                 </div>
 
                 <div id="announcements">
                     <h1>My announcements</h1>
-                    <div class="booking-card"><!--МЫНДА ФОР ИЧ КОЯСЫН-->
-                        <div>
-                            <img>
-                        </div>
-                        <div class="booking-card-info">
-                            <h1>Name</h1>
-                            <p>Description</p>
-                            <h1>Price</h1>
-                        </div>
-                    </div>
+                    <div id="bookingCardsContainer"><!-- Dynamic booking cards will be appended here --></div>
                 </div>
             </div>
         </div>
@@ -1295,5 +1275,81 @@
         }
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userId = document.querySelector('input[name="currentUserId"]').value; // Retrieve user ID
+
+        fetch(`http://localhost:1080/accommodations/findByUserId/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse JSON data from the response
+            })
+            .then(data => {
+                const container = document.getElementById('bookingCardsContainer');
+                data.forEach(item => {
+                    // Create the entire booking card dynamically
+                    const card = document.createElement('div');
+                    card.className = 'booking-card';
+                    card.innerHTML = `
+                    <div>
+                        <img src="${item.imageUrl || 'placeholder-image-url.jpg'}" alt="Image of ${item.name}" style="width: 100px; height: 100px;">
+                    </div>
+                    <div class="booking-card-info">
+                        <h1>${item.name}</h1>
+                        <p>${item.description}</p>
+                        <h2>$${item.price}</h2>
+                    </div>
+                `;
+                    container.appendChild(card); // Append each new card to the container
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch data:', error);
+                alert('Failed to load announcements.');
+            });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userId = document.querySelector('input[name="currentUserId"]').value;
+
+        // Fetch bookings by userId
+        fetch(`http://localhost:1080/bookings/findByUserId/${userId}`)
+            .then(response => response.json())
+            .then(bookings => {
+                bookings.forEach(booking => {
+                    // For each booking, fetch accommodation details
+                    fetch(`http://localhost:1080/accommodations/getByIdAccomodationApi/${booking.accommodationId}`)
+                        .then(response => response.json())
+                        .then(accommodation => {
+                            // Create and append booking card with accommodation details
+                            const container = document.getElementById('bookingCardsContainerQ');
+                            const card = document.createElement('div');
+                            card.className = 'booking-card';
+                            card.innerHTML = `
+                            <div>
+                                <img src="${accommodation.imageUrl || 'placeholder-image-url.jpg'}" alt="Image of ${accommodation.name}" style="width: 100px; height: 100px;">
+                            </div>
+                            <div class="booking-card-info">
+                                <h1>${accommodation.name}</h1>
+                                <p>${accommodation.description}</p>
+                                <h2>$${accommodation.price}</h2>
+                            </div>
+                        `;
+                            container.appendChild(card);
+                        })
+                        .catch(error => {
+                            console.error('Failed to fetch accommodation details:', error);
+                        });
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch bookings:', error);
+            });
+    });
+</script>
+
 </body>
 </html>

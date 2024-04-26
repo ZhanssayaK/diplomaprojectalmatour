@@ -135,4 +135,9 @@ public class AccomodationController {
     public List<AccommodationDTO> getAccomodationsByUser(@PathVariable(value = "userId") Long userId){
         return accomodationService.getAccomodationsByUserId(userId);
     }
+
+    @GetMapping(value = "/getByIdAccomodationApi/{id}")
+    public MyAccomodationFunctionDTO getByIdAccomodationApi(@PathVariable(value = "id") Long id){
+        return accomodationService.getAccomodationById(id);
+    }
 }

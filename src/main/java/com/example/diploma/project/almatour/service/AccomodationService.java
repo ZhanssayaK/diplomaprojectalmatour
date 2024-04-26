@@ -4,6 +4,7 @@ import com.example.diploma.project.almatour.dto.*;
 import com.example.diploma.project.almatour.exception.AccommmodationExistException;
 import com.example.diploma.project.almatour.mapper.AccommodationMapper;
 import com.example.diploma.project.almatour.mapper.AccommodationShowMapper;
+import com.example.diploma.project.almatour.mapper.MyAccomodationFunctionMapper;
 import com.example.diploma.project.almatour.mapper.UserMapper;
 import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.AccommodationPhoto;
@@ -39,6 +40,7 @@ public class AccomodationService {
     private final AccommodationShowMapper accommodationShowMapper;
     private final AccommodationMapper accommodationMapper;
     private final AccommodationPhotoRepository accommodationPhotoRepository;
+    private final MyAccomodationFunctionMapper myAccomodationFunctionMapper;
 
     public List<AccommodationShowDTO> getAccomodations(AccommodationSearchDTO searchDto) throws MalformedURLException {
         List<Accommodation> accommodations = accomodationRepository.findAll(AccommodationSpecification.accommodationSpecification(searchDto));
@@ -117,5 +119,9 @@ public class AccomodationService {
 
     public List<AccommodationDTO> getAccomodationsByUserId(Long userId){
         return accommodationMapper.toDtoList(accomodationRepository.findByUserId(userId));
+    }
+
+    public MyAccomodationFunctionDTO getAccomodationById(Long id){
+        return myAccomodationFunctionMapper.toDto(accomodationRepository.findById(id).orElse(null));
     }
 }
