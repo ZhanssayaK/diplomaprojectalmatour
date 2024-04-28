@@ -23,4 +23,5 @@ public class AccommodationDTO {
     private Long userId;
     private boolean status;
     private MultipartFile[] photos;
+    private String mainPhoto;
 }

@@ -1294,7 +1294,7 @@
                     card.className = 'booking-card';
                     card.innerHTML = `
                     <div>
-                        <img src="${item.imageUrl || 'placeholder-image-url.jpg'}" alt="Image of ${item.name}" style="width: 100px; height: 100px;">
+                        <img src="${item.mainPhoto}" alt="Image of ${item.name}" style="width: 100px; height: 100px;">
                     </div>
                     <div class="booking-card-info">
                         <h1>${item.name}</h1>
@@ -1330,7 +1330,7 @@
                             card.className = 'booking-card';
                             card.innerHTML = `
                             <div>
-                                <img src="${accommodation.imageUrl || 'placeholder-image-url.jpg'}" alt="Image of ${accommodation.name}" style="width: 100px; height: 100px;">
+                                <img src="${accommodation.mainPhoto}" alt="Image of ${accommodation.name}" style="width: 100px; height: 100px;">
                             </div>
                             <div class="booking-card-info">
                                 <h1>${accommodation.name}</h1>

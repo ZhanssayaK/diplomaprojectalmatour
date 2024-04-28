@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -48,7 +47,7 @@ public class AccomodationService {
         for (Accommodation ac : accommodations) {
             List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(ac.getId());
 
-            AccommodationShowDTO dto=accommodationShowMapper.toDto(ac);
+            AccommodationShowDTO dto = accommodationShowMapper.toDto(ac);
             if (!photos.isEmpty()) {
                 String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
                 dto.setPath(path);
@@ -99,8 +98,8 @@ public class AccomodationService {
         accomodationRepository.deleteById(id);
     }
 
-    public void rejectAccommodation(RejectDTO dto){
-        if(accomodationRepository.findById(dto.getId()).isPresent()) {
+    public void rejectAccommodation(RejectDTO dto) {
+        if (accomodationRepository.findById(dto.getId()).isPresent()) {
             Accommodation accommodation = accomodationRepository.findById(dto.getId()).get();
             accommodation.setComment(dto.getComment());
             accommodation.setStatus(false);
@@ -108,8 +107,8 @@ public class AccomodationService {
         }
     }
 
-    public void acceptAccommodation(Long id){
-        if(accomodationRepository.findById(id).isPresent()) {
+    public void acceptAccommodation(Long id) {
+        if (accomodationRepository.findById(id).isPresent()) {
             Accommodation accommodation = accomodationRepository.findById(id).get();
             accommodation.setComment("");
             accommodation.setStatus(true);
@@ -117,11 +116,27 @@ public class AccomodationService {
         }
     }
 
-    public List<AccommodationDTO> getAccomodationsByUserId(Long userId){
-        return accommodationMapper.toDtoList(accomodationRepository.findByUserId(userId));
+    public List<AccommodationDTO> getAccomodationsByUserId(Long userId) {
+        List<AccommodationDTO> dtoList = accommodationMapper.toDtoList(accomodationRepository.findByUserId(userId));
+        for (AccommodationDTO dto : dtoList) {
+            List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(dto.getId());
+
+            if (!photos.isEmpty()) {
+                String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
+                dto.setMainPhoto(path);
+            }
+        }
+        return dtoList;
     }
 
-    public MyAccomodationFunctionDTO getAccomodationById(Long id){
-        return myAccomodationFunctionMapper.toDto(accomodationRepository.findById(id).orElse(null));
+    public MyAccomodationFunctionDTO getAccomodationById(Long id) {
+        MyAccomodationFunctionDTO dto = myAccomodationFunctionMapper.toDto(accomodationRepository.findById(id).orElse(null));
+        List<AccommodationPhoto> photos = accommodationPhotoRepository.findAllByAccommodationId(id);
+
+        if (!photos.isEmpty()) {
+            String path = Paths.get(showPath, photos.get(0).getPath() + ".jpg").toString();
+            dto.setMainPhoto(path);
+        }
+        return dto;
     }
 }

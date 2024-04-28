@@ -13,5 +13,6 @@ public class MyAccomodationFunctionDTO {
     private String description;
     private String name;
     private MultipartFile[] photos;
+    private String mainPhoto;
     private double price;
 }
