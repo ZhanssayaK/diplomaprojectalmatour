@@ -7,22 +7,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class FeedBack {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String feedBack;
+    @Column(name = "text", columnDefinition = "TEXT")
+    private String text;
 
     @Column(name = "added_time")
     private LocalDateTime addedTime;
 
     @ManyToOne
     private Accommodation accommodation;
+
+    @ManyToOne
+    private User user;
 }

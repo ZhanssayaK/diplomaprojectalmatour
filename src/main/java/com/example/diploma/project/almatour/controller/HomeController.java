@@ -75,4 +75,9 @@ public class HomeController {
     public String messages() {
         return "messages";
     }
+
+    @GetMapping(value = "/myAccommodationsDetailsShow/{id}")
+    public String myAccomodationsDetialsShow(@PathVariable(value = "id") Long accomodationId) {
+        return "myAccomodationsDetialsShow";
+    }
 }

@@ -505,18 +505,114 @@
             margin-bottom: -10px;
         }
         .modal-content{
-            position: fixed;
-            background-color: rgb(0,0,0,0.5);
             width: 100%;
-            height: 100%;
+            background-color: rgb(0,0,0,0.5);
+            height: 130%;
+            position: absolute;
             top: 0px;
         }
         .md{
             width: 50%;
-            margin: 50px auto;
+            padding: 50px;
             background-color: white;
-            padding: 20px 50px;
-            border-radius: 7px;
+            position: absolute;
+            z-index: 1;
+            top: 5%;
+            left: 20%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px black;
+        }
+        .md .back-modal-img{
+            width: 100%;
+            height: 250px;
+            background-image: url('https://i.pinimg.com/originals/f9/62/90/f9629031c069ce8ae4fa44950e5370ec.jpg');
+            position: absolute;
+            margin-top: -50px;
+            margin-left: -50px;
+            background-position: center;
+            z-index: 0;
+        }
+        .md .close{
+            background-color: crimson;
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 30px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0px 0px 5px darkslategray;
+            position: absolute;
+            margin-left: 97%;
+            margin-top: -30px;
+        }
+        .md .back-modal-img img{
+            width: 100%;
+            margin-top: 100px;
+
+        }
+        .md .detail-card{
+            z-index: 1;
+            position: relative;
+        }
+        .md .detail-card h2{
+            color: white;
+            font-size: 30px;
+        }
+        .md .left-section{
+            color: whitesmoke;
+        }
+
+        .md #rejectButton{
+            background-color: crimson;
+            padding: 5px 10px;
+            color: white;
+            border: 0px ;
+            font-size: 17px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px darkslategray;
+        }
+        .md #comment{
+            width: 500px;
+            max-height: 80px;
+            margin-top: 20px;
+            min-height: 80px;
+            margin-bottom: 20px;
+            border: 0px;
+            box-shadow: 0px 2px 5px darkslategray;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .md .right-section p, h3{
+            display: grid;
+            grid-template-columns: 30% 70%;
+        }
+        .md .right-section{
+            padding-top: 50px;
+        }
+        .md .right-section h3,p span{
+            opacity: 0.7;
+        }
+        .md .other-photos{
+            display: grid;
+            width: 70%;
+            grid-template-columns: repeat(4,1fr);
+            height: 100px;
+            gap: 1em;
+            margin-bottom: 10px;
+        }
+        .md .other-photos img{
+            width: 100%;
+            height: 100px;
+            border-radius: 5px;
+        }
+        .md #acceptButton{
+            background-color: seagreen;
+            padding: 5px 10px;
+            color: white;
+            border: 0px ;
+            font-size: 17px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px darkslategray;
         }
         .btn-close-booking{
             background-color: crimson;
@@ -530,6 +626,7 @@
             position: absolute;
             margin-bottom: 0px;
             margin-left: 81%;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -804,12 +901,15 @@
         return `
         <div class="modal-content">
         <div class="md">
+            <div class="back-modal-img">
+                <img src="https://i.postimg.cc/q7gJMRxX/1714304512813.png">
+            </div>
+
+            <section class="detail-card">
             <span class="close" onclick="closeModal()">×</span>
             <h2>Edit Accommodation</h2>
-            <section class="detail-card">
                 <div class="left-section">
                     <h1>Name: <span>${data.name}</span></h1>
-                    <img width="20%" class="card-img" src="/images/${data.mainPhoto.substring(data.mainPhoto.lastIndexOf('/') + 1)}">
                 </div>
                 <div class="right-section">
                     <p>Description: <span>${data.description}</span></p>
@@ -820,7 +920,7 @@
                     <p>City: <span>${data.city != null ? data.city.name : 'City Name'}</span></p>
                     <p>User: <span>${data.user != null ? data.user.fullName : 'User Name'}</span></p>
                     <p>Status: <span>${data.status}</span></p>
-                    <h3>Price: <span>${data.price}</span></h3>
+                    <h3>Price: <span>${data.price + ' KZT'}</span></h3>
                 </div>
                 <div class="bottom-right-section">
                     <h3>Other Photos</h3>
@@ -829,7 +929,7 @@
                     </div>
                 </div>
                 <div>
-                    <textarea id="comment" placeholder="Enter your comment here">${data.comment ? data.comment : ''}</textarea>
+                    <textarea style="width: 500px" id="comment" placeholder="Enter your comment here">${data.comment ? data.comment : ''}</textarea>
                     <div class="button-container">
                         <button id="rejectButton" onclick="rejectAccommodation(${data.id})">Reject</button>
                         <button id="acceptButton" onclick="acceptAccommodation(${data.id})">Accept</button>
@@ -1299,7 +1399,8 @@
                     <div class="booking-card-info">
                         <h1>${item.name}</h1>
                         <p>${item.description}</p>
-                        <h2>$${item.price}</h2>
+                        <h2>${item.price} KZT</h2>
+                        <a href="/myAccommodationsDetailsShow/${item.id}">DETAILS</a> <!-- Link to detailed view -->
                     </div>
                 `;
                     container.appendChild(card); // Append each new card to the container
@@ -1350,6 +1451,5 @@
             });
     });
 </script>
-
 </body>
 </html>

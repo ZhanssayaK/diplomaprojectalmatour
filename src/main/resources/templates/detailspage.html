@@ -1623,6 +1623,7 @@
                     <h3>KZT</h3>
                 </div>
                 <div class="balans">
+                    <input type="text" id="accomodationId" name="accomodationId" th:value="${accommodation.id}">
                     <input type="hidden" id="userId" name="userId" th:value="${onlineUser != null && onlineUser.getId() != 0 ? onlineUser.getId() : ''}">
                     <h3>Your Balance:</h3>
                     <h1 id="user-balance"></h1>
@@ -1656,52 +1657,25 @@
                         <h3 class="text-center">Comments</h3>
                     </div>
                 </div>
-
-                <div class="list-group mt-3">
-                    <div th:each = "comm : ${comments}" class="list-group-item list-group-item-action">
+                <br>
+                <div class="row">
+                    <div class="comm-addtext">
+                            <textarea id="commentText" class="form-control" name="comment" placeholder="Insert comment" required></textarea>
+                        <button class="add-comm" onclick="addFeedback()">ADD FEEDBACK</button>
+                    </div>
+                </div>
+                <br>
+                <div class="list-group mt-3" id="commentsContainer">
+                    <div class="list-group-item list-group-item-action">
                         <div class="comment-div">
                             <div class="user-comment">
                                 <img src="https://www.zastavki.com/pictures/originals/2021Men___Male_Celebrity_Blue-eyed_actor_James_McAvoy_on_a_black_background_156528_.jpg" alt="img">
                                 <div>
-                                    <h3>Name User</h3>
-                                    <h4 class="mb-1" th:text = "${comm.comment}">Good!</h4>
-                                    <small class="text-body-secondary py-1" th:text = "${#temporals.format(comm.addedTime, 'dd MMMM yyyy HH:mm')}"></small>
+                                    <h3></h3>
+                                    <h4 class="mb-1"></h4>
+                                    <small class="text-body-secondary py-1"></small>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div th:each = "comm : ${comments}" class="list-group-item list-group-item-action">
-                        <div class="comment-div">
-                            <div class="user-comment">
-                                <img src="https://www.zastavki.com/pictures/originals/2021Men___Male_Celebrity_Blue-eyed_actor_James_McAvoy_on_a_black_background_156528_.jpg" alt="img">
-                                <div>
-                                    <h3>Name User</h3>
-                                    <h4 class="mb-1" th:text = "${comm.comment}">Good!</h4>
-                                    <small class="text-body-secondary py-1" th:text = "${#temporals.format(comm.addedTime, 'dd MMMM yyyy HH:mm')}"></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div th:each = "comm : ${comments}" class="list-group-item list-group-item-action">
-                        <div class="comment-div">
-                            <div class="user-comment">
-                                <img src="https://www.zastavki.com/pictures/originals/2021Men___Male_Celebrity_Blue-eyed_actor_James_McAvoy_on_a_black_background_156528_.jpg" alt="img">
-                                <div>
-                                    <h3>Name User</h3>
-                                    <h4 class="mb-1" th:text = "${comm.comment}">Good!</h4>
-                                    <small class="text-body-secondary py-1" th:text = "${#temporals.format(comm.addedTime, 'dd MMMM yyyy HH:mm')}"></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="comm-addtext">
-                            <form th:action = "@{'/comment/add'}" method="post">
-                                <input type="hidden" name="taskId" >
-                                <textarea class="form-control" name="comment" placeholder="Insert comment" required></textarea>
-                                <button class="add-comm">ADD FEEDBACK</button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -2086,5 +2060,98 @@
             });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadComments();
+    });
+
+    async function loadComments() {
+        const accommodationId = document.getElementById('accomodationId').value;
+        if (!accommodationId) {
+            console.log('Accommodation ID is required');
+            return;
+        }
+        const url = `http://localhost:1080/feedbacks/all/${accommodationId}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const container = document.getElementById('commentsContainer');
+            container.innerHTML = ''; // Clear previous comments
+            for (const comm of data) {
+                const user = await fetchUser(comm.userId);
+                const time = new Date(comm.addedTime).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                container.innerHTML += `
+                <div class="list-group-item list-group-item-action">
+                    <div class="comment-div">
+                        <div class="user-comment">
+                           <img th:src="@{'/images/' + ${user.avatarUrl}}" src="/images/${user.avatarUrl}" alt="User Avatar">
+                            <div>
+                                <h3>${user.fullName}</h3>
+                                <h4 class="mb-1">${comm.text}</h4>
+                                <small class="text-body-secondary py-1">${time}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            }
+        } catch (error) {
+            console.error('Error loading the comments:', error);
+        }
+    }
+
+    async function fetchUser(userId) {
+        const response = await fetch(`http://localhost:1080/users/${userId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+        }
+        return response.json();
+    }
+</script>
+<script>
+    function addFeedback() {
+        // Получаем значения из полей формы и скрытых полей
+        var commentText = document.getElementById("commentText").value;
+        var accommodationId = document.getElementById("accommodationId").value;
+        var userId = document.getElementById("userId").value;
+
+        // Проверяем, что userId не равен null или пустой строке
+        if (!userId) {
+            alert("Please log in to add feedback."); // Предупреждение пользователю
+            return; // Прерываем выполнение функции
+        }
+
+        // Создаем объект с данными для отправки
+        var feedbackData = {
+            text: commentText,
+            accommodationId: accommodationId,
+            userId: userId
+        };
+
+        // Отправляем AJAX запрос
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:1080/feedbacks/add", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        // Когда запрос завершен
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                // Здесь можно добавить логику для успешного завершения запроса
+                console.log("Feedback added successfully!");
+                // Очищаем поле комментария после успешной отправки
+                document.getElementById("commentText").value = "";
+                // Обновляем страницу после добавления комментария
+                location.reload(); // Это перезагрузит текущую страницу
+            } else {
+                // Здесь можно обработать ошибку, если запрос не удался
+                console.error("Error adding feedback:", xhr.statusText);
+            }
+        };
+
+        // Преобразуем объект с данными в JSON и отправляем
+        xhr.send(JSON.stringify(feedbackData));
+    }
+</script>
+
 </body>
 </html>

@@ -16,4 +16,5 @@ public class UserDTO {
     private boolean isBlocked;
     private Long cityId;
     private CreditCardDetailsDTO creditCardDetails;
+    private String avatarUrl;
 }
