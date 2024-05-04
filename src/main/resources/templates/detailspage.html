@@ -1517,6 +1517,29 @@
         }
 
     </style>
+    <style>
+        /* Стили для контейнера звезд */
+        .star-rating {
+            font-size: 24px; /* Размер звезд */
+            color: gold; /* Цвет заполненных звезд */
+            margin-left: 5px;
+        }
+
+        /* Стили для интерактивных звезд */
+        .star-rating span {
+            cursor: pointer; /* Курсор при наведении */
+        }
+
+        /* Стили для пустых звезд */
+        .star-rating span::before {
+            content: '\2606'; /* Символ Unicode для пустой звезды ☆ */
+        }
+
+        /* Стили для заполненных звезд */
+        .star-rating span.checked::before {
+            content: '\2605'; /* Символ Unicode для заполненной звезды ★ */
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -1623,7 +1646,7 @@
                     <h3>KZT</h3>
                 </div>
                 <div class="balans">
-                    <input type="text" id="accomodationId" name="accomodationId" th:value="${accommodation.id}">
+                    <input type="hidden" id="accomodationId" name="accomodationId" th:value="${accommodation.id}">
                     <input type="hidden" id="userId" name="userId" th:value="${onlineUser != null && onlineUser.getId() != 0 ? onlineUser.getId() : ''}">
                     <h3>Your Balance:</h3>
                     <h1 id="user-balance"></h1>
@@ -1661,6 +1684,14 @@
                 <div class="row">
                     <div class="comm-addtext">
                             <textarea id="commentText" class="form-control" name="comment" placeholder="Insert comment" required></textarea>
+                        <!-- Контейнер для звездочного рейтинга -->
+                        <div class="star-rating">
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                            <span class="star"></span>
+                        </div>
                         <button class="add-comm" onclick="addFeedback()">ADD FEEDBACK</button>
                     </div>
                 </div>
@@ -2152,6 +2183,39 @@
         xhr.send(JSON.stringify(feedbackData));
     }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const stars = document.querySelectorAll('.star-rating .star');
 
+        stars.forEach((star, index) => {
+            star.addEventListener('click', function() {
+                // Очищаем все звезды
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.classList.add('checked'); // Заполняем звезды до выбранной
+                    } else {
+                        s.classList.remove('checked'); // Оставляем остальные пустыми
+                    }
+                });
+            });
+
+            star.addEventListener('mouseover', function() {
+                // Подсвечиваем звезды при наведении
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.classList.add('checked');
+                    } else {
+                        s.classList.remove('checked');
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', function() {
+                // Убираем подсветку звезд при выходе курсора
+                stars.forEach(s => s.classList.remove('checked'));
+            });
+        });
+    });
+</script>
 </body>
 </html>

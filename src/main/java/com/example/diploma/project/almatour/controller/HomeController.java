@@ -76,6 +76,7 @@ public class HomeController {
         return "messages";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/myAccommodationsDetailsShow/{id}")
     public String myAccomodationsDetialsShow(@PathVariable(value = "id") Long accomodationId) {
         return "myAccomodationsDetialsShow";
