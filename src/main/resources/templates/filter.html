@@ -1189,6 +1189,114 @@
         .price-input{
             width: 100%;
         }
+        .main-cards{
+            width: 100%;
+        }
+        .cards-blocks{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            width: 80%;
+            margin: 100px auto;
+            gap: 2em 1em;
+        }
+        .main-card{
+            box-shadow: 0px 2px 5px darkslategray;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .main-card:hover .main-card-img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+        .main-card-img {
+            transition: transform 0.3s ease; /* Add transition for smooth effect */
+        }
+        .main-card-img{
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+        }
+        .main-card-div{
+            display: grid;
+            grid-template-columns: 60% 40%;
+            width: 90%;
+            margin: auto;
+            gap: 1em;
+        }
+        .main-card-div-name{
+            border-radius: 5px;
+            padding: 5px 20px;
+            text-align: center;
+            width: 70%;
+            font-size: 17px;
+            background-color: #53bf87;
+            color: white;
+        }
+        .main-card-rating{
+            display: grid;
+            width: 100%;
+            grid-template-columns: 50% 50%;
+        }
+        .main-card-description{
+            width: 90%;
+            margin-left: 5%;
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: -5px;
+        }
+        .main-card-rating-text{
+            color: #d0b44c;
+            font-size: 13px;
+        }
+        .main-card-rating-img{
+            width: 80%;
+            margin-top: 18px;
+            margin-left: -10px;
+
+        }
+        .main-card-rating-div{
+            display: grid;
+            gap: 5px;
+            grid-template-columns: 50% 50%;
+        }
+
+
+        .price-and-location{
+            display: grid;
+            width: 90%;
+            margin: auto;
+            margin-top: -15px;
+            grid-template-columns: 60% 40%;
+        }
+        .price-and-location-l{
+            display: grid;
+            grid-template-columns: 20% 80%;
+            gap: 5px;
+        }
+        .price-and-location-p h3{
+            color: orange;
+            font-size: 25px;
+            margin-top: 10px;
+        }
+        .price-and-location-p h3 small{
+            font-size: 17px;
+            font-style: italic;
+            margin-left: 5px;
+        }
+
+        .price-and-location-l img{
+            width: 100%;
+            margin-top: 20px;
+            opacity: 0.6;
+        }
+        .price-and-location-l h4{
+            opacity: 0.8
+        }
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -1261,7 +1369,7 @@
 
     <section class="cards-block">
         <h3 class="cards-block-h3">Accommodations:</h3>
-        <div class="cards" id="cards-container-1">
+        <div class="cards-blocks" id="cards-container-1">
 
         </div>
     </section>
@@ -1321,39 +1429,83 @@
 </footer>
 
 <script>
-    // Функция для создания и добавления карточек на страницу
     function createCard(data, container) {
-        var card = document.createElement('div');
-        card.className = 'card';
+        var mainCard = document.createElement('div');
+        mainCard.className = 'main-card';
 
         var img = document.createElement('img');
-        img.className = 'card-img';
+        img.className = 'main-card-img';
         img.src = data.path;
 
-        var cardDiv = document.createElement('div');
-        cardDiv.className = 'card-div';
+        var mainCardDiv = document.createElement('div');
+        mainCardDiv.className = 'main-card-div';
 
         var titleH3 = document.createElement('h3');
+        titleH3.className = 'main-card-div-name';
         titleH3.textContent = data.name;
+
+        var ratingDiv = document.createElement('div');
+        ratingDiv.className = 'main-card-rating';
+        var reviewDiv = document.createElement('div');
+        var reviewH4 = document.createElement('h4');
+        reviewH4.style.fontSize = '13px';
+        reviewH4.textContent = 'Review';
+        reviewDiv.appendChild(reviewH4);
+
+        var ratingTextH4 = document.createElement('h4');
+        ratingTextH4.className = 'main-card-rating-text';
+        ratingTextH4.textContent = '4.5';
+
+        var ratingImg = document.createElement('img');
+        ratingImg.className = 'main-card-rating-img';
+        ratingImg.src = 'https://i.pinimg.com/originals/a3/49/ba/a349ba598d8247d4352d5b18216732e4.jpg';
+
+        ratingDiv.appendChild(reviewDiv);
+        ratingDiv.appendChild(ratingTextH4);
+        ratingDiv.appendChild(ratingImg);
+
+        var descriptionP = document.createElement('p');
+        descriptionP.className = 'main-card-description';
+        descriptionP.textContent = data.description;
+
+        var priceAndLocationDiv = document.createElement('div');
+        priceAndLocationDiv.className = 'price-and-location';
+
+        var priceAndLocationPDiv = document.createElement('div');
+        priceAndLocationPDiv.className = 'price-and-location-p';
+        var priceH3 = document.createElement('h3');
+        priceH3.textContent = data.price;
+        var small = document.createElement('small');
+        small.textContent = 'KZT';
+        priceH3.appendChild(small);
+        priceAndLocationPDiv.appendChild(priceH3);
+
 
         titleH3.addEventListener('click', function() {
             window.location.href = '/accommodationdetail/' + data.id; // Navigate to detail page
         });
 
-        var countryH4 = document.createElement('h4');
-        countryH4.textContent = data.location;
+        var priceAndLocationLDiv = document.createElement('div');
+        priceAndLocationLDiv.className = 'price-and-location-l';
+        var locationImg = document.createElement('img');
+        locationImg.src = 'http://cdn.onlinewebfonts.com/svg/img_510085.png';
+        var locationH4 = document.createElement('h4');
+        locationH4.textContent = data.location;
+        priceAndLocationLDiv.appendChild(locationImg);
+        priceAndLocationLDiv.appendChild(locationH4);
 
-        var priceH3 = document.createElement('h3');
-        priceH3.textContent = data.startTime;
+        priceAndLocationDiv.appendChild(priceAndLocationPDiv);
+        priceAndLocationDiv.appendChild(priceAndLocationLDiv);
 
-        cardDiv.appendChild(titleH3);
-        cardDiv.appendChild(countryH4);
-        cardDiv.appendChild(priceH3);
+        mainCardDiv.appendChild(titleH3);
+        mainCardDiv.appendChild(ratingDiv);
+        mainCardDiv.appendChild(descriptionP);
+        mainCardDiv.appendChild(priceAndLocationDiv);
 
-        card.appendChild(img);
-        card.appendChild(cardDiv);
+        mainCard.appendChild(img);
+        mainCard.appendChild(mainCardDiv);
 
-        container.appendChild(card);
+        container.appendChild(mainCard);
     }
 
     // Функция для загрузки данных с сервера и их отображения

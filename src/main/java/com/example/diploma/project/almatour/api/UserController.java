@@ -2,6 +2,7 @@ package com.example.diploma.project.almatour.api;
 
 import com.example.diploma.project.almatour.dto.CreditCardDetailsDTO;
 import com.example.diploma.project.almatour.dto.UserDTO;
+import com.example.diploma.project.almatour.dto.UserMessagesDTO;
 import com.example.diploma.project.almatour.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,15 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Credit card details not found for user with id " + id);
         }
         return userDTO.getCreditCardDetails();
+    }
+
+    @GetMapping(value = "/allUserMessages/{currentUserId}")
+    public List<UserMessagesDTO> getUsersWhoMessagedCurrentUser(@PathVariable(value = "currentUserId") Long currentUserId){
+        return userService.getUsersWhoMessagedCurrentUser(currentUserId);
+    }
+
+    @GetMapping(value = "/userdetails/{id}")
+    public UserMessagesDTO getUserMessageById(@PathVariable(name = "id") Long id){
+        return userService.getUserMessageById(id);
     }
 }

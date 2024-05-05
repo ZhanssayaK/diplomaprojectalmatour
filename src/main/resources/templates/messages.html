@@ -2,9 +2,171 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chat Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .message .content {
+            margin-bottom: 5px;
+        }
+        .message .time {
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-<h1>HI! Message!</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Chat Room</div>
+                <div class="card-body">
+                    <ul class="chat-list list-unstyled" id="chatMessages">
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <form id="messageForm" class="input-group">
+                        <input type="hidden" id="userId" th:value="${onlineUser.id}">
+                        <input type="text" class="form-control" placeholder="Type your message here..." id="messageInput">
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    // Function to get `receiverId` from the URL path
+    function getReceiverIdFromPath() {
+        const path = window.location.pathname; // Get the full path
+        const pathSegments = path.split('/'); // Split path into segments
+        return pathSegments[pathSegments.length - 1]; // Return the last segment
+    }
+
+    function fetchUserDetails() {
+        const receiverId = getReceiverIdFromPath(); // Extract `receiverId` from the URL path
+
+        return fetch(`http://localhost:1080/users/userdetails/${receiverId}`) // Fetch user details from the updated API endpoint
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details, HTTP status ' + response.status);
+                }
+                return response.json();
+            })
+            .then(userData => {
+                return userData.fullName; // Assume 'fullName' is the field in the user data
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+                alert('Failed to load user details: ' + error.message);
+                return "Unknown User"; // Fallback name
+            });
+    }
+
+
+    // Function to fetch message history
+    function fetchMessageHistory() {
+        const receiverId = getReceiverIdFromPath(); // Extract `receiverId` from the URL
+        const senderId = document.getElementById('userId').value; // Get `senderId` from hidden input
+
+        const url = `/api/chat/history/${senderId}/${receiverId}`; // Construct the API URL
+
+        console.log("Fetching messages from:", url); // Log the URL to help with debugging
+
+        fetch(url) // Perform the fetch request
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch messages, HTTP status ' + response.status);
+                }
+                return response.json();
+            })
+            .then(messages => {
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = ''; // Clear existing messages
+
+                if (messages.length === 0) {
+                    chatMessages.innerHTML = '<li class="text-muted text-center small">No messages yet...</li>';
+                } else {
+                    messages.forEach(message => {
+                        fetchUserDetails(message.senderId).then(senderName => {
+                            const li = document.createElement('li');
+                            li.classList.add('message');
+
+                            const content = document.createElement('div');
+                            content.classList.add('content');
+                            content.textContent = `${message.senderId === parseInt(senderId) ? 'You' : senderName}: ${message.message}`;
+
+                            const time = document.createElement('div');
+                            time.classList.add('time');
+                            time.textContent = new Date(message.createdAt).toLocaleString();
+
+                            li.appendChild(time);
+                            li.appendChild(content);
+                            chatMessages.appendChild(li);
+                        });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching messages:', error);
+                alert('Failed to load messages: ' + error.message);
+            });
+    }
+
+
+    // Send message function
+    function sendMessage(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+
+        const messageInput = document.getElementById('messageInput');
+        const messageText = messageInput.value.trim();
+        const receiverId = getReceiverIdFromPath();
+        const senderId = document.getElementById('userId').value;
+
+        if (messageText && receiverId && senderId) {
+            const messageData = {
+                message: messageText,
+                senderId: parseInt(senderId),
+                receiverId: parseInt(receiverId)
+            };
+
+            console.log("Sending message:", messageData);
+
+            fetch('/api/chat/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(messageData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to send message, HTTP status ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Message sent:', data);
+                    const li = document.createElement('li');
+                    li.textContent = `You: ${messageText}`;
+                    document.getElementById('chatMessages').appendChild(li);
+                    messageInput.value = ''; // Clear input after sending
+                })
+                .catch(error => {
+                    console.error('Error sending message:', error);
+                    alert('Failed to send message: ' + error.message);
+                });
+        }
+        messageInput.focus();
+    }
+
+    document.getElementById('messageForm').addEventListener('submit', sendMessage);
+    window.onload = fetchMessageHistory; // Load message history when the page loads
+</script>
 </html>

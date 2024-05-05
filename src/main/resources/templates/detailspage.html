@@ -8,6 +8,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           integrity="sha384-...." crossorigin="anonymous">
     <style>
+        d-comm{
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px 30px;
+            width: 80%;
+            margin: auto;
+
+
+        }
+        .d-comm-div{
+            display: grid;
+            grid-template-columns: 5% 70%;
+        }
+
+        .u-comm-date h3{
+            color: darkslategray;
+            font-size: 20px;
+        }
+
+        .d-comm h4{
+            color: darkslategray;
+            font-weight: 100;
+
+        }
+
+        .u-comm-date small{
+            color: #999;
+            position: relative;
+            top: -17px;
+            font-size: 10px;
+        }
+
+
+        .u-comm img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            box-shadow: 0px 0px 5px #999;
+            margin-top: 25px;
+        }
         .booking-modal{
             width: 100%;
             height: 100%;
@@ -163,7 +203,29 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .big-image-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
 
+        /* Стили для большого изображения */
+        .big-image {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        /* Для закрытия большого изображения при клике на него */
+        .big-image-container.active {
+            display: flex;
+        }
         /* Стили для таблицы */
         .modal-content table {
             width: 100%;
@@ -184,13 +246,6 @@
             border-bottom: 1px solid #ddd;
             text-align: center; /* Выравнивание содержимого по центру */
         }
-
-
-
-
-
-
-
 
         .cards{
             display: none;
@@ -1484,6 +1539,76 @@
             padding-left: 25px; /* добавляем отступ слева для имитации флажка */
             cursor: pointer;
         }
+        .captcha-container {
+            text-align: center;
+            box-shadow: 0px 2px 5px #999;
+            width: 30%;
+            border-radius: 5px;
+            padding: 30px 200px;
+            background-color: white;
+            margin: auto;
+            padding-bottom: 70px;
+        }
+        #modalcatch{
+            background-color: rgb(0,0,0,0.5);
+            width: 100%;
+            z-index: 90990;
+            top: 0px;
+            display: none;
+            padding-top: 200px;
+            height: 100%;
+            position: fixed;
+        }
+        .privacy-text{
+            color: #999;
+            text-align: center;
+            margin-left: 110px;
+        }
+
+        .captcha-container-p{
+            color: darkslategray;
+            font-size: 30px;
+
+        }
+
+        .captcha {
+            font-size: 24px;
+            width: 100%;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            color: darkslategray;
+            padding: 20px 5px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .captcha-input {
+            margin-right: 5px;
+            padding: 10px 0px;
+            padding-left: 10px;
+            border-radius: 5px;
+            border: 0px solid ;
+            box-shadow: 0px 2px 5px #999;
+            color: darkslategray;
+            font-size: 17px;
+        }
+        .captcha-container div{
+            display: grid;
+            grid-template-columns: 80% 20%;
+            gap: 1em;
+            width: 100%;
+        }
+
+        .captcha-button {
+            box-shadow: 0px 2px 5px #999;
+            padding: 10px 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            cursor: pointer;
+        }
 
         .form-div label:before {
             content: '';
@@ -1602,6 +1727,18 @@
         </table>
     </div>
 </div>
+<div id="modalcatch" class="catch-booking-modal">
+    <div class="captcha-container">
+        <p class="captcha-container-p">Please enter the confirmation code to complete the payment:</p>
+        <span id="captcha" class="captcha"></span>
+        <div>
+            <input type="text" id="userInput" class="captcha-input" placeholder="Enter text from image">
+            <button onclick="validateCaptcha()" class="captcha-button">Check</button>
+            <p class="privacy-text">The privacy of all users is important to us.</p>
+        </div>
+    </div>
+</div>
+
 <main>
     <section class="detail-card">
         <div class="left-section">
@@ -1628,9 +1765,12 @@
             <h3>Other Photos</h3>
             <div class="other-photos">
                 <th:block th:each="photo : ${accommodation.otherPhoto}">
-                    <img th:src="@{'/images/' + ${photo.substring(photo.lastIndexOf('/') + 1)}}" class="other-photo">
+                    <img th:src="@{'/images/' + ${photo.substring(photo.lastIndexOf('/') + 1)}}" class="other-photo" onclick="showBigImage(this)">
                 </th:block>
             </div>
+        </div>
+        <div id="bigImageContainer" class="big-image-container">
+            <img id="bigImage" class="big-image">
         </div>
     </section>
     <section class="booking-modal">
@@ -1770,7 +1910,41 @@
         </div>
     </div>
 </footer>
+<script>
+    function generateCaptcha() {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        var length = 6;
+        var captcha = "";
+        for (var i = 0; i < length; i++) {
+            var index = Math.floor(Math.random() * chars.length);
+            captcha += chars.charAt(index);
+        }
+        document.getElementById("captcha").innerText = captcha;
+    }
 
+    function validateCaptcha() {
+        var userInput = document.getElementById("userInput").value.trim();
+        var captcha = document.getElementById("captcha").innerText;
+        if (userInput === captcha) {
+            var elements = document.getElementsByClassName('booking-modal');
+            var elements2 = document.getElementsByClassName('catch-booking-modal');
+            if (elements.length > 0) {  // Check if the element exists
+                elements[0].style.display = "block";  // Access the first element in the collection
+            }
+            if (elements2.length > 0) {  // Check if the element exists
+                elements2[0].style.display = "none";  // Access the first element in the collection
+            }
+        } else {
+            alert("The captcha is incorrect. Try again!");
+            generateCaptcha();
+            document.getElementById("userInput").value = "";
+        }
+    }
+
+    window.onload = function() {
+        generateCaptcha();
+    };
+</script>
 <script>
     // Функция для создания и добавления карточек на страницу
     function createCard(data, container) {
@@ -1865,7 +2039,7 @@
         }
     }
     function openModal() {
-        var elements = document.getElementsByClassName('booking-modal');
+        var elements = document.getElementsByClassName('catch-booking-modal');
         if (elements.length > 0) {  // Check if the element exists
             elements[0].style.display = "block";  // Access the first element in the collection
         }
@@ -1966,7 +2140,7 @@
         };
 
         // Save data to local storage
-        var savedData = JSON.parse(localStorage.getItem('savedData'))  [];
+        var savedData = JSON.parse(localStorage.getItem('savedData'));
         savedData.push(accommodationData);
         localStorage.setItem('savedData', JSON.stringify(savedData));
 
@@ -1982,7 +2156,7 @@
     function openFav() {
         var modal = document.getElementById('myModal');
         var modalContent = modal.querySelector('.modal-content');
-        var savedData = JSON.parse(localStorage.getItem('savedData'))  [];
+        var savedData = JSON.parse(localStorage.getItem('savedData'));
 
         // Clear previous data
         modalContent.innerHTML = '';
@@ -2112,17 +2286,18 @@
                 const user = await fetchUser(comm.userId);
                 const time = new Date(comm.addedTime).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                 container.innerHTML += `
-                <div class="list-group-item list-group-item-action">
-                    <div class="comment-div">
-                        <div class="user-comment">
-                           <img th:src="@{'/images/' + ${user.avatarUrl}}" src="/images/${user.avatarUrl}" alt="User Avatar">
-                            <div>
-                                <h3>${user.fullName}</h3>
-                                <h4 class="mb-1">${comm.text}</h4>
-                                <small class="text-body-secondary py-1">${time}</small>
-                            </div>
+                <div class="d-comm">
+                    <div class="d-comm-div">
+                        <div class="u-comm">
+                            <img th:src="@{'/images/' + ${user.avatarUrl}}" src="/images/${user.avatarUrl}" alt="User Avatar">
+                        </div>
+                        <div class="u-comm-date">
+                            <h3>${user.fullName}</h3>
+                            <small>${time}</small>
+                            <h4 style="position:relative; top: -25px">${comm.text}</h4>
                         </div>
                     </div>
+
                 </div>
             `;
             }
@@ -2215,6 +2390,18 @@
                 stars.forEach(s => s.classList.remove('checked'));
             });
         });
+    });
+</script>
+<script>
+    function showBigImage(img) {
+        var bigImageContainer = document.getElementById("bigImageContainer");
+        var bigImage = document.getElementById("bigImage");
+        bigImage.src = img.src;
+        bigImageContainer.classList.add("active");
+    }
+
+    document.getElementById("bigImageContainer").addEventListener("click", function() {
+        this.classList.remove("active");
     });
 </script>
 </body>

@@ -71,8 +71,12 @@ public class HomeController {
         return "detailspage";
     }
 
-    @GetMapping(value = "/messages")
-    public String messages() {
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/messages-page/{userId}")
+    public String messages(@PathVariable(value = "userId") Long id,
+                           Model model) {
+        User user = authenticationService.getCurrentUser();
+        model.addAttribute("onlineUser", user);
         return "messages";
     }
 
@@ -80,5 +84,11 @@ public class HomeController {
     @GetMapping(value = "/myAccommodationsDetailsShow/{id}")
     public String myAccomodationsDetialsShow(@PathVariable(value = "id") Long accomodationId) {
         return "myAccomodationsDetialsShow";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/myMessages/{currentUserId}")
+    public String myMessages(@PathVariable(value = "currentUserId") Long currentUserId){
+        return "myMessages";
     }
 }
