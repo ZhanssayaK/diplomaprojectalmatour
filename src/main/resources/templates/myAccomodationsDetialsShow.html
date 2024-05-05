@@ -30,11 +30,11 @@
         </table>
         <br><br>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#channelModal">
             CREATE CHANNEL
         </button>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="channelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -44,12 +44,12 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">NAME:</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" id="channelName"    >
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                        <button type="button" class="btn btn-primary">SAVE</button>
+                        <button type="button" class="btn btn-primary" onclick="createChannel()">SAVE</button>
                     </div>
                 </div>
             </div>
@@ -84,6 +84,32 @@
                 });
             })
             .catch(error => console.error('Error fetching users:', error));
+    }
+
+    function createChannel() {
+        var channelName = document.getElementById('channelName').value;
+
+        fetch('/channel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                channelName: channelName,
+                accomodationId: getAccommodationIdFromUrl()
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("AAAAAAAAAAA")
+                    document.getElementById('channelModal').style.display = 'none';
+                } else {
+                    throw new Error('Failed to create group chat');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     // Call the function on load

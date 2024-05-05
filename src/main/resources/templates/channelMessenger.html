@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel Messenger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #messagesContainer {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            overflow-y: auto;
+            max-height: 400px;
+            margin-bottom: 20px;
+        }
+
+        #messageForm {
+            display: flex;
+            align-items: center;
+        }
+
+        #messageText {
+            flex: 1;
+            margin-right: 10px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        #sendMessageButton {
+            padding: 5px 10px;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #goBackButton {
+            padding: 5px 10px;
+            border-radius: 4px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Channel: <span th:text="${channelName}"></span></h1>
+
+<div id="messagesContainer">
+    <ul>
+        <li th:each="message : ${messages}">
+            <span th:text="${message.sender.getFullName()}"></span>:
+            <!-- Assuming User entity has a 'getFullName()' method -->
+            <span th:text="${message.content}"></span>
+        </li>
+    </ul>
+</div>
+
+<div id="messageForm">
+    <input type="text" id="messageText" placeholder="Type your message...">
+    <button id="sendMessageButton" onclick="sendMessage(document.getElementById('messageText').value)">Send</button>
+</div>
+
+<button id="goBackButton" onclick="goBack()">Go Back</button>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // var channelId = ${channelId};
+
+    // document.getElementById('sendMessageButton').addEventListener('click', function() {
+    //     var messageText = document.getElementById('messageText').value;
+    //     if (messageText.trim() !== '') {
+    //         // Send message to server (not implemented in this example)
+    //         // Update messages container with new message (simulate real-time update)
+    //         var messagesContainer = document.getElementById('messagesContainer').getElementsByTagName('ul')[0];
+    //         var li = document.createElement('li');
+    //         li.textContent = messageText;
+    //         messagesContainer.appendChild(li);
+    //         document.getElementById('messageText').value = ''; // Clear input field
+    //     }
+    // });
+
+    // document.getElementById('goBackButton').addEventListener('click', function() {
+    //     window.history.back();
+    // });
+
+    function goBack() {
+        window.history.back();
+    }
+
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log("LLLLLLLLLLLLLLLLLLLLLLLL")
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/tour/receiveMessage/' + channelId, function (message) {
+                showMessage(JSON.parse(message.body));
+            });
+        });
+    }
+
+    /*<![CDATA[*/
+    var channelId = [[${channelId}]];
+    var userId = [[${userId}]];
+    // Use channelId in your Stomp client code
+    /*]]>*/
+
+    function sendMessage(message) {
+        if (stompClient !== null) {
+            stompClient.send('/channel/message/sendMessage/' + channelId, {}, JSON.stringify({
+                'content': message,
+                'userId': userId
+            }))
+        } else {
+            console.error('Stomp client is not initialized');
+        }
+    }
+
+    function showMessage(message) {
+        console.log("JJJJJJJJJJJJJ");
+        console.log(message)
+        // Display the message in the UI
+        var messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+
+        var senderElement = document.createElement('span');
+        senderElement.textContent = message.body.sender.fullName + ": ";
+        messageElement.appendChild(senderElement);
+
+        var contentElement = document.createElement('span');
+        contentElement.textContent = message.body.content;
+        messageElement.appendChild(contentElement);
+
+        document.getElementById('messagesContainer').appendChild(messageElement);
+    }
+
+    /*]]>*/
+    connect();
+</script>
+</body>
+</html>
