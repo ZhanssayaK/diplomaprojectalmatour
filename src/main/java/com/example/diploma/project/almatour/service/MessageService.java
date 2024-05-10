@@ -17,7 +17,9 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     public MessageDTO saveMessage(Message message) {
-        return messageMapper.messageToMessageDTO(messageRepository.save(message));
+        Message res=messageRepository.save(message);
+        return messageMapper.messageToMessageDTO(res);
+//        return messageMapper.messageToMessageDTO(messageRepository.save(message));
     }
 
     public List<MessageDTO> getMessageHistoryBetweenUsers(Long userId1, Long userId2) {

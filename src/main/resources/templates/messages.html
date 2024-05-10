@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Chat Application</title>
@@ -35,7 +37,7 @@
                     <form id="messageForm" class="input-group">
                         <input type="hidden" id="userId" th:value="${onlineUser.id}">
                         <input type="text" class="form-control" placeholder="Type your message here..." id="messageInput">
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="button" class="btn btn-primary" onclick="sendMessage(document.getElementById('messageInput').value)">Send</button>
                     </form>
                 </div>
             </div>
@@ -44,15 +46,21 @@
 </div>
 </body>
 <script>
-    // Function to get `receiverId` from the URL path
     function getReceiverIdFromPath() {
         const path = window.location.pathname; // Get the full path
         const pathSegments = path.split('/'); // Split path into segments
         return pathSegments[pathSegments.length - 1]; // Return the last segment
     }
 
+    function scrollChatToBottom() {
+        const messageInput = document.getElementById('messageInput');
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        messageInput.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
     function fetchUserDetails() {
-        const receiverId = getReceiverIdFromPath(); // Extract `receiverId` from the URL path
+        const receiverId = getReceiverIdFromPath();
 
         return fetch(`http://localhost:1080/users/userdetails/${receiverId}`) // Fetch user details from the updated API endpoint
             .then(response => {
@@ -71,17 +79,13 @@
             });
     }
 
-
-    // Function to fetch message history
     function fetchMessageHistory() {
         const receiverId = getReceiverIdFromPath(); // Extract `receiverId` from the URL
         const senderId = document.getElementById('userId').value; // Get `senderId` from hidden input
 
         const url = `/api/chat/history/${senderId}/${receiverId}`; // Construct the API URL
 
-        console.log("Fetching messages from:", url); // Log the URL to help with debugging
-
-        fetch(url) // Perform the fetch request
+        fetch(url)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch messages, HTTP status ' + response.status);
@@ -90,7 +94,7 @@
             })
             .then(messages => {
                 const chatMessages = document.getElementById('chatMessages');
-                chatMessages.innerHTML = ''; // Clear existing messages
+                chatMessages.innerHTML = '';
 
                 if (messages.length === 0) {
                     chatMessages.innerHTML = '<li class="text-muted text-center small">No messages yet...</li>';
@@ -119,54 +123,76 @@
                 console.error('Error fetching messages:', error);
                 alert('Failed to load messages: ' + error.message);
             });
+        scrollChatToBottom();
     }
 
+    var stompClient = null;
 
-    // Send message function
-    function sendMessage(event) {
-        event.preventDefault(); // Prevent form from submitting normally
+    function connect() {
+        var socket = new SockJS('/ws');
+        const receiverId = getReceiverIdFromPath(); // Extract `receiverId` from the URL
+        const senderId = document.getElementById('userId').value;
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/receiveMessage/' + senderId +'/'+receiverId, function (message) {
+                showMessageUser(message.body);
+            });
+        });
+    }
 
+    function sendMessage(message) {
         const messageInput = document.getElementById('messageInput');
         const messageText = messageInput.value.trim();
         const receiverId = getReceiverIdFromPath();
         const senderId = document.getElementById('userId').value;
-
-        if (messageText && receiverId && senderId) {
-            const messageData = {
-                message: messageText,
-                senderId: parseInt(senderId),
-                receiverId: parseInt(receiverId)
-            };
-
-            console.log("Sending message:", messageData);
-
-            fetch('/api/chat/send', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(messageData)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to send message, HTTP status ' + response.status);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Message sent:', data);
-                    const li = document.createElement('li');
-                    li.textContent = `You: ${messageText}`;
-                    document.getElementById('chatMessages').appendChild(li);
-                    messageInput.value = ''; // Clear input after sending
-                })
-                .catch(error => {
-                    console.error('Error sending message:', error);
-                    alert('Failed to send message: ' + error.message);
-                });
+        if (stompClient !== null) {
+            console.log("SENDING QUERY TO: "+messageText)
+            stompClient.send('/api/chat/send/'+senderId+'/'+receiverId,{}, JSON.stringify({
+                'id':null,
+                'message': messageText,
+                'createdAt':null,
+                'senderId': senderId,
+                'receiverId': receiverId
+            }));
+            messageInput.value = '';
+        } else {
+            console.error('Stomp client is not initialized');
         }
-        messageInput.focus();
+        scrollChatToBottom();
+        return false;
     }
 
-    document.getElementById('messageForm').addEventListener('submit', sendMessage);
+    document.getElementById('messageInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage(this.value); // this ссылается на элемент, на котором было вызвано событие, то есть на поле ввода
+            event.preventDefault(); // Предотвращаем стандартное действие формы (отправку)
+        }
+    });
+
+    function showMessageUser(message) {
+        const receiverId = getReceiverIdFromPath(); // Extract `receiverId` from the URL
+        const senderId = document.getElementById('userId').value;
+
+        const chatMessages = document.getElementById('chatMessages');
+        const li = document.createElement('li');
+        li.classList.add('message');
+
+        const content = document.createElement('div');
+        content.classList.add('content');
+        content.textContent = `${JSON.parse(message).body.senderId === parseInt(senderId) ? 'You' : JSON.parse(message).body.messageSender}: ${JSON.parse(message).body.message}`;
+
+        const time = document.createElement('div');
+        time.classList.add('time');
+        time.textContent = new Date(JSON.parse(message).body.createdAt).toLocaleString();
+
+        li.appendChild(time);
+        li.appendChild(content);
+        chatMessages.appendChild(li);
+        scrollChatToBottom();
+
+    }
     window.onload = fetchMessageHistory; // Load message history when the page loads
+
+    connect();
 </script>
 </html>

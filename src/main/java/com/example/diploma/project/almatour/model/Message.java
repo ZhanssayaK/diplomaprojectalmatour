@@ -27,7 +27,7 @@ public class Message{
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)

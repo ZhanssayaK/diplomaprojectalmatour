@@ -6,6 +6,10 @@ import com.example.diploma.project.almatour.model.Message;
 import com.example.diploma.project.almatour.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +23,12 @@ public class ChatController {
     private final MessageMapper messageMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
-    @PostMapping("/send")
-    public ResponseEntity<MessageDTO> sendChatMessage(@RequestBody MessageDTO messageDTO) {
+    @MessageMapping("/send/{senderId}/{receiverId}")
+    @SendTo({"/topic/receiveMessage/{senderId}/{receiverId}", "/topic/receiveMessage/{receiverId}/{senderId}"})
+    public ResponseEntity<MessageDTO> sendChatMessage(@DestinationVariable String senderId, @DestinationVariable String receiverId,@RequestBody MessageDTO messageDTO) {
         Message message = messageMapper.messageDTOToMessage(messageDTO);
         MessageDTO savedMessage = messageService.saveMessage(message);
-        MessageDTO savedMessageDTO = messageMapper.messageToMessageDTO(messageMapper.messageDTOToMessage(savedMessage));
-        messagingTemplate.convertAndSendToUser(
-                messageDTO.getReceiverId().toString(), "/queue/messages", savedMessageDTO);
-        return ResponseEntity.ok(savedMessageDTO);
+        return ResponseEntity.ok(savedMessage);
     }
 
     @GetMapping("/history/{senderId}/{receiverId}")
