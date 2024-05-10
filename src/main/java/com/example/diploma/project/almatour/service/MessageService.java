@@ -4,6 +4,7 @@ import com.example.diploma.project.almatour.dto.MessageDTO;
 import com.example.diploma.project.almatour.mapper.MessageMapper;
 import com.example.diploma.project.almatour.model.Message;
 import com.example.diploma.project.almatour.repository.MessageRepository;
+import com.example.diploma.project.almatour.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,10 @@ public class MessageService {
 
     private final MessageMapper messageMapper;
     private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
 
     public MessageDTO saveMessage(Message message) {
+        message.setSender(userRepository.findById(message.getSender().getId()).get());
         Message res=messageRepository.save(message);
         return messageMapper.messageToMessageDTO(res);
 //        return messageMapper.messageToMessageDTO(messageRepository.save(message));

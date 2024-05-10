@@ -7,8 +7,10 @@ import com.example.diploma.project.almatour.model.Accommodation;
 import com.example.diploma.project.almatour.model.CreditCardDetails;
 
 import com.example.diploma.project.almatour.model.User;
+import com.example.diploma.project.almatour.model.Wallet;
 import com.example.diploma.project.almatour.repository.CreditCardDetailsRepository;
 import com.example.diploma.project.almatour.repository.UserRepository;
+import com.example.diploma.project.almatour.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class CreditCardDetailsService {
     private final CreditCardDetailsMapper creditCardDetailsMapper;
     private final UserRepository userRepository;
     private final AuthenticationService authenticationService;
+    private final WalletRepository walletRepository;
     private final WalletService walletService;
 
     public List<CreditCardDetailsDTO> creditCardDetails() {
@@ -52,6 +55,10 @@ public class CreditCardDetailsService {
                     details = user.getCreditCardDetails();
                 } else {
                     details = new CreditCardDetails();
+                    Wallet wallet = new Wallet();
+                    wallet.setUser(user);
+                    wallet.setBalance(0);
+                    walletRepository.save(wallet);
                 }
                 details.setCardNumber(dto.getCardNumber());
                 details.setCvv(dto.getCvv());

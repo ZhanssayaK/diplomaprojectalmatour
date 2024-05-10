@@ -133,6 +133,7 @@ public class HomeController {
         if (!channelMessageList.isEmpty()) {
             model.addAttribute("messages", channelMessageList);
         }
+        model.addAttribute("memberCount",channel.getParticipants().size());
         return "channelMessenger";
     }
 }
