@@ -18,6 +18,7 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationService authenticationService;
 
     public Boolean registerUser(String email, String password, String rePassword, String fullName){
         User user = userRepository.findByEmail(email);
@@ -39,6 +40,23 @@ public class RegistrationService {
                 return true;
             }
             return false;
+        }
+        return null;
+    }
+
+    public Boolean updatePassword(String oldPassword, String newPassword, String repeatNewPassword) {
+        User currentUser = authenticationService.getCurrentUser();
+
+        if(currentUser != null){
+            if(passwordEncoder.matches(oldPassword, currentUser.getPassword())){
+                if(newPassword.equals(repeatNewPassword)){
+                    currentUser.setPassword(passwordEncoder.encode(newPassword));
+                    userRepository.save(currentUser);
+                    return true;
+                }
+                return false;
+            }
+            return null;
         }
         return null;
     }

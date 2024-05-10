@@ -14,6 +14,8 @@ public class AccommodationShowDTO {
     private String name;
     private Timestamp startTime;
     private String location;
+    private double price;
+    private String description;
     private String path;
     private boolean status;
     private UserDTO user;

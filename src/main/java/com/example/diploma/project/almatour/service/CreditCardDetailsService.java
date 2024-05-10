@@ -21,6 +21,7 @@ public class CreditCardDetailsService {
     private final CreditCardDetailsMapper creditCardDetailsMapper;
     private final UserRepository userRepository;
     private final AuthenticationService authenticationService;
+    private final WalletService walletService;
 
     public List<CreditCardDetailsDTO> creditCardDetails() {
         return creditCardDetailsMapper.toDTOList(creditCardDetailsRepository.findAll());

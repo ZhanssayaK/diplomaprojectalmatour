@@ -8,11 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .message {
+            align-items: center;
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
+        }
+        .content {
+            flex-grow: 1;
+            margin-bottom: 5px;
         }
         .message .content {
             margin-bottom: 5px;
@@ -24,6 +29,9 @@
     </style>
 </head>
 <body>
+<div style="margin: 20px; margin-left: 150px">
+    <button onclick="goBack()" class="btn btn-primary go-back-btn" style="margin-right: 20px;">Go Back</button>
+</div>
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -194,5 +202,13 @@
     window.onload = fetchMessageHistory; // Load message history when the page loads
 
     connect();
+</script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    // Load and display user messages on page load
+    window.onload = fetchUserMessages;
 </script>
 </html>

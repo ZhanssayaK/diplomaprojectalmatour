@@ -9,38 +9,51 @@
             background-color: #f0f0f0;
         }
         .chat-card {
-            border: none;
-            border-radius: 0;
+            border: 1px solid #ccc;
+            border-radius: 15px;
             margin-bottom: 10px;
-            box-shadow: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .chat-card:hover {
+            transform: translateY(-5px);
         }
         .chat-card .card-body {
             padding: 15px;
         }
         .chat-card .avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            margin-right: 10px;
+            margin-right: 15px;
         }
         .chat-card .user-info {
             flex-grow: 1;
         }
         .chat-card .user-name {
             font-weight: bold;
+            font-size: 18px;
         }
         .chat-card .last-message {
             color: #777;
+            font-size: 15px;
+        }
+        .go-back-btn {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2 class="mb-4">My Messages</h2>
-    <!-- User message list -->
+
+<div class="container py-5">
+    <button onclick="goBack()" class="btn btn-primary go-back-btn">Go Back</button>
+    <h2 class="mb-4 text-center">My Messages</h2>
     <div class="list-group" id="userList">
-        <!-- User message item -->
+        <!-- User message items will be dynamically inserted here -->
     </div>
 </div>
 <script>
@@ -52,10 +65,9 @@
                 .then(response => response.json())
                 .then(users => {
                     const userList = document.getElementById('userList');
-                    userList.innerHTML = ''; // Clear existing user list
+                    userList.innerHTML = '';
                     users.forEach(user => {
-                        const userCard = createUserCard(user);
-                        userList.appendChild(userCard);
+                        userList.appendChild(createUserCard(user));
                     });
                 })
                 .catch(error => console.error('Error fetching user messages:', error));
@@ -76,10 +88,7 @@
     function createUserCard(user) {
         const card = document.createElement('a');
         card.href = `http://localhost:1080/messages-page/${user.id}`;
-        card.classList.add('list-group-item', 'list-group-item-action', 'chat-card');
-
-        const userInfo = document.createElement('div');
-        userInfo.classList.add('d-flex');
+        card.classList.add('list-group-item', 'list-group-item-action', 'chat-card', 'd-flex', 'align-items-center', 'p-3');
 
         const avatar = document.createElement('img');
         avatar.src = `/images/${user.avatarUrl}`;
@@ -87,7 +96,7 @@
         avatar.classList.add('avatar');
 
         const userDetails = document.createElement('div');
-        userDetails.classList.add('user-info');
+        userDetails.classList.add('user-info', 'd-flex', 'flex-column');
 
         const userName = document.createElement('div');
         userName.textContent = user.fullName;
@@ -99,11 +108,8 @@
 
         userDetails.appendChild(userName);
         userDetails.appendChild(lastMessage);
-
-        userInfo.appendChild(avatar);
-        userInfo.appendChild(userDetails);
-
-        card.appendChild(userInfo);
+        card.appendChild(avatar);
+        card.appendChild(userDetails);
 
         return card;
     }
@@ -111,6 +117,13 @@
     // Load user messages on page load
     window.onload = fetchUserMessages;
 </script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
 
+    // Load and display user messages on page load
+    window.onload = fetchUserMessages;
+</script>
 </body>
 </html>

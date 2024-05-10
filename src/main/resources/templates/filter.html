@@ -1192,7 +1192,7 @@
         .main-cards{
             width: 100%;
         }
-        .cards-blocks{
+        .cards{
             display: grid;
             grid-template-columns: repeat(4,1fr);
             width: 80%;
@@ -1213,7 +1213,7 @@
         }
         .main-card-img{
             width: 100%;
-            height: 200px;
+            height: 220px;
             border-radius: 5px;
         }
         .main-card-div{
@@ -1235,24 +1235,24 @@
         .main-card-rating{
             display: grid;
             width: 100%;
-            grid-template-columns: 50% 50%;
+            padding-top: 10px;
+            grid-template-columns: 50% 15% 20%;
         }
         .main-card-description{
-            width: 90%;
-            margin-left: 5%;
-            font-size: 13px;
-            opacity: 0.7;
-            margin-top: -5px;
+            position: relative;
+            width: 280px;
+            height: 50px;
+            overflow: hidden;
+            font-size: 15px;
+            margin-top: -20px;
         }
         .main-card-rating-text{
             color: #d0b44c;
             font-size: 13px;
         }
         .main-card-rating-img{
-            width: 80%;
-            margin-top: 18px;
-            margin-left: -10px;
-
+            width: 30px;
+            margin-top: 10px;
         }
         .main-card-rating-div{
             display: grid;
@@ -1263,15 +1263,19 @@
 
         .price-and-location{
             display: grid;
-            width: 90%;
+            width: 100%;
             margin: auto;
             margin-top: -15px;
-            grid-template-columns: 60% 40%;
+
         }
         .price-and-location-l{
             display: grid;
-            grid-template-columns: 20% 80%;
+            width: 100%;
+            grid-template-columns: 10% 80%;
             gap: 5px;
+            position: absolute;
+            width: 250px;
+            margin-left: 130px
         }
         .price-and-location-p h3{
             color: orange;
@@ -1285,7 +1289,7 @@
         }
 
         .price-and-location-l img{
-            width: 100%;
+            width: 20px;
             margin-top: 20px;
             opacity: 0.6;
         }
@@ -1369,7 +1373,7 @@
 
     <section class="cards-block">
         <h3 class="cards-block-h3">Accommodations:</h3>
-        <div class="cards-blocks" id="cards-container-1">
+        <div class="cards" id="cards-container-1">
 
         </div>
     </section>
@@ -1490,6 +1494,7 @@
         var locationImg = document.createElement('img');
         locationImg.src = 'http://cdn.onlinewebfonts.com/svg/img_510085.png';
         var locationH4 = document.createElement('h4');
+        var br = document.createElement('br');
         locationH4.textContent = data.location;
         priceAndLocationLDiv.appendChild(locationImg);
         priceAndLocationLDiv.appendChild(locationH4);
@@ -1500,9 +1505,11 @@
         mainCardDiv.appendChild(titleH3);
         mainCardDiv.appendChild(ratingDiv);
         mainCardDiv.appendChild(descriptionP);
+        mainCardDiv.appendChild(br);
         mainCardDiv.appendChild(priceAndLocationDiv);
 
         mainCard.appendChild(img);
+
         mainCard.appendChild(mainCardDiv);
 
         container.appendChild(mainCard);
@@ -1562,7 +1569,18 @@
             });
     });
 </script>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var descriptions = document.querySelectorAll('.main-card-description');
+        descriptions.forEach(function(desc) {
+            var fullText = desc.textContent; // Get the full text
+            var words = fullText.split(/\s+/); // Split text into words by whitespace
+            if (words.length > 13) {
+                var truncated = words.slice(0, 13).join(' ') + '...'; // Join the first 13 words and add ellipsis
+                desc.textContent = truncated; // Set the truncated text
+            }
+        });
+    });
+</script>
 </body>
 </html>
-

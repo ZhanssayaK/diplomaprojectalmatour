@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,10 +31,31 @@ public class HomeController {
 
     private final AccomodationService accomodationService;
     private final ChannelRepository channelRepository;
+    private final RegistrationService registrationService;
 
     @GetMapping(value = "/")
     public String index() {
         return "index";
+    }
+
+    @PostMapping("/savePasswordd")
+    public String savePassword(@RequestParam(name = "user_old_password") String oldPassword,
+                               @RequestParam(name = "user_new_password") String newPassword,
+                               @RequestParam(name = "user_repeat_new_password") String repeatNewPassword){
+
+        System.out.println(oldPassword);
+        System.out.println(newPassword);
+        Boolean result = registrationService.updatePassword(oldPassword, newPassword, repeatNewPassword);
+
+        if(result != null){
+            if(result){
+                return "redirect:/profile?success";
+            }
+
+            return "redirect:/profile?newPasswordError";
+        }
+
+        return "redirect:/profile?oldPasswordError";
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -59,4 +59,8 @@ public class WalletService {
         User user = userRepository.findById(userId).orElseThrow();
         return walletMapper.toEntity(walletRepository.findByUser(user));
     }
+
+    public void creatWallet(WalletDTO walletDTO){
+        walletRepository.save(walletMapper.toDTO(walletDTO));
+    }
 }

@@ -5,95 +5,81 @@
     <title>Profile Screen</title>
     <link rel="icon" href="https://i.postimg.cc/zGBDRhXy/2024-02-25-113236.png" type="image/png">
     <style>
-        body {
+        body{
             width: 100%;
             margin: 0px;
             font-family: 'Segoe UI';
         }
-
-        main {
+        main{
             display: grid;
             grid-template-columns: 20% 80%;
         }
-
-        .logo {
+        .logo{
             position: absolute;
             left: 15%;
             font-size: 30px;
         }
-
-        .logo:hover {
+        .logo:hover{
             opacity: 0.7;
         }
-
-        .main-left {
+        .main-left{
             border: 1px solid lightgray;
-            min-height: 738px;
+            max-height: 1050px;
+            min-height: 750px;
         }
-
-        .main-left-div {
+        .main-left-div{
             margin-top: 50px;
             display: grid;
             padding: 0px 10%;
             row-gap: 2em;
-        }
 
-        .main-left-div div {
+        }
+        .main-left-div div{
             display: grid;
             grid-template-columns: 20% 80%;
         }
-
-        .main-left img {
+        .main-left img{
             width: 30px;
             opacity: 0.3;
         }
-
-        .main-left a {
+        .main-left a{
             text-decoration: none;
             color: darkslategray;
             top: 5px;
             position: relative;
         }
-
-        .main-left h1 {
+        .main-left h1{
             position: relative;
             left: 10%;
             color: #092035;
         }
-
-        .main-right {
+        .main-right{
             height: 940px;
         }
-
-        .main-right-header {
+        .main-right-header{
             display: grid;
             grid-template-columns: 70% 30%;
             border-top: 1px solid lightgray;
             border-right: 1px solid lightgray;
         }
-
-        .main-right-header img {
+        .main-right-header img{
             width: 30px;
             height: 30px;
             margin: auto;
         }
-
-        .main-right-info {
+        .main-right-info{
             display: grid;
             grid-template-columns: 15% 15% 40%;
         }
-
-        .main-right-info h4 {
+        .main-right-info h4{
             text-align: center;
         }
-
-        .main-right-logo h1 {
+        .main-right-logo h1{
             color: darkslategray;
             position: relative;
             left: 20px;
         }
-
-        .background {
+        .background{
             width: 100%;
             height: 200px;
             background-image: url('https://static.vecteezy.com/system/resources/previews/003/452/115/non_2x/wildlife-elk-in-forest-nature-landscape-illustration-free-vector.jpg');
@@ -101,7 +87,7 @@
             background-size: cover;
         }
 
-        form {
+        form{
             display: grid;
             grid-template-columns: 35% 65%;
             gap: 3em;
@@ -111,40 +97,36 @@
             margin-left: 50px;
             z-index: 1000;
         }
-
-        .m-1 {
+        .m-1{
             border: 1px solid lightgray;
             height: 310px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
         }
-
-        .m-2 {
+        .m-2{
             border: 1px solid lightgray;
             min-height: 500px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
         }
-
-        #main2 {
+        #main2{
             display: none;
         }
 
-        .main-2 {
+        .main-2{
             border: 1px solid lightgray;
             height: 50px;
             padding-top: 13px;
             padding-bottom: 14px;
             width: 100%;
             display: grid;
-            grid-template-columns: 40% 30% 30%;
+            grid-template-columns: 35% 20% 25% 15%;
         }
-
-        .main-2 button {
+        .main-2 button{
             background-color: white;
-            border: 0px;
+            border: 0px ;
             height: 50px;
             color: darkslategray;
             cursor: pointer;
@@ -152,7 +134,7 @@
             font-weight: 600;
         }
 
-        .main-2 button:hover {
+        .main-2 button:hover{
             opacity: 0.7;
             transition: 0.3s;
         }
@@ -160,12 +142,10 @@
         .file {
             position: relative;
         }
-
-        label {
+        label{
             font-family: Arial;
             color: #999;
         }
-
         .input {
             display: none;
         }
@@ -184,7 +164,7 @@
             border-radius: 50px;
         }
 
-        .profile-photo {
+        .profile-photo{
             width: 200px;
             margin: 50px auto;
             box-shadow: 0px 2px 10px lightgray;
@@ -192,8 +172,7 @@
             border: 1px solid whitesmoke;
             height: 200px
         }
-
-        .profile-photo img {
+        .profile-photo img{
             width: 200px;
             border-radius: 50%;
             margin: auto;
@@ -201,20 +180,45 @@
         }
 
 
-        .content {
+
+        .content{
             display: grid;
             grid-template-columns: 50% 50%;
             justify-items: center;
             row-gap: 1em;
             margin-top: 40px;
         }
-
-        .content label {
+        .content-div{
+            display: grid;
+            position: relative;
+            top: -50px;
+        }
+        .content-div h3{
+            opacity: 0.8;
+            width: 100%;
+            position: relative;
+            padding-left: 42%;
+        }
+        .content-div label{
+            font-size: 18px;
+            position: relative;
+            left: 37%;
+        }
+        .content label{
             font-size: 18px;
 
         }
-
-        .content input {
+        .content-div input{
+            font-size: 17px;
+            position: relative;
+            left: 37%;
+            padding: 10px;
+            margin-top: 0px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            width: 250px;
+        }
+        .content input{
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -222,41 +226,51 @@
             border-radius: 5px;
             width: 250px;
         }
-
-        .content button {
+        .content-div button{
             background-color: #335da5;
             color: white;
             padding: 10px 30px;
             font-size: 17px;
             border-radius: 10px;
-            border: 0px solid;
+            border: 0px solid ;
+            position: relative;
+            left: 37%;
+            top: 0px;
+            box-shadow: 0px 5px 5px lightgray;
+        }
+        .content button{
+            background-color: #335da5;
+            color: white;
+            padding: 10px 30px;
+            font-size: 17px;
+            border-radius: 10px;
+            border: 0px solid ;
             position: relative;
             margin-left: -115px;
             top: 20px;
             box-shadow: 0px 5px 5px lightgray;
         }
-
-        #user-image {
+        #user-image{
             border-radius: 50px;
         }
-
-        .content button:hover {
+        .content button:hover{
             opacity: 0.7;
             transition: 0.3s;
         }
-
-        #default-image {
+        .content-div button:hover{
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        #default-image{
             width: 70%;
             height: 70%;
             margin: 15%;
             border-radius: 0px;
         }
-
-        #userimage {
+        #userimage{
             border-radius: 50px;
         }
-
-        .admin-panel {
+        .admin-panel{
             background-color: white;
             border: 0px;
             padding: 0px;
@@ -265,8 +279,7 @@
             font-size: 15px;
             cursor: pointer;
         }
-
-        .admin-page {
+        .admin-page{
             opacity: 1000;
             background-color: white;
             width: 70%;
@@ -278,7 +291,6 @@
             border: 1px solid lightgray;
             padding-bottom: 50px;
         }
-
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -288,24 +300,21 @@
             overflow: hidden;
             box-shadow: 0px 2px 5px lightgray;
         }
-
-        .btn-danger {
+        .btn-danger{
             background-color: crimson;
             color: white;
             padding: 5px 20px;
             border: 0px;
             border-radius: 5px;
         }
-
-        .btn-warning {
+        .btn-warning{
             background-color: orange;
             color: white;
             padding: 5px 20px;
             border: 0px;
             border-radius: 5px;
         }
-
-        .container-btns {
+        .container-btns{
             display: grid;
             position: absolute;
             width: 80%;
@@ -313,9 +322,8 @@
             top: 0px;
             grid-template-columns: 50% 50%;
         }
-
-        .container-btns button {
-            border: 0px solid;
+        .container-btns button{
+            border: 0px solid ;
             padding-top: 20px;
             font-size: 18px;
             color: darkslategray;
@@ -324,32 +332,26 @@
             font-weight: 600;
             background-color: white;
         }
-
-        .container2 {
+        .container2{
             display: none;
         }
-
-        hr {
+        hr{
             border: 1px solid lightgray;
             position: absolute;
             width: 100%;
             left: 0px;
             margin-top: -30px;
         }
-
-        .admin-page {
+        .admin-page{
             display: none;
         }
-
-        .container-btns button:hover {
+        .container-btns button:hover{
             opacity: 0.7;
         }
-
-        .btn:hover {
+        .btn:hover{
             opacity: 0.7;
             transition: 0.3s;
         }
-
         .table thead {
             background-color: #5dcae3;
             color: #fff;
@@ -371,31 +373,29 @@
         .table tbody td:last-child {
             text-align: center;
         }
-
-        #close {
+        #close{
             background-color: crimson;
             color: white;
-            border: 1px solid;
+            border: 1px solid ;
             border-radius: 10px;
             padding: 5px 20px;
             font-size: 17px;
             margin-bottom: 50px;
         }
 
-        .container-h3 {
+        .container-h3{
             margin-left: 20px;
             font-weight: 450px;
             color: darkslategray;
             margin-top: -10px;
 
         }
-
-        #close:hover {
+        #close:hover{
             opacity: 0.8;
             transition: 0.3s;
         }
 
-        #content3 {
+        #content3{
             height: 250px;
             display: grid;
             grid-template-columns: 50% 50%;
@@ -406,26 +406,26 @@
             top: 80px;
             left: 120px;
         }
-
-        .cont-div {
+        #content4{
+            display: grid;
+        }
+        .cont-div{
             display: grid;
             grid-template-columns: 50% 50%;
             justify-items: center;
             width: 50%;
         }
-
-        .cont-div input {
+        .cont-div input{
             width: 100px;
         }
 
-        .signout-btn {
+        .signout-btn{
             border-top: 1px solid #999;
             padding-top: 20px;
             position: relative;
             top: 550px;
         }
-
-        #main3 {
+        #main3{
             display: none;
             background-color: white;
             width: 73%;
@@ -438,8 +438,7 @@
             position: absolute;
             border: 1px solid lightgray;
         }
-
-        select {
+        select{
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -448,8 +447,7 @@
             color: #999;
             width: 272px;
         }
-
-        textarea {
+        textarea{
             font-size: 17px;
             padding: 10px;
             margin-top: 10px;
@@ -462,8 +460,7 @@
             max-height: 60px;
 
         }
-
-        #main4 {
+        #main4{
             display: none;
             background-color: white;
             width: 73%;
@@ -476,24 +473,34 @@
             position: absolute;
             border: 1px solid lightgray;
         }
-
-        #main2 {
+        #main5{
+            display: none;
+            background-color: white;
+            width: 73%;
+            border-radius: 10px;
+            margin-left: 50px;
+            margin-top: -50px;
+            min-height: 450px;
+            z-index: 500;
+            overflow: hidden;
+            position: absolute;
+            border: 1px solid lightgray;
+        }
+        #main2{
             display: grid;
         }
-
-        #main3 .content {
+        #main3 .content{
             height: 400px;
             margin-top: -20px;
         }
 
-        #image-container {
+        #image-container{
             width: 100%;
             overflow: hidden;
             height: 100%;
             top: 0px;
         }
-
-        #default-image {
+        #default-image{
             width: 200px;
             height: 200px;
             position: relative;
@@ -503,15 +510,12 @@
         }
 
 
-        #bookings {
+
+
+        #bookings{
             display: none;
         }
-
-        #channels {
-            display: none;
-        }
-
-        .container-btns-2 {
+        .container-btns-2{
             display: grid;
             grid-template-columns: 50% 50%;
             width: 80%;
@@ -519,19 +523,16 @@
             margin-top: -80px;
             position: absolute;
         }
-
-        #announcements {
+        #announcements{
             display: none;
         }
-
-        .container-btns-2 button {
+        .container-btns-2 button{
             background-color: white;
             border: 0px;
             font-size: 20px;
             color: darkslategray;
         }
-
-        .bookings-cards {
+        .bookings-cards{
             width: 80%;
             margin: auto;
             position: relative;
@@ -541,42 +542,36 @@
             border-radius: 10px;
             border: 1px solid #ddd;
         }
-
-        .booking-card {
+        .booking-card{
             display: grid;
             grid-template-columns: 15% 70%;
             gap: 1em;
         }
-
-        .booking-card img {
+        .booking-card img{
             width: 80%;
             height: 100px;
         }
 
-        .booking-card-info {
+        .booking-card-info{
             margin-top: 0px;
         }
-
-        .booking-card-info h1 {
+        .booking-card-info h1{
             font-size: 18px;
         }
-
-        .booking-card-info p {
+        .booking-card-info p{
             font-size: 15px;
             color: red;
             margin-top: -10px;
             margin-bottom: -10px;
         }
-
-        .modal-content {
+        .modal-content{
             width: 100%;
-            background-color: rgb(0, 0, 0, 0.5);
+            background-color: rgb(0,0,0,0.5);
             height: 130%;
             position: absolute;
             top: 0px;
         }
-
-        .md {
+        .md{
             width: 50%;
             padding: 50px;
             background-color: white;
@@ -588,8 +583,7 @@
             overflow: hidden;
             box-shadow: 0px 0px 10px black;
         }
-
-        .md .back-modal-img {
+        .md .back-modal-img{
             width: 100%;
             height: 250px;
             background-image: url('https://i.pinimg.com/originals/f9/62/90/f9629031c069ce8ae4fa44950e5370ec.jpg');
@@ -599,8 +593,7 @@
             background-position: center;
             z-index: 0;
         }
-
-        .md .close {
+        .md .close{
             background-color: crimson;
             padding: 2px 10px;
             font-weight: bold;
@@ -612,38 +605,33 @@
             margin-left: 97%;
             margin-top: -30px;
         }
-
-        .md .back-modal-img img {
+        .md .back-modal-img img{
             width: 100%;
             margin-top: 100px;
 
         }
-
-        .md .detail-card {
+        .md .detail-card{
             z-index: 1;
             position: relative;
         }
-
-        .md .detail-card h2 {
+        .md .detail-card h2{
             color: white;
             font-size: 30px;
         }
-
-        .md .left-section {
+        .md .left-section{
             color: whitesmoke;
         }
 
-        .md #rejectButton {
+        .md #rejectButton{
             background-color: crimson;
             padding: 5px 10px;
             color: white;
-            border: 0px;
+            border: 0px ;
             font-size: 17px;
             border-radius: 5px;
             box-shadow: 0px 2px 5px darkslategray;
         }
-
-        .md #comment {
+        .md #comment{
             width: 500px;
             max-height: 80px;
             margin-top: 20px;
@@ -654,45 +642,81 @@
             border-radius: 5px;
             padding: 15px;
         }
-
-        .md .right-section p, h3 {
+        .md .right-section p, h3{
             display: grid;
             grid-template-columns: 30% 70%;
         }
-
-        .md .right-section {
+        .md .right-section{
             padding-top: 50px;
         }
-
-        .md .right-section h3, p span {
+        .md .right-section h3,p span{
             opacity: 0.7;
         }
-
-        .md .other-photos {
+        .md .other-photos{
             display: grid;
             width: 70%;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4,1fr);
             height: 100px;
             gap: 1em;
             margin-bottom: 10px;
         }
-
-        .md .other-photos img {
+        .md .other-photos img{
             width: 100%;
             height: 100px;
             border-radius: 5px;
         }
-
-        .md #acceptButton {
+        .md #acceptButton{
             background-color: seagreen;
             padding: 5px 10px;
             color: white;
-            border: 0px;
+            border: 0px ;
             font-size: 17px;
             border-radius: 5px;
             box-shadow: 0px 2px 5px darkslategray;
         }
+        .btn-close-booking{
+            background-color: crimson;
+            border: 0px;
 
+            padding: 5px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            color: white;
+            box-shadow: 0px 2px 5px #ddd;
+            position: absolute;
+            margin-bottom: 0px;
+            margin-left: 81%;
+            margin-top: 10px;
+        }
+        #content12{
+            height: 900px;
+            position: relative;
+            top: -40px;
+        }
+        #content1111{
+            text-align: center;
+            padding-bottom: 50px;
+            border-top: 1px solid #e4e4e4;
+        }
+        .text-pass{
+            background-color: #dcf0e1;
+            padding: 15px 30px;
+            width: 250px;
+            color: #6e9680;
+            margin-left: 35px;
+            border-radius: 5px;
+        }
+        .change-text{
+            margin-left: -100px;
+            color: darkslategray;
+            font-size: 20px;
+        }
+        .submitCreditCardDD{
+
+        }
+        #channels {
+            display: none;
+        }
         /* Table Styles */
         #channelsTable {
             width: 100%;
@@ -712,57 +736,6 @@
         #channelsTable tbody tr:hover {
             background-color: #f9f9f9;
             cursor: pointer;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn-close-booking {
-            background-color: crimson;
-            border: 0px;
-
-            padding: 5px 20px;
-            font-size: 18px;
-            border-radius: 5px;
-            color: white;
-            box-shadow: 0px 2px 5px #ddd;
-            position: absolute;
-            margin-bottom: 0px;
-            margin-left: 81%;
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -789,13 +762,12 @@
                     <a>Admin Panel</a>
                 </button>
             </div>
-            <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+            <div>
                 <img src="https://icon-library.com/images/control-system-icon/control-system-icon-0.jpg">
                 <button class="admin-panel" onclick="changePage3()">
                     <a>Channels</a>
                 </button>
             </div>
-
             <div class="signout-btn">
                 <img src="https://c3.klipartz.com/pngpicture/421/12/sticker-png-sword-art-online-vector-icons-logout-thumbnail.png">
                 <a th:href="@{'/exit'}">Sign Out</a>
@@ -885,6 +857,7 @@
                             <button type="button" onclick="closeModal1()">Account Settings</button>
                             <button type="button" onclick="closeModal2()">Place an Add</button>
                             <button type="button" onclick="closeModal3()">Requisites</button>
+                            <button type="button" onclick="closeModal4()">Wallet</button>
                         </div>
                         <div class="content" id="content1">
                             <div>
@@ -897,42 +870,34 @@
                             </div>
                             <div>
                                 <label>Phone number:</label><br>
-                                <input name="userPhoneNumber" type="text"
-                                       th:value="${#authentication.principal.phoneNumber}">
+                                <input name="userPhoneNumber" type="text" th:value="${#authentication.principal.phoneNumber}">
                             </div>
                             <div>
                                 <label>City:</label><br>
                                 <select name="userCity">
-                                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"
-                                            th:selected="${#authentication.principal.city != null and city.id == #authentication.principal.city.id}"></option>
+                                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" th:selected="${#authentication.principal.city != null and city.id == #authentication.principal.city.id}"></option>
                                 </select>
                             </div>
                             <div>
                                 <button type="submit">Update</button>
                             </div>
                         </div>
+
+<!--                        <div class="content" id="content1111">-->
+<!--                            <div>-->
+<!--                                <form th:action="@{'/savePasswordd'}" method="post">-->
+<!--                                    <h4 class="change-text">Change password</h4>-->
+<!--                                    <input name="user_old_password" placeholder="Current Password" type="text">-->
+<!--                                    <h4 class="text-pass">Please create a new password that you don't use any other site!</h4>-->
+<!--                                    <input name="user_new_password" type="text" placeholder="New Password" >-->
+<!--                                    <input name="user_repeat_new_password" type="text" placeholder="Confirm Password">-->
+<!--                                    <br>-->
+<!--                                    <button type="submit">Submit</button>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </form>
-            </div>
-        </div>
-        <div id="channels">
-            <div class="bookings-cards">
-                <button id="close" onclick="closeChannel()">Close</button>
-                <hr>
-                <div id="chane">
-                    <h1>My channels:</h1>
-                    <div id="channelsContainer">
-                        <table id="channelsTable">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <!-- Add more table headers if needed -->
-                            </tr>
-                            </thead>
-                            <tbody id="channelsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="bookings">
@@ -955,11 +920,32 @@
                 </div>
             </div>
         </div>
+        <div id="channels">
+            <div class="bookings-cards">
+                <button id="close" onclick="closeChannel()">Close</button>
+                <hr>
+                <div id="chane">
+                    <h1>My channels:</h1>
+                    <div id="channelsContainer">
+                        <table id="channelsTable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <!-- Add more table headers if needed -->
+                            </tr>
+                            </thead>
+                            <tbody id="channelsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="main3">
             <div class="main-2">
                 <button onclick="closeModal1()">Account Settings</button>
                 <button onclick="closeModal2()">Place an Add</button>
                 <button onclick="closeModal3()">Requisites</button>
+                <button type="button" onclick="closeModal4()">Wallet</button>
             </div>
             <div class="content" id="content12">
                 <div>
@@ -1014,6 +1000,7 @@
                 <button onclick="closeModal1()">Account Settings</button>
                 <button onclick="closeModal2()">Place an add</button>
                 <button onclick="closeModal3()">Requisites</button>
+                <button type="button" onclick="closeModal4()">Wallet</button>
             </div>
             <div class="content" id="content3">
                 <div>
@@ -1035,6 +1022,30 @@
                 </div>
                 <div>
                     <button type="submit" id="submitCreditCard">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="main5">
+            <div class="main-2">
+                <button onclick="closeModal1()">Account Settings</button>
+                <button onclick="closeModal2()">Place an add</button>
+                <button onclick="closeModal3()">Requisites</button>
+                <button onclick="closeModal4()">Wallet</button>
+            </div>
+            <div class="content-div">
+                <h3>Top up your balance:</h3>
+                <div>
+                    <label>Your ballance:</label><br>
+                    <input type="text" name="balance">
+                </div>
+
+                <div>
+                    <label>Replenish the amount:</label><br>
+                    <input type="text" name="amount">
+                </div>
+                <div>
+                    <button type="button" id="submitCreditCardDD">Submit</button>
                 </div>
             </div>
         </div>
@@ -1116,7 +1127,7 @@
         acceptButton.disabled = true;
 
         const comment = document.getElementById('comment').value;
-        const requestData = {id: id, comment: comment};
+        const requestData = { id: id, comment: comment };
 
         fetch('/accommodations/reject-accommodation', {
             method: 'POST',
@@ -1199,7 +1210,6 @@
     function changePage() {
         document.getElementById('adminpage').style.display = 'block';
         document.getElementById('main2').style.display = 'none';
-        document.getElementById('channels').style.display = 'none';
         document.getElementById('main3').style.display = 'none';
         document.getElementById('main4').style.display = 'none';
         document.getElementById('bookings').style.display = 'none';
@@ -1209,26 +1219,34 @@
 
     function closeModal1() {
         document.getElementById('main2').style.display = 'grid';
-        document.getElementById('channels').style.display = 'none';
         document.getElementById('main3').style.display = 'none';
         document.getElementById('main4').style.display = 'none';
+        document.getElementById('main5').style.display = 'none';
     }
 
     function closeModal2() {
         document.getElementById('main3').style.display = 'grid';
         document.getElementById('main2').style.display = 'none';
         document.getElementById('main4').style.display = 'none';
+        document.getElementById('main5').style.display = 'none';
     }
 
     function closeModal3() {
         document.getElementById('main4').style.display = 'grid';
         document.getElementById('main3').style.display = 'none';
         document.getElementById('main2').style.display = 'none';
+        document.getElementById('main5').style.display = 'none';
+    }
+
+    function closeModal4() {
+        document.getElementById('main5').style.display = 'grid';
+        document.getElementById('main2').style.display = 'none';
+        document.getElementById('main3').style.display = 'none';
+        document.getElementById('main4').style.display = 'none';
     }
 
     function closePage() {
         document.getElementById('adminpage').style.display = 'none';
-        document.getElementById('channels').style.display = 'none';
         document.getElementById('main2').style.display = 'grid';
 
 
@@ -1237,13 +1255,11 @@
     function changePanel() {
         document.getElementById('container').style.display = 'block';
         document.getElementById('container2').style.display = 'none';
-        document.getElementById('channels').style.display = 'none';
     }
 
     function changePanel2() {
         document.getElementById('container').style.display = 'none';
         document.getElementById('container2').style.display = 'block';
-        document.getElementById('channels').style.display = 'none';
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -1412,42 +1428,29 @@
     }
 </script>
 <script>
-    function changeBook1() {
-        document.getElementById('bookingss').style.display = "block";
-        document.getElementById('announcements').style.display = "none";
+    function changeBook1(){
+        document.getElementById('bookingss').style.display="block";
+        document.getElementById('announcements').style.display="none";
     }
-
-    function changeBook2() {
-        document.getElementById('bookingss').style.display = "none";
-        document.getElementById('announcements').style.display = "block";
+    function changeBook2(){
+        document.getElementById('bookingss').style.display="none";
+        document.getElementById('announcements').style.display="block";
     }
-
     function closeBooking() {
-        document.getElementById('bookings').style.display = 'none';
-        document.getElementById('channels').style.display = 'none';
-        document.getElementById('main2').style.display = 'block';
+        document.getElementById('bookings').style.display='none';
+        document.getElementById('main2').style.display='block';
 
 
     }
-
-    function closeChannel() {
-        document.getElementById('channels').style.display = 'none';
-        document.getElementById('main2').style.display = 'block';
-
-
-    }
-
     function changePage2() {
-        document.getElementById('bookings').style.display = 'block';
-        document.getElementById('adminpage').style.display = 'none';
-        document.getElementById('channels').style.display = 'none';
-        document.getElementById('main2').style.display = 'none';
-        document.getElementById('main3').style.display = 'none';
-        document.getElementById('main4').style.display = 'none';
+        document.getElementById('bookings').style.display='block';
+        document.getElementById('adminpage').style.display='none';
+        document.getElementById('main2').style.display='none';
+        document.getElementById('main3').style.display='none';
+        document.getElementById('main4').style.display='none';
 
 
     }
-
     function changePage3() {
         document.getElementById('bookings').style.display = 'none';
         document.getElementById('adminpage').style.display = 'none';
@@ -1455,8 +1458,6 @@
         document.getElementById('main2').style.display = 'none';
         document.getElementById('main3').style.display = 'none';
         document.getElementById('main4').style.display = 'none';
-
-
     }
 </script>
 <script type="text/javascript">
@@ -1556,13 +1557,13 @@
         url: 'http://localhost:1080/users/' + userId + '/credit-card-details',
         type: 'GET',
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
             $('input[name="fullName"]').val(response.fullName);
             $('input[name="cardNumber"]').val(response.cardNumber);
             $('input[name="cvv"]').val(response.cvv);
             $('input[name="expirationDate"]').val(response.expirationDate);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
             console.error('Error:', error);
         }
     });
@@ -1601,6 +1602,45 @@
             .catch(error => {
                 console.error('Failed to fetch data:', error);
                 alert('Failed to load announcements.');
+            });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userId = document.querySelector('input[name="currentUserId"]').value;
+
+        // Fetch bookings by userId
+        fetch(`http://localhost:1080/bookings/findByUserId/${userId}`)
+            .then(response => response.json())
+            .then(bookings => {
+                bookings.forEach(booking => {
+                    // For each booking, fetch accommodation details
+                    fetch(`http://localhost:1080/accommodations/getByIdAccomodationApi/${booking.accommodationId}`)
+                        .then(response => response.json())
+                        .then(accommodation => {
+                            // Create and append booking card with accommodation details
+                            const container = document.getElementById('bookingCardsContainerQ');
+                            const card = document.createElement('div');
+                            card.className = 'booking-card';
+                            card.innerHTML = `
+                            <div>
+                                <img src="${accommodation.mainPhoto}" alt="Image of ${accommodation.name}" style="width: 100px; height: 100px;">
+                            </div>
+                            <div class="booking-card-info">
+                                <h1>${accommodation.name}</h1>
+                                <p>${accommodation.description}</p>
+                                <h2>$${accommodation.price}</h2>
+                            </div>
+                        `;
+                            container.appendChild(card);
+                        })
+                        .catch(error => {
+                            console.error('Failed to fetch accommodation details:', error);
+                        });
+                });
+            })
+            .catch(error => {
+                console.error('Failed to fetch bookings:', error);
             });
     });
 </script>
@@ -1661,46 +1701,9 @@
     }
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const userId = document.querySelector('input[name="currentUserId"]').value;
-
-        // Fetch bookings by userId
-        fetch(`http://localhost:1080/bookings/findByUserId/${userId}`)
-            .then(response => response.json())
-            .then(bookings => {
-                bookings.forEach(booking => {
-                    // For each booking, fetch accommodation details
-                    fetch(`http://localhost:1080/accommodations/getByIdAccomodationApi/${booking.accommodationId}`)
-                        .then(response => response.json())
-                        .then(accommodation => {
-                            // Create and append booking card with accommodation details
-                            const container = document.getElementById('bookingCardsContainerQ');
-                            const card = document.createElement('div');
-                            card.className = 'booking-card';
-                            card.innerHTML = `
-                            <div>
-                                <img src="${accommodation.mainPhoto}" alt="Image of ${accommodation.name}" style="width: 100px; height: 100px;">
-                            </div>
-                            <div class="booking-card-info">
-                                <h1>${accommodation.name}</h1>
-                                <p>${accommodation.description}</p>
-                                <h2>$${accommodation.price}</h2>
-                            </div>
-                        `;
-                            container.appendChild(card);
-                        })
-                        .catch(error => {
-                            console.error('Failed to fetch accommodation details:', error);
-                        });
-                });
-            })
-            .catch(error => {
-                console.error('Failed to fetch bookings:', error);
-            });
-    });
-
-    function goBack() {
-        console.log("GOOOOOccccccccccccccccc")
+    function closeChannel() {
+        document.getElementById('channels').style.display = 'none';
+        document.getElementById('main2').style.display = 'block';
     }
 </script>
 </body>
